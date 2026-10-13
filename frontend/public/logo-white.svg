@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 110" width="460" height="110" fill="none">
+  <!-- YT text in Pure White for Dark Backgrounds -->
+  <text x="5" y="82" font-family="'Plus Jakarta Sans', 'Outfit', 'Nunito', system-ui, sans-serif" font-size="82" font-weight="900" fill="#FFFFFF" letter-spacing="-2">yt</text>
+  
+  <!-- Academy text in Vibrant Amber Gold -->
+  <text x="115" y="82" font-family="'Plus Jakarta Sans', 'Outfit', 'Nunito', system-ui, sans-serif" font-size="82" font-weight="800" fill="#FBBF24" letter-spacing="-1">academy</text>
+  
+  <!-- Two Sparkle Stars over letter 'y' of academy -->
+  <path d="M422 42 C422 30 428 22 440 22 C428 22 422 14 422 2 C422 14 416 22 404 22 C416 22 422 30 422 42 Z" fill="#FBBF24" />
+  <path d="M446 16 C446 9 450 4 458 4 C450 4 446 -1 446 -8 C446 -1 442 4 434 4 C442 4 446 9 446 16 Z" fill="#F59E0B" />
+</svg>

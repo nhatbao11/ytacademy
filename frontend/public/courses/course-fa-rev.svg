@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0A192F" />
+      <stop offset="100%" stop-color="#172A45" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A" />
+      <stop offset="50%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <pattern id="gridPattern" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#FFFFFF" stroke-width="0.75" stroke-opacity="0.04" />
+    </pattern>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="640" height="360" fill="url(#bgGrad)" />
+  <rect width="640" height="360" fill="url(#gridPattern)" />
+
+  <!-- Ambient Glow Shapes -->
+  <circle cx="560" cy="80" r="140" fill="#FBBF24" fill-opacity="0.12" filter="blur(40px)" />
+  <circle cx="80" cy="300" r="120" fill="#0B2545" fill-opacity="0.5" filter="blur(30px)" />
+
+  <!-- Geometric Abstract Financial Chart lines in background -->
+  <g opacity="0.15" stroke="#FBBF24" stroke-width="2" fill="none">
+    <path d="M 320 280 L 380 230 L 440 250 L 510 180 L 570 195 L 640 140" />
+    <path d="M 320 300 L 380 260 L 440 275 L 510 220 L 570 230 L 640 190" stroke-dasharray="4 4" />
+  </g>
+
+  <!-- Golden Brand Accent Strip at Left Edge -->
+  <rect x="0" y="0" width="6" height="360" fill="url(#goldGrad)" />
+
+  <!-- Top Bar: Brand Logo &amp; Level Tag -->
+  <g transform="translate(36, 36)">
+    <!-- Brand Logo: yt academy with stars -->
+    <text x="0" y="18" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="20" fill="#FFFFFF" letter-spacing="-0.5">
+      yt<tspan fill="#F59E0B"> academy</tspan>
+    </text>
+    <!-- Sparkles -->
+    <path d="M 16 0 L 17.5 4 L 21.5 5.5 L 17.5 7 L 16 11 L 14.5 7 L 10.5 5.5 L 14.5 4 Z" fill="#FBBF24" />
+    <path d="M 23 -3 L 24 -0.5 L 26.5 0.5 L 24 1.5 L 23 4 L 22 1.5 L 19.5 0.5 L 22 -0.5 Z" fill="#FDE68A" />
+
+    <!-- Qualification Tag -->
+    <rect x="360" y="-2" width="208" height="24" fill="#07172C" stroke="#F59E0B" stroke-width="1.2" />
+    <text x="464" y="14" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="10" fill="#F59E0B" text-anchor="middle" letter-spacing="1">
+      APPLIED KNOWLEDGE
+    </text>
+  </g>
+
+  <!-- Center Subject Badge -->
+  <g transform="translate(36, 115)">
+    <!-- Subject Code Frame -->
+    <rect x="0" y="0" width="180" height="38" fill="#0A192F" stroke="#F59E0B" stroke-width="1.5" />
+    <text x="90" y="25" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="18" fill="#FBBF24" text-anchor="middle" letter-spacing="1">
+      TỔNG ÔN F3
+    </text>
+
+    <!-- Main Title -->
+    <text x="0" y="80" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="28" fill="#FFFFFF" letter-spacing="-0.5">
+      FA CBE REVISION
+    </text>
+
+    <!-- Vietnamese Subtitle -->
+    <text x="0" y="112" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="500" font-size="14" fill="#CBD5E1">
+      Tổng ôn Trọng tâm &amp; Luyện đề Thi CBE
+    </text>
+  </g>
+
+  <!-- Bottom Details Bar -->
+  <g transform="translate(36, 310)">
+    <!-- Divider -->
+    <line x1="0" y1="0" x2="568" y2="0" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="1" />
+
+    <!-- Lecturer -->
+    <text x="0" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="12" fill="#F8FAFC">
+      Giảng viên: <tspan fill="#FBBF24">Mr. Trần Minh Nhật</tspan>
+    </text>
+
+    <!-- CBE Online Exam Notice -->
+    <text x="568" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="11" fill="#94A3B8" text-anchor="end" letter-spacing="0.5">
+      KHÓA HỌC CHUẨN ACCA CBE
+    </text>
+  </g>
+</svg>
