@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # YT Academy Project Rule
 
 - Project: YT Academy (ytacademy.com.vn)

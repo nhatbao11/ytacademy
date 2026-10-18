@@ -27,6 +27,14 @@ export const CourseDetailModal: React.FC<CourseDetailModalProps> = ({ course, on
   if (!course) return null
 
   const isInCart = items.some((item) => item.course.id === course.id)
+  const displayTitle = currentLang === 'en' && course.titleEn ? course.titleEn : course.title
+  const displayCategory = currentLang === 'en' && course.categoryNameEn ? course.categoryNameEn : course.categoryName
+  const displayDuration = currentLang === 'en' && course.durationHoursEn ? course.durationHoursEn : course.durationHours
+  const displayDescription = currentLang === 'en' && course.descriptionEn ? course.descriptionEn : course.description
+  const instructorTitle = currentLang === 'en' ? 'ACCA Lecturer' : course.instructor.title
+  const instructorExperience = currentLang === 'en'
+    ? 'Extensive experience training ACCA students with outstanding pass rates'
+    : course.instructor.experience
 
   const handleEnroll = () => {
     addToCart(course)
@@ -43,7 +51,7 @@ export const CourseDetailModal: React.FC<CourseDetailModalProps> = ({ course, on
         <div className="relative aspect-21/9 w-full bg-slate-900 overflow-hidden rounded-none">
           <img
             src={course.thumbnail}
-            alt={course.title}
+            alt={displayTitle}
             className="w-full h-full object-cover opacity-60 rounded-none"
           />
           <button
@@ -55,10 +63,10 @@ export const CourseDetailModal: React.FC<CourseDetailModalProps> = ({ course, on
           </button>
           <div className="absolute bottom-4 left-6 right-6">
             <span className="px-3 py-1 rounded-none bg-amber-400 text-slate-950 font-bold text-xs uppercase tracking-wider mb-2 inline-block">
-              {course.categoryName}
+              {displayCategory}
             </span>
             <h2 className="text-xl sm:text-2xl font-black text-white leading-tight drop-shadow-md">
-              {course.title}
+              {displayTitle}
             </h2>
           </div>
         </div>
@@ -70,29 +78,29 @@ export const CourseDetailModal: React.FC<CourseDetailModalProps> = ({ course, on
             <div className="flex items-center gap-1.5">
               <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
               <span className="font-bold text-slate-900">{course.rating.toFixed(1)}</span>
-              <span className="text-slate-400">({course.reviewCount} đánh giá)</span>
+              <span className="text-slate-400">({course.reviewCount} {t('courses.reviews')})</span>
             </div>
             <div className="flex items-center gap-1.5">
               <Users className="w-4 h-4 text-slate-400" />
-              <span>0 học viên</span>
+              <span>{course.studentCount} {t('courseDetail.studentsCount')}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <Clock className="w-4 h-4 text-slate-400" />
-              <span>{course.durationHours} giờ học trực tuyến</span>
+              <span>{t('courseDetailModal.hoursOnline', { hours: displayDuration })}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <BookOpen className="w-4 h-4 text-slate-400" />
-              <span>{course.lessonsCount} bài giảng chi tiết</span>
+              <span>{t('courseDetailModal.lessonsDetailed', { count: course.lessonsCount })}</span>
             </div>
           </div>
 
           {/* Description */}
           <div>
             <h4 className="text-sm font-bold uppercase tracking-wider text-slate-400 mb-2">
-              Giới thiệu khóa học
+              {t('courseDetail.courseIntro')}
             </h4>
             <p className="text-slate-700 leading-relaxed text-sm sm:text-base">
-              {course.description}
+              {displayDescription}
             </p>
           </div>
 
@@ -105,35 +113,35 @@ export const CourseDetailModal: React.FC<CourseDetailModalProps> = ({ course, on
             />
             <div>
               <div className="text-xs font-semibold text-amber-600 uppercase tracking-wider">
-                Giảng viên hướng dẫn
+                {t('courseDetailModal.instructorTitleLabel')}
               </div>
               <div className="text-base font-bold text-slate-900">{course.instructor.name}</div>
-              <div className="text-xs text-slate-500">{course.instructor.title}</div>
-              <div className="text-xs text-slate-400 mt-0.5">{course.instructor.experience}</div>
+              <div className="text-xs text-slate-500">{instructorTitle}</div>
+              <div className="text-xs text-slate-400 mt-0.5">{instructorExperience}</div>
             </div>
           </div>
 
           {/* Highlights / What You Will Learn */}
           <div className="space-y-3">
             <h4 className="text-sm font-bold uppercase tracking-wider text-slate-400">
-              Quyền lợi học viên tại YT Academy
+              {t('courseDetailModal.studentBenefits')}
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-slate-700">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                <span>Video bài giảng chất lượng Full HD không giới hạn thời gian xem</span>
+                <span>{t('courseDetailModal.benefit1')}</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                <span>Trọn bộ slide bài giảng, tóm tắt công thức & mindmap độc quyền</span>
+                <span>{t('courseDetailModal.benefit2')}</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                <span>Ngân hàng bài tập và đề thi thử Mock Exam có đáp án chi tiết</span>
+                <span>{t('courseDetailModal.benefit3')}</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                <span>Tham gia nhóm thảo luận chuyên môn cùng Giảng viên và Trợ giảng</span>
+                <span>{t('courseDetailModal.benefit4')}</span>
               </div>
             </div>
           </div>
@@ -147,7 +155,7 @@ export const CourseDetailModal: React.FC<CourseDetailModalProps> = ({ course, on
               <div className="text-2xl font-black text-[#0B2545] flex items-center gap-2">
                 <span>{formatCurrency(course.salePrice, currentLang)}</span>
                 <span className="text-xs font-bold px-2 py-0.5 rounded-none bg-red-100 text-red-700">
-                  Tiết kiệm {course.discountPercent}%
+                  {t('courseDetailModal.savePercent', { percent: course.discountPercent })}
                 </span>
               </div>
             </div>
@@ -159,14 +167,14 @@ export const CourseDetailModal: React.FC<CourseDetailModalProps> = ({ course, on
                 className="flex-1 sm:flex-initial px-6 py-3 rounded-none font-bold text-sm bg-amber-400 hover:bg-amber-500 text-slate-950 transition-all shadow-md active:scale-95 flex items-center justify-center gap-2"
               >
                 <ShoppingCart className="w-4 h-4" />
-                <span>{isInCart ? 'Mở giỏ hàng thanh toán' : t('courses.buyNow')}</span>
+                <span>{isInCart ? t('courseDetailModal.openCartToCheckout') : t('courses.buyNow')}</span>
               </button>
             </div>
           </div>
 
           <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
             <ShieldCheck className="w-4 h-4 text-emerald-500" />
-            <span>Thanh toán an toàn bảo mật qua Chuyển khoản QR / Thẻ / MoMo</span>
+            <span>{t('cart.guarantee')}</span>
           </div>
         </div>
       </div>

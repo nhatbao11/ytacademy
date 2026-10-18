@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PhoneCall, X, Sparkles, MessageCircle, ArrowRight } from 'lucide-react'
 
-const HOTLINE_DISPLAY = '0989.123.456'
-const HOTLINE_TEL = 'tel:0989123456'
-const ZALO_URL = 'https://zalo.me/0989123456'
+const HOTLINE_DISPLAY = '0822.082.407'
+const HOTLINE_TEL = 'tel:0822082407'
+const ZALO_URL = 'https://zalo.me/0822082407'
 
 export const FloatingContactWidget: React.FC = () => {
   const { t } = useTranslation()

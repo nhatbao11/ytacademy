@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { X, Lock, Mail, User, Phone, CheckCircle2, ShieldCheck, Loader2, RotateCw } from 'lucide-react'
+import { useAuthStore } from '../authStore'
 
 interface AuthModalProps {
   isOpen: boolean
@@ -17,6 +18,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   onClose,
 }) => {
   const { t } = useTranslation()
+  const { authHintMessage, login } = useAuthStore()
   const [mode, setMode] = useState<'login' | 'register'>(initialMode)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -42,13 +44,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
   useEffect(() => {
     if (isOpen) {
+      setMode(initialMode)
       generateNewCaptcha()
       setIsHumanVerified(false)
       setIsVerifyingHuman(false)
       setUserCaptchaInput('')
       setValidationError(null)
     }
-  }, [isOpen, mode])
+  }, [isOpen, initialMode])
 
   if (!isOpen) return null
 
@@ -82,12 +85,22 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     setValidationError(null)
     setIsSuccess(true)
 
+    // Cập nhật trạng thái đăng nhập vào authStore
+    const defaultStudentName = t('auth.defaultStudentName')
+    const resolvedName = fullName.trim() || (email ? email.split('@')[0] : defaultStudentName)
+    const resolvedEmail = email.trim() || 'hocvien@ytacademy.com.vn'
+
     setTimeout(() => {
+      login({
+        name: resolvedName,
+        email: resolvedEmail,
+        phone: phone.trim(),
+      })
       setIsSuccess(false)
       setIsHumanVerified(false)
       setUserCaptchaInput('')
       onClose()
-    }, 1500)
+    }, 1200)
   }
 
   const handleSwitchMode = (newMode: 'login' | 'register') => {
@@ -111,6 +124,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           <X className="w-5 h-5" />
         </button>
 
+        {/* Auth Hint Notice (Hiển thị khi người dùng cố gắng vào Khóa học của tôi hoặc Thêm giỏ hàng mà chưa đăng nhập) */}
+        {authHintMessage && (
+          <div className="mb-5 p-3 bg-amber-50 border-l-4 border-amber-500 flex items-start gap-2.5 text-xs text-amber-900 rounded-none shadow-2xs">
+            <Lock className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+            <span className="font-medium leading-relaxed">
+              {authHintMessage.startsWith('auth.') ? t(authHintMessage) : authHintMessage}
+            </span>
+          </div>
+        )}
+
         {/* Tab switchers */}
         <div className="flex border-b border-slate-200 mb-6 pb-2 gap-6">
           <button
@@ -120,7 +143,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               mode === 'login' ? 'text-slate-950' : 'text-slate-400 hover:text-slate-600'
             }`}
           >
-            {t('nav.login')}
+            {t('auth.loginTitle')}
             {mode === 'login' && (
               <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-none" />
             )}
@@ -132,7 +155,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               mode === 'register' ? 'text-slate-950' : 'text-slate-400 hover:text-slate-600'
             }`}
           >
-            {t('nav.register')}
+            {t('auth.registerTitle')}
             {mode === 'register' && (
               <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500 rounded-none" />
             )}
@@ -287,7 +310,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       <span>{t('auth.securityBadge')}</span>
                     </div>
                     <div className="text-[9px] text-slate-400">
-                      <span>Anti-Bot</span>
+                      <span>{t('auth.antiBot')}</span>
                     </div>
                   </div>
                 </div>

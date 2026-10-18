@@ -1,9 +1,10 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Star, ShoppingCart, Check } from 'lucide-react'
+import { Star, ShoppingCart, Check, BookOpen } from 'lucide-react'
 import type { ICourse } from '../../../types'
 import { formatCurrency } from '../../../utils/format'
 import { useCartStore } from '../../cart/cartStore'
+import { useAuthStore } from '../../auth/authStore'
 
 interface CourseCardProps {
   course: ICourse
@@ -11,13 +12,23 @@ interface CourseCardProps {
 }
 
 export const CourseCard: React.FC<CourseCardProps> = ({ course, onSelectCourse }) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const currentLang = i18n.language?.startsWith('en') ? 'en' : 'vi'
   const { addToCart, items } = useCartStore()
+  const { isLoggedIn, openAuthModal } = useAuthStore()
 
   const isInCart = items.some((item) => item.course.id === course.id)
+  const displayTitle = currentLang === 'en' && course.titleEn ? course.titleEn : course.title
+  const displayDuration = currentLang === 'en' && course.durationHoursEn ? course.durationHoursEn : course.durationHours
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation()
+    if (!isLoggedIn) {
+      openAuthModal('login', 'auth.loginToAddToCart', () => {
+        addToCart(course)
+      })
+      return
+    }
     addToCart(course)
   }
 
@@ -30,7 +41,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onSelectCourse }
       <div className="relative aspect-video w-full overflow-hidden bg-slate-900 rounded-none">
         <img
           src={course.thumbnail}
-          alt={course.title}
+          alt={displayTitle}
           loading="eager"
           decoding="async"
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 rounded-none"
@@ -41,10 +52,8 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onSelectCourse }
           </span>
         )}
         <span className="absolute top-2 right-2 px-2 py-0.5 bg-slate-950/80 text-amber-300 text-[10px] font-bold flex items-center gap-1 rounded-none shadow-sm border border-white/10">
-          <svg className="w-3 h-3 text-amber-400 shrink-0" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h10v2H4z" />
-          </svg>
-          <span>{course.lessonsCount} {t('courses.videos')}</span>
+          <BookOpen className="w-3 h-3 text-amber-400 shrink-0" />
+          <span>{displayDuration ? displayDuration : `${course.chapters?.length || course.lessonsCount} ${t('courses.lessonsUnit')}`}</span>
         </span>
       </div>
 
@@ -52,7 +61,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onSelectCourse }
       <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
         <div className="space-y-1.5">
           <h3 className="font-bold text-slate-900 text-sm line-clamp-2 group-hover:text-amber-600 transition-colors leading-snug">
-            {course.title}
+            {displayTitle}
           </h3>
 
           <div className="flex items-center gap-2">
@@ -66,15 +75,20 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onSelectCourse }
             </p>
           </div>
 
-          <div className="flex items-center gap-1.5 text-xs pt-0.5">
-            <div className="flex items-center text-amber-400">
-              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+          <div className="flex items-center justify-between text-xs pt-0.5">
+            <div className="flex items-center gap-1.5">
+              <div className="flex items-center text-amber-400">
+                <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+              </div>
+              <span className="font-bold text-slate-800">
+                {course.rating > 0 ? course.rating.toFixed(1) : '5.0'}
+              </span>
+              <span className="text-slate-500">
+                ({course.reviewCount || course.reviews?.length || 0} {t('courses.reviews')})
+              </span>
             </div>
-            <span className="font-bold text-slate-800">
-              {course.rating > 0 ? course.rating.toFixed(1) : '5.0'}
-            </span>
-            <span className="text-slate-500">
-              ({course.reviewCount || course.reviews?.length || 0} {t('courses.reviews')})
+            <span className="text-slate-500 text-[11px] font-medium">
+              {course.studentCount} {t('courseDetail.studentsCount')}
             </span>
           </div>
         </div>
@@ -84,11 +98,11 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onSelectCourse }
           <div>
             {course.originalPrice > course.salePrice && (
               <div className="text-[11px] text-slate-400 line-through">
-                {formatCurrency(course.originalPrice)}
+                {formatCurrency(course.originalPrice, currentLang)}
               </div>
             )}
             <div className="text-sm font-black text-[#0B2545]">
-              {formatCurrency(course.salePrice)}
+              {formatCurrency(course.salePrice, currentLang)}
             </div>
           </div>
 

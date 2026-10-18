@@ -10,6 +10,7 @@ import {
   Check,
 } from 'lucide-react'
 import { useCartStore } from '../cartStore'
+import { useAuthStore } from '../../auth/authStore'
 import { formatCurrency } from '../../../utils/format'
 
 export const CartDrawer: React.FC = () => {
@@ -27,6 +28,7 @@ export const CartDrawer: React.FC = () => {
     getSubtotal,
     getTotal,
   } = useCartStore()
+  const { isLoggedIn, openAuthModal, addEnrolledCourse } = useAuthStore()
 
   const [inputCode, setInputCode] = useState('')
   const [voucherNotice, setVoucherNotice] = useState<{ text: string; success: boolean } | null>(null)
@@ -42,6 +44,20 @@ export const CartDrawer: React.FC = () => {
   }
 
   const handleCheckout = () => {
+    if (!isLoggedIn) {
+      openAuthModal('login', 'auth.loginToCheckout', () => {
+        items.forEach((item) => addEnrolledCourse(item.course.id))
+        setIsCheckoutSuccess(true)
+        setTimeout(() => {
+          clearCart()
+          setIsCheckoutSuccess(false)
+          closeCart()
+        }, 2500)
+      })
+      return
+    }
+
+    items.forEach((item) => addEnrolledCourse(item.course.id))
     setIsCheckoutSuccess(true)
     setTimeout(() => {
       clearCart()

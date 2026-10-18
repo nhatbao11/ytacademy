@@ -19,14 +19,17 @@ export interface IInstructor {
 export interface ILessonDetail {
   id: string
   title: string
+  titleEn?: string
   duration: string
 }
 
 export interface IChapterDetail {
   id: string
   title: string
+  titleEn?: string
   lessonsCount: number
   totalDuration?: string
+  totalDurationEn?: string
   lessons: ILessonDetail[]
 }
 
@@ -38,15 +41,19 @@ export interface ICourseReview {
   rating: number
   date: string
   comment: string
+  commentEn?: string
 }
 
 export interface ICourse {
   id: string
   title: string
+  titleEn?: string
   slug: string
   category: CourseCategory
   categoryName: string
+  categoryNameEn?: string
   levelName: string // e.g. 'Applied Knowledge', 'Applied Skills', 'Strategic Professional'
+  levelNameEn?: string
   instructor: IInstructor
   rating: number
   reviewCount: number
@@ -59,10 +66,19 @@ export interface ICourse {
   isNew?: boolean
   lessonsCount: number
   durationHours: string
+  durationHoursEn?: string
+  format?: string
+  formatEn?: string
+  allDevicesSupport?: string
+  allDevicesSupportEn?: string
   description: string
+  descriptionEn?: string
   targetAudience: string
+  targetAudienceEn?: string
   whatYouWillLearn: string[]
+  whatYouWillLearnEn?: string[]
   fullDescription: string
+  fullDescriptionEn?: string
   chapters: IChapterDetail[]
   reviews?: ICourseReview[]
 }

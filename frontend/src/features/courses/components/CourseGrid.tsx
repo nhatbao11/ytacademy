@@ -117,7 +117,7 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
       {/* Mobile Swipe Helper: Hiển thị hướng dẫn kéo & số lượng khóa học hiện tại */}
       <div className="flex sm:hidden items-center justify-between pb-1 px-1 text-xs">
         <span className="text-[11px] font-bold text-amber-800 bg-amber-100/90 px-2.5 py-0.5 border border-amber-300 rounded-none">
-          ← Kéo ngang để xem môn học →
+          {t('courses.mobileSwipeHint')}
         </span>
         <span className="text-[11px] font-bold text-[#0B2545] bg-white px-2.5 py-0.5 border border-slate-300 rounded-none shadow-2xs">
           {currentIndex + 1} / {courses.length}
@@ -140,7 +140,7 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
                 ? 'opacity-30 cursor-not-allowed bg-slate-100 text-slate-400 border-slate-200 shadow-none'
                 : 'hover:bg-amber-400 hover:text-slate-950 hover:border-amber-500'
             }`}
-            aria-label="Xem khóa học trước"
+            aria-label={t('classroom.prevLesson')}
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -160,7 +160,7 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
                 ? 'opacity-30 cursor-not-allowed bg-slate-100 text-slate-400 border-slate-200 shadow-none'
                 : 'hover:bg-amber-400 hover:text-slate-950 hover:border-amber-500'
             }`}
-            aria-label="Xem khóa học kế tiếp"
+            aria-label={t('classroom.nextLesson')}
           >
             <ChevronRight className="w-5 h-5" />
           </button>

@@ -15,21 +15,20 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
 
   return (
     <div className="flex items-center gap-2 select-none group">
-      {/* Modern Picture element with SVG & WebP & PNG fallback for optimal resolution & performance */}
       <picture className="flex items-center">
-        {/* Vector SVG first (Infinite sharpness, zero compression artifact) */}
+        {/* Next-gen transparent WebP */}
+        <source
+          type="image/webp"
+          srcSet={isWhite ? '/logo-white.webp' : '/logo.webp'}
+        />
+        {/* Vector SVG */}
         <source
           type="image/svg+xml"
           srcSet={isWhite ? '/logo-white.svg' : '/logo.svg'}
         />
-        {/* Next-gen transparent WebP */}
-        <source
-          type="image/webp"
-          srcSet={isWhite ? '/logo-white.svg' : '/logo.webp'}
-        />
         {/* Standard PNG Fallback */}
         <img
-          src={isWhite ? '/logo-white.svg' : '/logo.png'}
+          src={isWhite ? '/logo-white.png' : '/logo.png'}
           alt="YT Academy - ytacademy.com.vn"
           className={`${className} w-auto object-contain transition-transform duration-300 group-hover:scale-102`}
           loading="eager"

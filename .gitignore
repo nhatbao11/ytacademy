@@ -33,3 +33,4 @@ frontend/.vercel/
 *.sln
 *.sw?
 .vercel
+.env*

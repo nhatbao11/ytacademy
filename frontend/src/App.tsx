@@ -11,11 +11,13 @@ import { AuthModal } from './features/auth/components/AuthModal'
 import { CoreValuesSection } from './components/layout/CoreValuesSection'
 import { Footer } from './components/layout/Footer'
 import { FloatingContactWidget } from './components/common/FloatingContactWidget'
+import { CountdownWidget } from './components/common/CountdownWidget'
 import { MyCoursesView } from './features/learning/components/MyCoursesView'
 import { ClassroomView } from './features/learning/components/ClassroomView'
 import { mockEnrolledCourses } from './features/learning/learningData'
 import { useCourses } from './features/courses/useCourses'
 import { useCartStore } from './features/cart/cartStore'
+import { useAuthStore } from './features/auth/authStore'
 import type { ICourse } from './types'
 import type { IEnrolledCourse } from './features/learning/types'
 
@@ -32,6 +34,14 @@ export function App() {
   } = useCourses()
 
   const { addToCart, openCart } = useCartStore()
+  const {
+    isLoggedIn,
+    enrolledCourseIds,
+    isAuthModalOpen,
+    authModalMode,
+    openAuthModal,
+    closeAuthModal,
+  } = useAuthStore()
 
   // App Navigation View: 'home' (Slide 1) | 'course-detail' (Slide 2 - chi tiết giới thiệu) | 'my-courses' | 'classroom'
   const [currentView, setCurrentView] = useState<'home' | 'course-detail' | 'my-courses' | 'classroom'>('home')
@@ -39,13 +49,6 @@ export function App() {
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
 
   const [isActivationOpen, setIsActivationOpen] = useState(false)
-  const [authModal, setAuthModal] = useState<{
-    isOpen: boolean
-    mode: 'login' | 'register'
-  }>({
-    isOpen: false,
-    mode: 'login',
-  })
 
   const handleSelectCourseToDetail = (course: ICourse) => {
     setSelectedCourse(course)
@@ -69,7 +72,7 @@ export function App() {
           window.scrollTo({ top: 0, behavior: 'smooth' })
         }}
         onOpenActivation={() => setIsActivationOpen(true)}
-        onOpenAuth={(mode) => setAuthModal({ isOpen: true, mode })}
+        onOpenAuth={(mode) => openAuthModal(mode)}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onSelectCategory={setSelectedCategory}
@@ -85,7 +88,7 @@ export function App() {
               onSearchChange={setSearchQuery}
               onSelectCategory={setSelectedCategory}
               onOpenActivation={() => setIsActivationOpen(true)}
-              onOpenAuth={(mode) => setAuthModal({ isOpen: true, mode })}
+              onOpenAuth={(mode) => openAuthModal(mode)}
               onRegisterNow={() => {
                 const el = document.getElementById('courses-section')
                 if (el) el.scrollIntoView({ behavior: 'smooth' })
@@ -105,6 +108,11 @@ export function App() {
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-28 bg-amber-400/15 blur-3xl pointer-events-none" />
 
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                {/* Daily Flash Sale Countdown Banner (-15%) */}
+                <div className="mb-6">
+                  <CountdownWidget variant="banner" />
+                </div>
+
                 {/* Course Header - Tinh gọn chuẩn BISC Online */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-3 border-b border-slate-300">
                   <div>
@@ -119,6 +127,13 @@ export function App() {
                   <button
                     type="button"
                     onClick={() => {
+                      if (!isLoggedIn) {
+                        openAuthModal('login', 'auth.loginToViewMyCourses', () => {
+                          setCurrentView('my-courses')
+                          window.scrollTo({ top: 0, behavior: 'smooth' })
+                        })
+                        return
+                      }
                       setCurrentView('my-courses')
                       window.scrollTo({ top: 0, behavior: 'smooth' })
                     }}
@@ -164,6 +179,7 @@ export function App() {
         {currentView === 'course-detail' && selectedCourse && (
           <CourseDetailPage
             course={selectedCourse}
+            isEnrolled={isLoggedIn && enrolledCourseIds.includes(selectedCourse.id)}
             onBackToHome={() => {
               setCurrentView('home')
               window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -175,6 +191,10 @@ export function App() {
             onEnrollNow={(c) => {
               addToCart(c)
               openCart()
+            }}
+            onGoToClassroom={() => {
+              const enrolled = mockEnrolledCourses.find((e) => e.course.id === selectedCourse.id) || mockEnrolledCourses[0]
+              handleEnterClassroom(enrolled)
             }}
           />
         )}
@@ -209,9 +229,9 @@ export function App() {
       />
 
       <AuthModal
-        isOpen={authModal.isOpen}
-        initialMode={authModal.mode}
-        onClose={() => setAuthModal({ isOpen: false, mode: 'login' })}
+        isOpen={isAuthModalOpen}
+        initialMode={authModalMode}
+        onClose={closeAuthModal}
       />
 
       {/* Floating Contact Widget (Zalo + Hotline với hiệu ứng rung lắc & bóng thoại tư vấn) */}
