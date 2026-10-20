@@ -8,13 +8,16 @@ import {
   ArrowUpRight,
   Plus,
   KeyRound,
+  FileCheck2,
 } from 'lucide-react'
-import type { IAdminCourse, IAdminStudent, IAdminReview } from '../types'
+import type { IAdminCourse, IAdminStudent, IAdminReview, IAdminOrder } from '../types'
+import { AdminRevenueCharts } from './AdminRevenueCharts'
 
 interface OverviewProps {
   courses: IAdminCourse[]
   students: IAdminStudent[]
   reviews: IAdminReview[]
+  orders?: IAdminOrder[]
   onOpenAddCourse: () => void
   onNavigateTab: (tab: any) => void
 }
@@ -23,6 +26,7 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
   courses,
   students,
   reviews,
+  orders = [],
   onOpenAddCourse,
   onNavigateTab,
 }) => {
@@ -154,6 +158,9 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
           </div>
         </div>
       </div>
+
+      {/* SƠ ĐỒ SO SÁNH DOANH THU & PHÂN TÍCH HIỆU SUẤT TRỰC QUAN */}
+      <AdminRevenueCharts />
 
       {/* LƯỚI NỘI DUNG 2 CỘT */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -289,6 +296,88 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
           </div>
         </div>
       </div>
+
+      {/* ĐƠN HÀNG HỌC PHÍ MỚI NHẤT */}
+      {orders.length > 0 && (
+        <div className="bg-white border border-slate-200 rounded-none p-5 shadow-xs">
+          <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
+            <div>
+              <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <FileCheck2 className="w-4 h-4 text-amber-500" />
+                <span>Giao Dịch Học Phí Gần Nhất</span>
+              </h2>
+              <p className="text-xs text-slate-500">
+                Các đơn đăng ký khóa học ACCA mới phát sinh trên hệ thống
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => onNavigateTab('orders')}
+              className="text-xs font-bold text-amber-700 hover:underline cursor-pointer"
+            >
+              Xem tất cả đơn hàng →
+            </button>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-slate-50 text-slate-600 font-bold uppercase text-[10px] border-b border-slate-200">
+                <tr>
+                  <th className="py-2.5 px-3">Mã đơn</th>
+                  <th className="py-2.5 px-3">Học viên</th>
+                  <th className="py-2.5 px-3">Khóa học đăng ký</th>
+                  <th className="py-2.5 px-3">Số tiền</th>
+                  <th className="py-2.5 px-3">Phương thức</th>
+                  <th className="py-2.5 px-3">Trạng thái</th>
+                  <th className="py-2.5 px-3 text-right">Thời gian</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {orders.slice(0, 4).map((order) => (
+                  <tr key={order.id} className="hover:bg-slate-50">
+                    <td className="py-2.5 px-3 font-mono font-bold text-slate-900">
+                      {order.orderCode}
+                    </td>
+                    <td className="py-2.5 px-3">
+                      <div className="font-bold text-slate-800">{order.studentName}</div>
+                      <div className="text-[11px] text-slate-400">{order.studentEmail}</div>
+                    </td>
+                    <td className="py-2.5 px-3 font-semibold text-slate-700">
+                      {order.courseName}
+                    </td>
+                    <td className="py-2.5 px-3 font-mono font-black text-[#0B2545]">
+                      {new Intl.NumberFormat('vi-VN').format(order.amount)} đ
+                    </td>
+                    <td className="py-2.5 px-3 text-slate-600">
+                      {order.paymentMethod}
+                    </td>
+                    <td className="py-2.5 px-3">
+                      <span
+                        className={`px-2 py-0.5 text-[10px] font-bold uppercase ${
+                          order.status === 'completed'
+                            ? 'bg-emerald-100 text-emerald-800'
+                            : order.status === 'pending'
+                            ? 'bg-amber-100 text-amber-800'
+                            : 'bg-rose-100 text-rose-800'
+                        }`}
+                      >
+                        {order.status === 'completed'
+                          ? 'Đã duyệt'
+                          : order.status === 'pending'
+                          ? 'Chờ duyệt'
+                          : 'Đã hủy'}
+                      </span>
+                    </td>
+                    <td className="py-2.5 px-3 text-right text-slate-500 font-mono text-[11px]">
+                      {order.createdAt}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

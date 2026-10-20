@@ -445,13 +445,14 @@ export const AdminPage: React.FC = () => {
           </div>
         </header>
 
-        {/* Dynamic Tab Body - 100% Full Width */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 w-full">
+        {/* Dynamic Tab Body - 100% Full Fluid Width */}
+        <main className="flex-1 p-3 sm:p-5 lg:p-6 w-full max-w-none">
           {activeTab === 'overview' && (
             <AdminOverviewTab
               courses={courses}
               students={students}
               reviews={reviews}
+              orders={orders}
               onOpenAddCourse={() => setIsAddCourseOpen(true)}
               onNavigateTab={(t) => setActiveTab(t)}
             />

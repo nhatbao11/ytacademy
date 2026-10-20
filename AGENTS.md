@@ -187,3 +187,14 @@ frontend/src/
    * Gồm các nút hành động: **Zalo** (màu xanh `#0068FF`) và **Hotline điện thoại** (màu đỏ `red-600`), 100% góc vuông (`rounded-none`).
    * Có hiệu ứng rung lắc chuông thu hút (`animate-ring-wiggle`) kèm sóng radar tỏa ra (`animate-radar-ripple`).
    * Đi kèm bóng thoại tư vấn (Speech Bubble) tự động chuyển động xoay vòng 4 thông điệp tư vấn lộ trình 1-1, giải đáp môn học, ưu đãi và tài liệu ôn thi.
+9. **Bảng Điều Khiển Quản Trị Hệ Thống Toàn Màn Hình (Admin Control Panel - `/admin`)**:
+   * Giao diện 100% góc vuông (`rounded-none`), tràn viền Fluid Width tối đa hóa không gian bảng số liệu, có nút thu gọn sidebar thành thanh biểu tượng compact.
+   * **Sơ đồ So sánh Doanh thu & Hiệu suất Tài chính (`AdminRevenueCharts.tsx`)**:
+     - So sánh Doanh thu Thực tế (Navy/Gold) vs Chỉ tiêu KPI (Slate) theo chu kỳ: **6 Tháng**, **Theo Quý (Q1-Q4)**, hoặc **4 Tuần qua**.
+     - Chuyển đổi linh hoạt giữa các chỉ số: **Doanh thu (VND)**, **Số học viên mới**, **Giá trị đơn trung bình (AOV)**.
+     - Chuyển đổi chế độ trực quan: **Cột so sánh (Bar Chart)** hoặc **Đường xu hướng vùng (Area Gradient Chart)** kèm hover tooltip chi tiết.
+     - **Cơ cấu Doanh thu Phân lớp**: Biểu đồ phân bổ tỷ trọng theo Cấp độ ACCA (Applied Knowledge, Applied Skills, Strategic Professional) và Hình thức đào tạo (Record, Hybrid, 1-to-1).
+     - **Phễu Chuyển Đổi Tuyển Sinh (Conversion Funnel)**: Đo lường 4 giai đoạn từ Lượt xem -> Đăng ký tư vấn -> Thi thử CBE Mock -> Nhập học đóng học phí.
+     - **Ma trận Chất lượng Đào tạo**: Tỷ lệ đỗ ACCA 94.2%, Tỷ lệ hoàn thành bài 86.8%, Số đề CBE đã chấm và CSAT 4.9/5.0.
+   * **Quản trị Toàn diện Nghiệp vụ**: Quản lý Khóa học ACCA, Phân quyền RBAC Học viên (student/admin/instructor/collaborator/assistant), Đơn hàng & Duyệt học phí, Đánh giá, Sinh mã kích hoạt môn học, Mã giảm giá Flash Sale, và Quản lý Đề thi CBE Mock Exam / Tài liệu học tập.
+
