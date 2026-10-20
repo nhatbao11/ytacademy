@@ -65,8 +65,8 @@
     "v3Desc": "Theo dõi tiến độ & giải đáp thắc mắc chuyên môn 24/7.",
     "v4Title": "TƯ DUY & PHƯƠNG PHÁP",
     "v4Desc": "Hiểu bản chất, rèn tư duy phân tích và ứng dụng thực tế.",
-    "advisoryTitle": "Mô hình Đào tạo Thực chiến cùng Giảng viên Mr. Trần Minh Nhật",
-    "advisoryDesc": "Lớp 1-to-1, Nhóm nhỏ & Video Record chuyên sâu sát định dạng đề thi CBE thật.",
+    "advisoryTitle": "Mô hình Đào tạo Thực chiến tại Trung tâm YT Academy",
+    "advisoryDesc": "Lớp 1-to-1, Nhóm nhỏ & Video Record chuyên sâu sát định dạng đề thi CBE thật tại YT Academy.",
     "consultBtn": "Tư vấn lộ trình"
   },
   "courseDetail": {
@@ -124,7 +124,7 @@
     "ratingStarTitle": "{{star}} sao",
     "namePlaceholder": "Họ và tên của bạn (Ví dụ: Nguyễn Văn A)",
     "upcomingCoursesNotice": "Các môn học tiếp theo thuộc lộ trình ACCA (Applied Skills & Strategic Professional) đang được cập nhật.",
-    "contactAdvisoryNotice": "Học viên vui lòng liên hệ Hotline / Zalo tư vấn để nhận thông tin lịch khai giảng và lộ trình học 1-1 cùng Giảng viên Mr. Trần Minh Nhật.",
+    "contactAdvisoryNotice": "Học viên vui lòng liên hệ Hotline / Zalo tư vấn để nhận thông tin lịch khai giảng và lộ trình học 1-1 cùng YT Academy.",
     "enterClassroomNow": "Vào phòng học ngay",
     "previewTrialChap1": "Học thử miễn phí Chương 1",
     "specDuration": "Thời lượng",
@@ -132,7 +132,7 @@
     "specChapters": "{{count}} chương",
     "specLessons": "{{count}} bài học",
     "specFormat": "Hình thức",
-    "specDevices": "Học trên thiết bị",
+    "specDevices": "Học trên mọi thiết bị",
     "modalPreviewBadge": "Học thử miễn phí",
     "modalPreviewClose": "Đóng",
     "modalPreviewVideoAlt": "Bài giảng ACCA YT Academy",
@@ -140,9 +140,9 @@
     "modalPreviewInstructorPrefix": "Giảng viên",
     "modalPreviewOtherLessons": "Các bài học khác trong Chương 1 (Học thử miễn phí):",
     "modalPreviewUpgradePrompt": "Bạn đang học thử bài giảng Chương 1. Muốn mở khóa trọn bộ {{count}} chương?",
-    "modalPreviewUpgradeDesc": "Đăng ký để học trực tiếp Online 1:1 cùng Thầy Trần Minh Nhật, giải đáp 24/7 và nhận bộ đề thi CBE!",
-    "lockedDesc1": "Toàn bộ bài giảng và tài liệu học tập thuộc hệ thống đào tạo chuyên sâu của môn {{title}}. Vui lòng đăng ký khóa học để được mở khóa nội dung và đồng hành 1:1 cùng Giảng viên Mr. Trần Minh Nhật.",
-    "lockedDesc2": "Vui lòng đăng ký khóa học để được mở khóa toàn bộ {{count}} chương bài giảng, nhận tài liệu học tập chuẩn IFRS và tham gia lớp học Online meeting 1:1 cùng Giảng viên Mr. Trần Minh Nhật!",
+    "modalPreviewUpgradeDesc": "Đăng ký để học trực tiếp Online 1:1 cùng YT Academy, giải đáp 24/7 và nhận bộ đề thi CBE!",
+    "lockedDesc1": "Toàn bộ bài giảng và tài liệu học tập thuộc hệ thống đào tạo chuyên sâu của môn {{title}}. Vui lòng đăng ký khóa học để được mở khóa nội dung và đồng hành 1:1 cùng YT Academy.",
+    "lockedDesc2": "Vui lòng đăng ký khóa học để được mở khóa toàn bộ {{count}} chương bài giảng, nhận tài liệu học tập chuẩn IFRS và tham gia lớp học Online meeting 1:1 cùng YT Academy!",
     "lockedTuitionDiscount": "Học phí ưu đãi (-{{percent}}%)",
     "lockedPreviewFirst": "Học thử miễn phí Chương 1 trước",
     "lockedCloseOrLater": "Để sau / Đóng",
@@ -176,7 +176,7 @@
     "enterClass": "Vào phòng học",
     "viewDetail": "Xem chi tiết",
     "emptyCategoryCoursesTitle": "Bạn chưa đăng ký khóa học nào trong mục này",
-    "emptyCategoryCoursesDesc": "Hãy lựa chọn các môn học ACCA thực chiến cùng Mr. Trần Minh Nhật để nâng cao kỹ năng và đạt chứng chỉ quốc tế!"
+    "emptyCategoryCoursesDesc": "Hãy lựa chọn các môn học ACCA thực chiến tại YT Academy để nâng cao kỹ năng và đạt chứng chỉ quốc tế!"
   },
   "classroom": {
     "back": "Quay lại Khóa học của tôi",
@@ -292,7 +292,7 @@
   "floatingWidget": {
     "tagRoute": "Tư vấn 1-1",
     "titleRoute": "Tư vấn Lộ trình ACCA 1-1",
-    "descRoute": "Nhắn Zalo để được Mr. Trần Minh Nhật định hướng lộ trình học phù hợp nhất.",
+    "descRoute": "Nhắn Zalo để được YT Academy định hướng lộ trình học phù hợp nhất.",
     "ctaRoute": "Nhắn Zalo",
     "tagSupport": "Hỗ trợ 24/7",
     "titleSupport": "Hỗ trợ Môn học & Học phí",
@@ -319,10 +319,11 @@
     "miniRemaining": "Ưu đãi còn:"
   },
   "footer": {
-    "about": "YT Academy – Learn Today - Grow Tomorrow! Chuyên sâu đào tạo chứng chỉ Kế toán Công chứng Anh quốc ACCA theo hình thức 1-to-1, nhóm nhỏ và video record cùng Giảng viên Mr. Trần Minh Nhật.",
+    "about": "YT ACADEMY – Learn Today - Grow Tomorrow!",
     "hotline": "Hotline: 0822.082.407",
-    "email": "Email: contact@ytacademy.com.vn",
-    "address": "Bình Tân, Thành phố Hồ Chí Minh",
+    "email": "Email: ytacademy.edu@gmail.com",
+    "address": "75 Hậu Giang, Phường Bình Tây, TP. Hồ Chí Minh, Việt Nam",
+    "followUs": "Kênh truyền thông & Mạng xã hội",
     "copyright": "© 2026 YT Academy. All rights reserved.",
     "programsTitle": "Chương trình đào tạo",
     "policiesTitle": "Chính sách & Quy định",

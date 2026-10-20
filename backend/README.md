@@ -1,6 +1,6 @@
 # YT Academy - Backend Service (API)
 
-Đây là thư mục dành cho Backend của hệ thống **YT Academy** (`ytacademy.com.vn`), được phân tách độc lập với `frontend/`.
+Đây là thư mục dành cho Backend của hệ thống **YT Academy** (`ytacademy.vn`), được phân tách độc lập với `frontend/`.
 
 ## Dự kiến Kiến trúc Backend:
 * **Framework**: Node.js (NestJS / Express + TypeScript) hoặc Python (FastAPI) / Go.

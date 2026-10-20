@@ -29,7 +29,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
         {/* Standard PNG Fallback */}
         <img
           src={isWhite ? '/logo-white.png' : '/logo.png'}
-          alt="YT Academy - ytacademy.com.vn"
+          alt="YT Academy - ytacademy.vn"
           className={`${className} w-auto object-contain transition-transform duration-300 group-hover:scale-102`}
           loading="eager"
           decoding="async"
@@ -44,7 +44,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
               : 'bg-amber-50 text-amber-800 border-amber-200'
           }`}
         >
-          ytacademy.com.vn
+          ytacademy.vn
         </span>
       )}
     </div>

@@ -122,10 +122,13 @@ export const ActivationModal: React.FC<ActivationModalProps> = ({ isOpen, onClos
             </button>
 
             <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-              <span className="flex items-center gap-1">
+              <a
+                href="tel:0822082407"
+                className="flex items-center gap-1 hover:text-amber-600 transition-colors cursor-pointer"
+              >
                 <Phone className="w-3.5 h-3.5 text-amber-500" />
                 <span>{t('activation.supportHotline')}</span>
-              </span>
+              </a>
               <span className="text-slate-400">{t('activation.instant247')}</span>
             </div>
           </form>

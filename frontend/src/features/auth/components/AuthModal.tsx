@@ -88,7 +88,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     // Cập nhật trạng thái đăng nhập vào authStore
     const defaultStudentName = t('auth.defaultStudentName')
     const resolvedName = fullName.trim() || (email ? email.split('@')[0] : defaultStudentName)
-    const resolvedEmail = email.trim() || 'hocvien@ytacademy.com.vn'
+    const resolvedEmail = email.trim() || 'hocvien@ytacademy.vn'
 
     setTimeout(() => {
       login({

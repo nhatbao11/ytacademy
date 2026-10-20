@@ -4,7 +4,7 @@ trigger: always_on
 
 # YT Academy Project Rule
 
-- Project: YT Academy (ytacademy.com.vn)
+- Project: YT Academy (ytacademy.vn)
 - Stack: React + TypeScript + Vite + Tailwind CSS
 - Multi-language: Bilingual (Vietnamese 'vi' and English 'en') using i18n
 - Decoupled BE/FE: frontend/ and backend/

@@ -6,7 +6,7 @@ export const defaultInstructor: IInstructor = {
   title: 'Giảng viên ACCA',
   avatar: '/instructor-tran-minh-nhat.webp',
   experience: 'Có nhiều năm kinh nghiệm đào tạo học viên ACCA đạt tỷ lệ đỗ cao',
-  coursesCount: 3,
+  coursesCount: 5,
   studentsCount: 14,
 }
 
@@ -15,13 +15,13 @@ export const mockCategories: ICategoryItem[] = [
     id: 'all',
     name: 'Tất cả môn ACCA',
     description: 'Chương trình đào tạo chứng chỉ Kế toán Công chứng Anh quốc ACCA Quốc tế',
-    courseCount: 3,
+    courseCount: 5,
   },
   {
     id: 'applied-knowledge',
     name: 'Applied Knowledge (BT, MA, FA)',
     description: 'Cấp độ Kiến thức Ứng dụng - Nền tảng cho người mới bắt đầu',
-    courseCount: 1,
+    courseCount: 3,
   },
   {
     id: 'applied-skills',
@@ -39,13 +39,13 @@ export const mockCategories: ICategoryItem[] = [
     id: 'acca-online',
     name: 'ACCA Online',
     description: 'Lớp học trực tuyến linh hoạt, tương tác chuyên sâu 1-1 cùng giảng viên',
-    courseCount: 3,
+    courseCount: 5,
   },
   {
     id: 'acca-offline',
     name: 'ACCA Offline & Blended',
     description: 'Lớp học kết hợp trực tiếp và giải đáp trực tuyến',
-    courseCount: 3,
+    courseCount: 5,
   },
 ]
 
@@ -74,6 +74,26 @@ export const mockCourseReviewsMap: Record<string, ICourseReview[]> = {
       rating: 5,
       date: '18/01/2026',
       comment: 'Học Online meeting 1:1 cùng thầy Nhật rất chất lượng, bài giảng súc tích. Thắc mắc được thầy giải đáp cặn kẽ từng bản chất IFRS. Đã pass F3 chỉ sau 1,5 tháng ôn thi!',
+    },
+  ],
+  'c-fa-records': [
+    {
+      id: 'rev-far-1',
+      userName: 'Trần Thu Trang',
+      userRole: 'Chuyên viên Kế toán Doanh nghiệp',
+      rating: 5,
+      date: '18/01/2026',
+      comment: 'Học video record bài bản, bài giảng súc tích. Thắc mắc được hỗ trợ giải đáp cặn kẽ từng bản chất IFRS. Đã pass F3 chỉ sau 1,5 tháng ôn thi!',
+    },
+  ],
+  'c-fa-hybrid': [
+    {
+      id: 'rev-fah-1',
+      userName: 'Nguyễn Thùy Linh',
+      userRole: 'Pass CBE 88/100 • Học viện Ngân hàng',
+      rating: 5,
+      date: '15/02/2026',
+      comment: 'Mô hình Hybrid 19 buổi cực kỳ linh hoạt: vừa xem video record chủ động vừa có 7 buổi Online 1:1 giải đáp với giảng viên. Rất hiệu quả!',
     },
   ],
   'c-fr': [
@@ -122,7 +142,6 @@ export const mockCourseReviewsMap: Record<string, ICourseReview[]> = {
   ],
 }
 
-// -------------------------------------------------------------
 // 1. 26 CHƯƠNG HỌC MÔN ACCA F3 - FINANCIAL ACCOUNTING
 // -------------------------------------------------------------
 export const fa26Chapters: IChapterDetail[] = [
@@ -862,11 +881,109 @@ export const aa15Chapters: IChapterDetail[] = [
   },
 ]
 
-// -------------------------------------------------------------
-// DANH SÁCH KHÓA HỌC CHÍNH THỨC CỦA YT ACADEMY
-// -------------------------------------------------------------
+
 export const mockCourses: ICourse[] = [
-  // 1. ACCA F3 – Financial Accounting (FA / F3)
+  // 1. ACCA F3 – Financial Accounting (FA / F3) - Records (Khóa mới)
+  {
+    id: 'c-fa-records',
+    title: 'ACCA F3 – Financial Accounting (FA / F3) - Records',
+    titleEn: 'ACCA F3 – Financial Accounting (FA / F3) - Records',
+    slug: 'acca-f3-financial-accounting-records',
+    category: 'applied-knowledge',
+    categoryName: 'Applied Knowledge',
+    categoryNameEn: 'Applied Knowledge',
+    levelName: 'Kiến thức Ứng dụng',
+    levelNameEn: 'Applied Knowledge',
+    instructor: defaultInstructor,
+    rating: 5.0,
+    reviewCount: 1,
+    studentCount: 5,
+    originalPrice: 3600000,
+    salePrice: 2160000,
+    discountPercent: 40,
+    thumbnail: '/courses/course-fa.svg?v=yt-rec',
+    isHot: true,
+    lessonsCount: 26,
+    durationHours: '30 buổi',
+    durationHoursEn: '30 sessions',
+    format: 'Records',
+    formatEn: 'Records',
+    allDevicesSupport: 'Laptop; Ipad; ...',
+    allDevicesSupportEn: 'Laptop; iPad; ...',
+    description: 'Nền tảng Kế toán tài chính quốc tế IFRS, nguyên lý hạch toán kép, lập Báo cáo tài chính và luyện thi CBE qua video record bài bản.',
+    descriptionEn: 'Comprehensive foundation in International Financial Accounting (IFRS), double-entry bookkeeping, financial statements, and CBE exam preparation.',
+    targetAudience: 'Sinh viên, người mới bắt đầu học ACCA muốn chủ động thời gian học qua video records và tự tin thi đậu CBE format.',
+    targetAudienceEn: 'Students and beginners pursuing ACCA who aim for a flexible recorded curriculum to pass CBE with confidence.',
+    whatYouWillLearn: [
+      'Nắm vững nguyên lý hạch toán kép và quy trình ghi nhận, xử lý các nghiệp vụ kế toán tài chính.',
+      'Hiểu và vận dụng các chuẩn mực kế toán quốc tế (IFRS), tập trung vào hàng tồn kho (IAS 2), tài sản cố định hữu hình (IAS 16) và ghi nhận doanh thu (IFRS 15).',
+      'Thành thạo lập báo cáo tài chính, từ Bảng cân đối thử (Trial Balance).',
+      'Nắm được nguyên tắc lập báo cáo tài chính hợp nhất và phương pháp xử lý các nghiệp vụ kế toán trọng tâm.',
+      'Luyện tập đề thi ACCA F3 trên máy tính (CBE) với hệ thống câu hỏi thực hành và lời giải chi tiết.',
+    ],
+    whatYouWillLearnEn: [
+      'Master double-entry bookkeeping and accounting record-keeping principles.',
+      'Understand and apply core IFRS standards including inventories (IAS 2), tangible non-current assets (IAS 16), and revenue (IFRS 15).',
+      'Proficiently prepare financial statements from a Trial Balance.',
+      'Understand fundamental principles of consolidated financial statements and key accounting adjustments.',
+      'Practice on-computer ACCA F3 CBE examinations with practice questions and detailed explanations.',
+    ],
+    fullDescription: 'ACCA Financial Accounting (F3 / FA) là môn học nền tảng giúp học viên xây dựng tư duy kế toán tài chính theo định hướng chuẩn mực quốc tế. Khóa học bao quát quy trình kế toán từ ghi nhận nghiệp vụ, điều chỉnh số liệu đến lập và điểm giải báo cáo tài chính.\n\nTại YT Academy, bài giảng được thiết kế theo từng chương, kết hợp giải thích bản chất – thực hành bài tập – luyện đề thi CBE, giúp học viên vững cả kiến thức, làm quen với dạng câu hỏi ACCA và chuẩn bị tốt cho kỳ thi.\n\nHoàn thành môn học là bước đệm quan trọng để học viên tiếp tục chinh phục các môn ACCA tiếp theo, đồng thời xây dựng nền tảng chuyên môn cho định hướng nghề nghiệp trong lĩnh vực kế toán, kiểm toán và tài chính.\n\nThông điệp khóa học: Hiểu nguyên lý - Vững nền tảng - Thành thạo kế toán.',
+    fullDescriptionEn: 'ACCA Financial Accounting (F3 / FA) is the foundational module designed to build an international financial accounting mindset. The curriculum covers the entire accounting cycle from transaction recording to financial statement preparation and interpretation.\n\nAt YT Academy, lectures are structured chapter by chapter, integrating core principles, practical exercises, and CBE mock exams, helping students master concepts, familiarize themselves with ACCA question formats, and prepare effectively for examinations.\n\nCompleting this module provides a crucial springboard for subsequent ACCA papers and long-term career advancement in accounting, audit, and finance.\n\nCourse Motto: Understand Principles - Strengthen Foundations - Master Accounting.',
+    reviews: mockCourseReviewsMap['c-fa-records'] || mockCourseReviewsMap['c-fa'] || [],
+    chapters: fa26Chapters,
+  },
+  // 2. ACCA F3 – Financial Accounting (FA / F3) - Hybrid (Khóa mới)
+  {
+    id: 'c-fa-hybrid',
+    title: 'ACCA F3 – Financial Accounting (FA / F3) - Hybrid',
+    titleEn: 'ACCA F3 – Financial Accounting (FA / F3) - Hybrid',
+    slug: 'acca-f3-financial-accounting-hybrid',
+    category: 'applied-knowledge',
+    categoryName: 'Applied Knowledge',
+    categoryNameEn: 'Applied Knowledge',
+    levelName: 'Kiến thức Ứng dụng',
+    levelNameEn: 'Applied Knowledge',
+    instructor: defaultInstructor,
+    rating: 5.0,
+    reviewCount: 1,
+    studentCount: 6,
+    originalPrice: 3800000,
+    salePrice: 2850000,
+    discountPercent: 25,
+    thumbnail: '/courses/course-fa-hybrid.webp',
+    isHot: true,
+    lessonsCount: 26,
+    durationHours: '19 buổi (7 Online 1:1 & 12 Records)',
+    durationHoursEn: '19 sessions (7 Online 1:1 & 12 Records)',
+    format: 'Hybrid',
+    formatEn: 'Hybrid',
+    allDevicesSupport: 'Laptop; Ipad; ...',
+    allDevicesSupportEn: 'Laptop; iPad; ...',
+    description: 'Linh hoạt hơn – Tương tác trực tiếp – Hiệu quả vượt trội. Kết hợp học Online 1:1 cùng giảng viên và video bài giảng được thiết kế bài bản.',
+    descriptionEn: 'More flexible – Direct interaction – Superior effectiveness. Combining 1:1 online sessions with structured recorded masterclasses.',
+    targetAudience: 'Sinh viên, người mới bắt đầu học ACCA muốn hiểu sâu bản chất kế toán quốc tế, tương tác 1:1 cùng giảng viên và tự tin thi đậu CBE format.',
+    targetAudienceEn: 'Students and beginners pursuing ACCA who aim for 1:1 mentorship and video library to pass CBE with confidence.',
+    whatYouWillLearn: [
+      'Nắm vững nguyên lý hạch toán kép và quy trình ghi nhận, xử lý các nghiệp vụ kế toán tài chính.',
+      'Hiểu và vận dụng các chuẩn mực kế toán quốc tế (IFRS), tập trung vào hàng tồn kho (IAS 2), tài sản cố định hữu hình (IAS 16) và ghi nhận doanh thu (IFRS 15).',
+      'Thành thạo lập báo cáo tài chính, từ Bảng cân đối thử (Trial Balance).',
+      'Nắm được nguyên tắc lập báo cáo tài chính hợp nhất và phương pháp xử lý các nghiệp vụ kế toán trọng tâm.',
+      'Luyện tập đề thi ACCA F3 trên máy tính (CBE) với hệ thống câu hỏi thực hành và lời giải chi tiết.',
+    ],
+    whatYouWillLearnEn: [
+      'Master double-entry bookkeeping and accounting record-keeping principles.',
+      'Understand and apply core IFRS standards including inventories (IAS 2), tangible non-current assets (IAS 16), and revenue (IFRS 15).',
+      'Proficiently prepare financial statements from a Trial Balance.',
+      'Understand fundamental principles of consolidated financial statements and key accounting adjustments.',
+      'Practice on-computer ACCA F3 CBE examinations with practice questions and detailed explanations.',
+    ],
+    fullDescription: 'ACCA Financial Accounting (F3 / FA) là môn học nền tảng giúp học viên xây dựng tư duy kế toán tài chính theo định hướng chuẩn mực quốc tế. Khóa học bao quát quy trình kế toán từ ghi nhận nghiệp vụ, điều chỉnh số liệu đến lập và điểm giải báo cáo tài chính.\n\nTại YT Academy, bài giảng được thiết kế theo từng chương, kết hợp giải thích bản chất – thực hành bài tập – luyện đề thi CBE, giúp học viên vững cả kiến thức, làm quen với dạng câu hỏi ACCA và chuẩn bị tốt cho kỳ thi.\n\nHoàn thành môn học là bước đệm quan trọng để học viên tiếp tục chinh phục các môn ACCA tiếp theo, đồng thời xây dựng nền tảng chuyên môn cho định hướng nghề nghiệp trong lĩnh vực kế toán, kiểm toán và tài chính.\n\nThông điệp khóa học: Hiểu nguyên lý - Vững nền tảng - Thành thạo kế toán.',
+    fullDescriptionEn: 'ACCA Financial Accounting (F3 / FA) is the foundational module designed to build an international financial accounting mindset. The curriculum covers the entire accounting cycle from transaction recording to financial statement preparation and interpretation.\n\nAt YT Academy, lectures are structured chapter by chapter, integrating core principles, practical exercises, and CBE mock exams, helping students master concepts, familiarize themselves with ACCA question formats, and prepare effectively for examinations.\n\nCompleting this module provides a crucial springboard for subsequent ACCA papers and long-term career advancement in accounting, audit, and finance.\n\nCourse Motto: Understand Principles - Strengthen Foundations - Master Accounting.',
+    reviews: mockCourseReviewsMap['c-fa-hybrid'] || mockCourseReviewsMap['c-fa'] || [],
+    chapters: fa26Chapters,
+  },
+  // 3. ACCA F3 – Financial Accounting (FA / F3) - Lớp Online Meeting 1:1
   {
     id: 'c-fa',
     title: 'ACCA F3 – Financial Accounting (FA / F3)',
@@ -901,7 +1018,7 @@ export const mockCourses: ICourse[] = [
       'Hiểu và vận dụng các chuẩn mực kế toán quốc tế (IFRS), tập trung vào hàng tồn kho (IAS 2), tài sản cố định hữu hình (IAS 16) và ghi nhận doanh thu (IFRS 15).',
       'Thành thạo lập báo cáo tài chính, từ Bảng cân đối thử (Trial Balance).',
       'Nắm được nguyên tắc lập báo cáo tài chính hợp nhất và phương pháp xử lý các nghiệp vụ kế toán trọng tâm.',
-      'Luyện tập bộ đề thi ACCA F3 trên máy tính (CBE) với hệ thống câu hỏi thực hành và lời giải chi tiết.',
+      'Luyện tập đề thi ACCA F3 trên máy tính (CBE) với hệ thống câu hỏi thực hành và lời giải chi tiết.',
     ],
     whatYouWillLearnEn: [
       'Master double-entry bookkeeping and accounting record-keeping principles.',
@@ -910,13 +1027,12 @@ export const mockCourses: ICourse[] = [
       'Understand fundamental principles of consolidated financial statements and key accounting adjustments.',
       'Practice on-computer ACCA F3 CBE examinations with practice questions and detailed explanations.',
     ],
-    fullDescription: 'ACCA Financial Accounting (F3/FA) là môn học nền tảng giúp học viên xây dựng tư duy kế toán tài chính theo định hướng chuẩn mực quốc tế. Khóa học bao quát quy trình kế toán từ ghi nhận nghiệp vụ, điều chỉnh số liệu đến lập và diễn giải báo cáo tài chính.\n\nTại YT Academy, bài giảng được thiết kế theo từng chương, kết hợp giải thích bản chất – thực hành bài tập – luyện đề thi CBE, giúp học viên củng cố kiến thức, làm quen với dạng câu hỏi ACCA và chuẩn bị tốt cho kỳ thi.\n\nHoàn thành môn học là bước đệm quan trọng để học viên tiếp tục chinh phục các môn ACCA tiếp theo, đồng thời xây dựng nền tảng chuyên môn cho định hướng nghề nghiệp trong lĩnh vực kế toán, kiểm toán và tài chính.\n\nThông điệp khóa học: Hiểu nguyên lý – Vững nền tảng – Thành thạo toàn diện.',
-    fullDescriptionEn: 'ACCA Financial Accounting (F3/FA) is the foundational module designed to build international financial accounting mindset. The curriculum covers the entire accounting cycle from transaction recording to financial statement preparation and interpretation.\n\nAt YT Academy, lectures are structured chapter by chapter, integrating core principles, practical exercises, and CBE mock exams.\n\nCompleting this module provides a crucial springboard for subsequent ACCA papers and long-term career advancement in accounting, audit, and finance.\n\nCourse Motto: Understand Principles – Strengthen Foundations – Master Fundamentals.',
+    fullDescription: 'ACCA Financial Accounting (F3 / FA) là môn học nền tảng giúp học viên xây dựng tư duy kế toán tài chính theo định hướng chuẩn mực quốc tế. Khóa học bao quát quy trình kế toán từ ghi nhận nghiệp vụ, điều chỉnh số liệu đến lập và điểm giải báo cáo tài chính.\n\nTại YT Academy, bài giảng được thiết kế theo từng chương, kết hợp giải thích bản chất – thực hành bài tập – luyện đề thi CBE, giúp học viên vững cả kiến thức, làm quen với dạng câu hỏi ACCA và chuẩn bị tốt cho kỳ thi.\n\nHoàn thành môn học là bước đệm quan trọng để học viên tiếp tục chinh phục các môn ACCA tiếp theo, đồng thời xây dựng nền tảng chuyên môn cho định hướng nghề nghiệp trong lĩnh vực kế toán, kiểm toán và tài chính.\n\nThông điệp khóa học: Hiểu nguyên lý - Vững nền tảng - Thành thạo kế toán.',
+    fullDescriptionEn: 'ACCA Financial Accounting (F3 / FA) is the foundational module designed to build an international financial accounting mindset. The curriculum covers the entire accounting cycle from transaction recording to financial statement preparation and interpretation.\n\nAt YT Academy, lectures are structured chapter by chapter, integrating core principles, practical exercises, and CBE mock exams, helping students master concepts, familiarize themselves with ACCA question formats, and prepare effectively for examinations.\n\nCompleting this module provides a crucial springboard for subsequent ACCA papers and long-term career advancement in accounting, audit, and finance.\n\nCourse Motto: Understand Principles - Strengthen Foundations - Master Accounting.',
     reviews: mockCourseReviewsMap['c-fa'] || [],
     chapters: fa26Chapters,
   },
-
-  // 2. ACCA F7 – Financial Reporting (FR / F7)
+  // 4. ACCA F7 – Financial Reporting (FR / F7)
   {
     id: 'c-fr',
     title: 'ACCA F7 – Financial Reporting (FR / F7)',
@@ -965,8 +1081,7 @@ export const mockCourses: ICourse[] = [
     reviews: mockCourseReviewsMap['c-fr'] || [],
     chapters: fr26Chapters,
   },
-
-  // 3. ACCA F8 – Audit and Assurance (AA / F8)
+  // 5. ACCA F8 – Audit and Assurance (AA / F8)
   {
     id: 'c-aa',
     title: 'ACCA F8 – Audit and Assurance (AA / F8)',

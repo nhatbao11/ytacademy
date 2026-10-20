@@ -1,4 +1,4 @@
-# HƯỚNG DẪN DỰ ÁN & QUY TẮC PHÁT TRIỂN: YT ACADEMY (ytacademy.com.vn)
+# HƯỚNG DẪN DỰ ÁN & QUY TẮC PHÁT TRIỂN: YT ACADEMY (ytacademy.vn)
 
 > **LƯU Ý QUAN TRỌNG CHO TẤT CẢ AGENT / DEVELOPER**:
 > Tệp này ghi nhận toàn bộ quyết định kiến trúc, tiêu chuẩn kỹ thuật, thiết kế thương hiệu và quy tắc phát triển của dự án **YT Academy**.
@@ -9,7 +9,7 @@
 ## 1. TỔNG QUAN DỰ ÁN & THƯƠNG HIỆU
 
 * **Tên thương hiệu**: YT Academy
-* **Tên miền**: `ytacademy.com.vn`
+* **Tên miền**: `ytacademy.vn`
 * **Lĩnh vực**: Nền tảng EdTech chuyên sâu **Đào tạo Chứng chỉ Kế toán Công chứng Anh quốc ACCA Quốc tế** (100% tập trung vào ACCA).
 * **Giảng viên chuyên môn**: **Mr. Trần Minh Nhật** (Ảnh đại diện tại `public/instructor-tran-minh-nhat.webp`).
 * **Trang web tham chiếu nghiệp vụ**: BISC Online (`https://bisconline.edu.vn/`).
@@ -36,8 +36,8 @@
   1. `01. HỌC ĐÚNG TÀI LIỆU`: Kiến thức được hệ thống hóa theo từng môn, bám sát nội dung ACCA và tập trung vào những phần thực sự cần nắm vững.
   2. `02. ĐI ĐÚNG LỘ TRÌNH`: Xác định điểm xuất phát, lựa chọn môn học phù hợp và xây dựng kế hoạch học tập theo từng giai đoạn.
   3. `03. ĐỒNG HÀNH XUYÊN SUỐT`: Theo dõi tiến độ, giải đáp thắc mắc 24/7 và hỗ trợ học viên trong suốt hành trình.
-  4. `04. TƯ DUY & PHƯƠNG PHÁP HỌC`: Hiểu bản chất, phát triển tư duy phân tích, kỹ năng giải quyết vấn đề và ứng dụng thực tế.
-* **Mô hình triển khai đào tạo**: Lớp 1-to-1, Nhóm nhỏ và Khóa Video Record chất lượng cao cùng Giảng viên Mr. Trần Minh Nhật.
+* **Mô hình triển khai đào tạo**: Lớp 1-to-1, Nhóm nhỏ và Khóa Video Record chất lượng cao tại Trung tâm YT Academy.
+* **Định hướng định vị thương hiệu**: Định hướng phát triển thành Trung tâm / Học viện EdTech (YT Academy), các thông điệp tư vấn, mô hình đào tạo, chân trang và widget liên hệ tập trung sử dụng tên thương hiệu **YT Academy / Trung tâm YT Academy**.
 
 ---
 
@@ -59,7 +59,8 @@ Ytacademy/
 3. **Đa ngôn ngữ (i18n)**: `react-i18next` + `i18next` (2 ngôn ngữ bắt buộc: **Tiếng Việt (`vi`)** làm mặc định và **Tiếng Anh (`en`)**). Mọi văn bản hiển thị trên giao diện PHẢI thông qua hàm `t(...)` của i18n.
 4. **Icons**: `lucide-react` (đồng nhất, nét vẽ hiện đại).
 5. **Quản lý trạng thái (State Management)**: `zustand` (quản lý Giỏ hàng, Modal State, Bộ lọc, Ngôn ngữ, Đăng nhập).
-6. **Tầng Dữ liệu (Data/Service Layer)**: Tách riêng trong `src/services/` (dùng Mock Data có cấu trúc DTO chuẩn của BE, khi kết nối BE chỉ cần thay đổi endpoint).
+6. **Điều hướng & Định tuyến URL (Routing)**: `react-router-dom` (hỗ trợ đầy đủ URL trang con chuẩn SEO `/khoa-hoc/:slug`, `/khoa-hoc-cua-toi`, `/phong-hoc/:courseId`, nút Back lịch sử trình duyệt và F5 giữ nguyên trang).
+7. **Tầng Dữ liệu (Data/Service Layer)**: Tách riêng trong `src/services/` (dùng Mock Data có cấu trúc DTO chuẩn của BE, khi kết nối BE chỉ cần thay đổi endpoint).
 
 ---
 
@@ -123,6 +124,7 @@ frontend/src/
 7. **Triết lý Thiết kế & Trình bày Sản phẩm (Design & Catalog Conventions)**:
    * **Góc vuông 100% (Zero Border-Radius / Sharp Corners)**: Toàn bộ giao diện (Nút bấm, thẻ Card, ô Input, Modal, Drawer, Badge, Banner, Video Player...) dùng hình học góc vuông sắc nét (`rounded-none` / `border-radius: 0px !important`). Tuyệt đối KHÔNG bo tròn góc.
    * **Header Tinh gọn & 100% ACCA**: Header tối giản, không bao viền xám rườm rà quanh từng icon; chỉ gồm: Logo YT Academy -> Menu "Khóa học ACCA" (3 cấp độ) -> Ô tìm kiếm môn học -> Nút "Khóa học của tôi" -> Nút "Kích hoạt" -> Giỏ hàng -> Đăng nhập -> Ngôn ngữ (VI | EN).
+   * **Thứ tự Ưu tiên Khóa học (Highest Discount First)**: Danh sách khóa học luôn được sắp xếp theo mức độ giảm giá phần trăm giảm dần (khóa học giảm giá nhiều nhất đứng đầu tiên: F3 Records -40% -> F3 Hybrid -25% -> F3 -15% -> F7 -15% -> F8 -15%).
    * **Bố cục Lưới Khóa học (2 hàng 8 cái + Xem thêm)**: Mặc định hiển thị đúng 2 hàng (8 môn học, 4 cột trên Desktop). Nếu có nhiều hơn 8 môn, hiển thị nút "Xem thêm ... môn học khác" để mở rộng.
    * **Nền Khu vực Khóa học có Điểm nhấn**: Nền phần danh mục khóa học dùng canvas có chiều sâu (màu xám slate `#EEF2F6` kết hợp họa tiết chấm kiến trúc `radial-gradient` và banner tiêu đề Navy `#0B2545` + viền Gold `#F59E0B`), giúp các thẻ khóa học trắng tinh khôi nổi bật rực rỡ, không bị cảm giác trắng trơn trống trải.
    * **Trung thực Dữ liệu (Không Fake số liệu)**: Đánh giá sao (Rating) và số lượng học viên khởi điểm là 0 (`0.0 (0 đánh giá)`, `0 Học viên`). Tuyệt đối không tự ý thêm các con số giả mạo.
@@ -167,9 +169,10 @@ frontend/src/
 6. **Giảng viên & Cam kết chất lượng**:
    * Đội ngũ giảng viên chứng chỉ FCCA, CFA, chuyên gia Big4.
 7. **Footer chuẩn**:
-   * Thông tin công ty YT Academy, địa chỉ, hotline, email `ytacademy.com.vn`, chính sách bảo mật, thanh toán và khiếu nại.
+   * Thông tin công ty YT Academy, địa chỉ: `75 Hậu Giang, Phường Bình Tây, TP. Hồ Chí Minh, Việt Nam`, hotline: `0822.082.407`, email: `ytacademy.edu@gmail.com`, chính sách bảo mật, thanh toán và khiếu nại.
+   * Kênh mạng xã hội chính thức: Facebook (`https://www.facebook.com/profile.php?id=61558436517466`) và TikTok (`https://www.tiktok.com/@yt.academy.edu`).
 8. **Tiện ích Liên hệ Nổi (Floating Contact Widget)**:
    * Vị trí góc phải dưới (`fixed bottom-6 right-5 z-40`).
-   * Gồm 2 nút hành động: **Zalo** (màu xanh `#0068FF`) và **Hotline điện thoại** (màu đỏ `red-600`), 100% góc vuông (`rounded-none`).
+   * Gồm các nút hành động: **Zalo** (màu xanh `#0068FF`) và **Hotline điện thoại** (màu đỏ `red-600`), 100% góc vuông (`rounded-none`).
    * Có hiệu ứng rung lắc chuông thu hút (`animate-ring-wiggle`) kèm sóng radar tỏa ra (`animate-radar-ripple`).
    * Đi kèm bóng thoại tư vấn (Speech Bubble) tự động chuyển động xoay vòng 4 thông điệp tư vấn lộ trình 1-1, giải đáp môn học, ưu đãi và tài liệu ôn thi.

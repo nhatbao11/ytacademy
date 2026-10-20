@@ -1,6 +1,6 @@
 # TÀI LIỆU DỰ ÁN & HỆ THỐNG THIẾT KẾ: YT ACADEMY
 
-**Domain chính thức**: [ytacademy.com.vn](https://ytacademy.com.vn)  
+**Domain chính thức**: [ytacademy.vn](https://ytacademy.vn)  
 **Mục tiêu**: Nền tảng bán khóa học đào tạo nghề nghiệp và chứng chỉ quốc tế (ACCA, ICAEW, CFA, Chinh phục Big4, Tài chính thực chiến).  
 **Trang web tham chiếu**: [BISC Online](https://bisconline.edu.vn/) (Kế thừa luồng nghiệp vụ thực tiễn, cải tiến UX/UI vượt bậc).
 

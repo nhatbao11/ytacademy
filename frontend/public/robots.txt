@@ -1,0 +1,8 @@
+# Robots.txt for YT Academy (ytacademy.vn)
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://ytacademy.vn/sitemap.xml

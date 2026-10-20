@@ -65,8 +65,8 @@
     "v3Desc": "Track progress & provide 24/7 academic support.",
     "v4Title": "ANALYTICAL THINKING",
     "v4Desc": "Understand the essence, hone problem-solving & practical application.",
-    "advisoryTitle": "Practical Training Models with Lecturer Mr. Tran Minh Nhat",
-    "advisoryDesc": "1-on-1 coaching, small cohorts & HD Recorded masterclasses tailored to CBE format.",
+    "advisoryTitle": "Practical Training Model at YT Academy",
+    "advisoryDesc": "1-on-1, Small Group & In-depth Video Records aligned with authentic CBE exam format at YT Academy.",
     "consultBtn": "Consult Pathway"
   },
   "courseDetail": {
@@ -124,7 +124,7 @@
     "ratingStarTitle": "{{star}} stars",
     "namePlaceholder": "Your full name (e.g. John Doe)",
     "upcomingCoursesNotice": "Subsequent modules in the ACCA qualification pathway (Applied Skills & Strategic Professional) are currently being updated.",
-    "contactAdvisoryNotice": "Please contact our Hotline / Zalo for registration schedules and 1-on-1 mentorship with Instructor Mr. Tran Minh Nhat.",
+    "contactAdvisoryNotice": "Please contact our Hotline / Zalo for registration schedules and 1-on-1 mentorship at YT Academy.",
     "enterClassroomNow": "Enter Classroom Now",
     "previewTrialChap1": "Free Trial Chapter 1",
     "specDuration": "Duration",
@@ -132,7 +132,7 @@
     "specChapters": "{{count}} chapters",
     "specLessons": "{{count}} lessons",
     "specFormat": "Format",
-    "specDevices": "Supported Devices",
+    "specDevices": "Learn on all devices",
     "modalPreviewBadge": "Free Trial",
     "modalPreviewClose": "Close",
     "modalPreviewVideoAlt": "YT Academy ACCA Lecture",
@@ -140,9 +140,9 @@
     "modalPreviewInstructorPrefix": "Instructor",
     "modalPreviewOtherLessons": "Other lessons in Chapter 1 (Free Trial):",
     "modalPreviewUpgradePrompt": "You are currently previewing Chapter 1. Want to unlock all {{count}} chapters?",
-    "modalPreviewUpgradeDesc": "Enroll now for 1:1 online sessions with Mr. Tran Minh Nhat, 24/7 Q&A support, and CBE mock exams!",
-    "lockedDesc1": "All lectures and course materials are part of the advanced curriculum for {{title}}. Please enroll to unlock full course access and receive 1-on-1 mentorship with Instructor Mr. Tran Minh Nhat.",
-    "lockedDesc2": "Please enroll to unlock all {{count}} lecture chapters, receive standard IFRS study materials, and join 1:1 online meetings with Instructor Mr. Tran Minh Nhat!",
+    "modalPreviewUpgradeDesc": "Enroll now for 1:1 online sessions at YT Academy, 24/7 Q&A support, and CBE mock exams!",
+    "lockedDesc1": "All lectures and course materials are part of the advanced curriculum for {{title}}. Please enroll to unlock full course access and receive 1-on-1 mentorship at YT Academy.",
+    "lockedDesc2": "Please enroll to unlock all {{count}} lecture chapters, receive standard IFRS study materials, and join 1:1 online meetings at YT Academy!",
     "lockedTuitionDiscount": "Discounted Tuition (-{{percent}}%)",
     "lockedPreviewFirst": "Preview Chapter 1 First",
     "lockedCloseOrLater": "Later / Close",
@@ -176,7 +176,7 @@
     "enterClass": "Enter Classroom",
     "viewDetail": "View Details",
     "emptyCategoryCoursesTitle": "You have no enrolled courses in this category",
-    "emptyCategoryCoursesDesc": "Explore practical ACCA modules taught by Mr. Tran Minh Nhat to advance your career and achieve your international qualification!"
+    "emptyCategoryCoursesDesc": "Explore practical ACCA modules at YT Academy to advance your career and achieve your international qualification!"
   },
   "classroom": {
     "back": "Back to My Courses",
@@ -292,7 +292,7 @@
   "floatingWidget": {
     "tagRoute": "1-on-1 Guidance",
     "titleRoute": "1-on-1 ACCA Pathway Consultation",
-    "descRoute": "Chat on Zalo with Mr. Tran Minh Nhat for tailored ACCA study pathway.",
+    "descRoute": "Chat on Zalo with YT Academy for tailored ACCA study pathway.",
     "ctaRoute": "Chat on Zalo",
     "tagSupport": "24/7 Support",
     "titleSupport": "Course & Tuition Inquiries",
@@ -319,10 +319,11 @@
     "miniRemaining": "Promo ends:"
   },
   "footer": {
-    "about": "YT Academy – Learn Today - Grow Tomorrow! ACCA Specialist Training via 1-to-1, small cohorts and recorded masterclasses with Lecturer Mr. Tran Minh Nhat.",
+    "about": "YT ACADEMY – Learn Today - Grow Tomorrow!",
     "hotline": "Hotline: 0822.082.407",
-    "email": "Email: contact@ytacademy.com.vn",
-    "address": "Binh Tan, Ho Chi Minh City",
+    "email": "Email: ytacademy.edu@gmail.com",
+    "address": "75 Hau Giang, Binh Tay Ward, Ho Chi Minh City, Vietnam",
+    "followUs": "Official Channels & Social Media",
     "copyright": "© 2026 YT Academy. All rights reserved.",
     "programsTitle": "Training Programs",
     "policiesTitle": "Policies & Terms",

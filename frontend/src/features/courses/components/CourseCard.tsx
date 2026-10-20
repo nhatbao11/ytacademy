@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Star, ShoppingCart, Check, BookOpen } from 'lucide-react'
 import type { ICourse } from '../../../types'
@@ -22,6 +23,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onSelectCourse }
   const displayDuration = currentLang === 'en' && course.durationHoursEn ? course.durationHoursEn : course.durationHours
 
   const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault()
     e.stopPropagation()
     if (!isLoggedIn) {
       openAuthModal('login', 'auth.loginToAddToCart', () => {
@@ -33,9 +35,11 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onSelectCourse }
   }
 
   return (
-    <div
+    <Link
+      to={`/khoa-hoc/${course.slug}`}
       onClick={() => onSelectCourse && onSelectCourse(course)}
-      className="group bg-white border border-slate-200 hover:border-amber-400 hover:shadow-md transition-all duration-150 flex flex-col justify-between cursor-pointer rounded-none"
+      className="group bg-white border border-slate-200 hover:border-amber-400 hover:shadow-md transition-all duration-150 flex flex-col justify-between cursor-pointer rounded-none no-underline text-inherit"
+      title={`Xem chi tiết khóa học ${displayTitle}`}
     >
       {/* Thumbnail (Góc vuông) */}
       <div className="relative aspect-video w-full overflow-hidden bg-slate-900 rounded-none">
@@ -120,6 +124,6 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onSelectCourse }
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }

@@ -360,7 +360,7 @@ export const ClassroomView: React.FC<ClassroomViewProps> = ({
                   </div>
 
                   <div className="pt-6 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
-                    <span>© ytacademy.com.vn</span>
+                    <span>© ytacademy.vn</span>
                     <span>1 / 18</span>
                   </div>
                 </div>

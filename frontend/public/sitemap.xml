@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Trang chủ YT Academy -->
+  <url>
+    <loc>https://ytacademy.vn/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Khóa học ACCA F3 Records (-40%) -->
+  <url>
+    <loc>https://ytacademy.vn/khoa-hoc/acca-f3-financial-accounting-records</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Khóa học ACCA F3 Hybrid (-25%) -->
+  <url>
+    <loc>https://ytacademy.vn/khoa-hoc/acca-f3-financial-accounting-hybrid</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Khóa học ACCA F3 Financial Accounting Online 1:1 -->
+  <url>
+    <loc>https://ytacademy.vn/khoa-hoc/acca-f3-financial-accounting</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Khóa học ACCA F7 Financial Reporting -->
+  <url>
+    <loc>https://ytacademy.vn/khoa-hoc/acca-f7-financial-reporting</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Khóa học ACCA F8 Audit and Assurance -->
+  <url>
+    <loc>https://ytacademy.vn/khoa-hoc/acca-f8-audit-and-assurance</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Khóa học của tôi -->
+  <url>
+    <loc>https://ytacademy.vn/khoa-hoc-cua-toi</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset>

@@ -15,6 +15,7 @@ import {
   BadgeCheck,
   Lock,
   Unlock,
+  Sparkles,
 } from 'lucide-react'
 import type { ICourse, ICourseReview } from '../../../types'
 import { formatCurrency } from '../../../utils/format'
@@ -342,6 +343,171 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
 
             {/* SECTION 1: "Bạn sẽ học được gì" & Giới thiệu khóa học */}
             <div id="sec-intro" className="space-y-6 scroll-mt-32">
+              {/* Lựa chọn hình thức học: Records hoặc Hybrid nếu là môn F3 */}
+              {(course.id === 'c-fa' || course.id === 'c-fa-records' || course.id === 'c-fa-hybrid') && (
+                <div className="bg-amber-50 border-2 border-amber-300 p-4 rounded-none space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-black uppercase text-amber-900 tracking-wide flex items-center gap-1.5">
+                      <Sparkles className="w-4 h-4 text-amber-600" />
+                      {currentLang === 'en' ? 'Select Learning Format:' : 'Lựa chọn hình thức đào tạo môn F3:'}
+                    </span>
+                    <span className="text-[11px] font-bold text-amber-700">
+                      {course.id === 'c-fa-records' ? 'Đang chọn: Records' : course.id === 'c-fa-hybrid' ? 'Đang chọn: Hybrid' : 'Đang chọn: Online 1:1'}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const target = mockCourses.find((c) => c.id === 'c-fa-records')
+                        if (target && course.id !== 'c-fa-records') onSelectRelatedCourse(target)
+                      }}
+                      className={`p-3 text-left border transition-all cursor-pointer rounded-none flex items-start justify-between ${
+                        course.id === 'c-fa-records'
+                          ? 'bg-[#0B2545] text-white border-[#0B2545] shadow-xs'
+                          : 'bg-white hover:bg-slate-50 text-slate-800 border-slate-300'
+                      }`}
+                    >
+                      <div>
+                        <div className="font-black text-xs sm:text-sm flex items-center gap-1.5">
+                          <span>Khóa Records (30 buổi)</span>
+                          <span className={`text-[10px] px-1.5 py-0.2 font-bold ${course.id === 'c-fa-records' ? 'bg-amber-400 text-slate-950' : 'bg-red-50 text-red-600 border border-red-200'}`}>-40%</span>
+                        </div>
+                        <p className={`text-[11px] mt-0.5 ${course.id === 'c-fa-records' ? 'text-slate-300' : 'text-slate-500'}`}>
+                          Học video record bài bản + Luyện đề CBE
+                        </p>
+                      </div>
+                      <div className="text-right shrink-0 ml-2">
+                        <span className={`text-xs sm:text-sm font-black block ${course.id === 'c-fa-records' ? 'text-amber-400' : 'text-[#0B2545]'}`}>2.160.000 đ</span>
+                        <span className="text-[10px] text-slate-400 line-through">3.600.000 đ</span>
+                      </div>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const target = mockCourses.find((c) => c.id === 'c-fa-hybrid')
+                        if (target && course.id !== 'c-fa-hybrid') onSelectRelatedCourse(target)
+                      }}
+                      className={`p-3 text-left border transition-all cursor-pointer rounded-none flex items-start justify-between ${
+                        course.id === 'c-fa-hybrid'
+                          ? 'bg-[#0B2545] text-white border-[#0B2545] shadow-xs'
+                          : 'bg-white hover:bg-slate-50 text-slate-800 border-slate-300'
+                      }`}
+                    >
+                      <div>
+                        <div className="font-black text-xs sm:text-sm flex items-center gap-1.5">
+                          <span>Khóa Hybrid (19 buổi: 7 buổi 1:1 & 12 buổi Records)</span>
+                          <span className={`text-[10px] px-1.5 py-0.2 font-bold ${course.id === 'c-fa-hybrid' ? 'bg-amber-400 text-slate-950' : 'bg-red-50 text-red-600 border border-red-200'}`}>-25%</span>
+                        </div>
+                        <p className={`text-[11px] mt-0.5 ${course.id === 'c-fa-hybrid' ? 'text-slate-300' : 'text-slate-500'}`}>
+                          Online 1:1 giải đáp + Video Records đầy đủ
+                        </p>
+                      </div>
+                      <div className="text-right shrink-0 ml-2">
+                        <span className={`text-xs sm:text-sm font-black block ${course.id === 'c-fa-hybrid' ? 'text-amber-400' : 'text-[#0B2545]'}`}>2.850.000 đ</span>
+                        <span className="text-[10px] text-slate-400 line-through">3.800.000 đ</span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Infographic Cấu trúc Khóa học Hybrid 19 buổi */}
+              {course.id === 'c-fa-hybrid' && (
+                <div className="bg-white border-2 border-[#0B2545] p-5 sm:p-6 rounded-none space-y-5">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-200 gap-2">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 bg-[#0B2545] text-amber-400 font-black text-xs uppercase tracking-wider">
+                          Mô hình Hybrid độc quyền
+                        </span>
+                        <span className="text-xs font-bold text-amber-600">Tổng 19 buổi học</span>
+                      </div>
+                      <h3 className="text-base sm:text-lg font-black text-slate-900 mt-1">
+                        Linh hoạt hơn – Tương tác trực tiếp – Hiệu quả vượt trội
+                      </h3>
+                      <p className="text-xs text-slate-600 mt-1">
+                        Kết hợp học Online 1:1 cùng giảng viên và video bài giảng được thiết kế bài bản, có sự rà soát, review bởi giảng viên, giúp bạn vừa chủ động thời gian, vừa đảm bảo chất lượng học tập.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* 3 Cột: 7 buổi 1:1, 12 buổi Record, Giảng viên review */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                    {/* Cột 1 */}
+                    <div className="p-4 bg-sky-50 border border-sky-200 rounded-none space-y-2.5">
+                      <div className="flex items-center gap-2.5">
+                        <span className="w-8 h-8 bg-[#0B2545] text-white font-black flex items-center justify-center rounded-none text-base">
+                          7
+                        </span>
+                        <div>
+                          <strong className="text-xs font-black text-slate-900 block uppercase">buổi Online 1:1</strong>
+                          <span className="text-[11px] text-sky-800 font-medium">Học trực tiếp cùng giảng viên</span>
+                        </div>
+                      </div>
+                      <ul className="space-y-1.5 text-xs text-slate-700 pt-1">
+                        <li className="flex items-start gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-sky-600 shrink-0 mt-0.5" /> Học trực tiếp với giảng viên</li>
+                        <li className="flex items-start gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-sky-600 shrink-0 mt-0.5" /> Trao đổi, giải đáp thắc mắc</li>
+                        <li className="flex items-start gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-sky-600 shrink-0 mt-0.5" /> Củng cố các phần học trọng tâm</li>
+                      </ul>
+                    </div>
+
+                    {/* Cột 2 */}
+                    <div className="p-4 bg-amber-50 border border-amber-200 rounded-none space-y-2.5">
+                      <div className="flex items-center gap-2.5">
+                        <span className="w-8 h-8 bg-amber-500 text-slate-950 font-black flex items-center justify-center rounded-none text-base">
+                          12
+                        </span>
+                        <div>
+                          <strong className="text-xs font-black text-slate-900 block uppercase">buổi Video Record</strong>
+                          <span className="text-[11px] text-amber-800 font-medium">Học chủ động mọi lúc mọi nơi</span>
+                        </div>
+                      </div>
+                      <ul className="space-y-1.5 text-xs text-slate-700 pt-1">
+                        <li className="flex items-start gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" /> Chủ động học theo thời gian phù hợp</li>
+                        <li className="flex items-start gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" /> Xem lại bài giảng khi cần</li>
+                        <li className="flex items-start gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" /> Nắm vững kiến thức theo tiến độ</li>
+                      </ul>
+                    </div>
+
+                    {/* Cột 3 */}
+                    <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-none space-y-2.5">
+                      <div className="flex items-center gap-2.5">
+                        <span className="w-8 h-8 bg-emerald-600 text-white font-black flex items-center justify-center rounded-none text-base">
+                          ✓
+                        </span>
+                        <div>
+                          <strong className="text-xs font-black text-slate-900 block uppercase">Giảng viên Review</strong>
+                          <span className="text-[11px] text-emerald-800 font-medium">Đồng hành chất lượng xuyên suốt</span>
+                        </div>
+                      </div>
+                      <ul className="space-y-1.5 text-xs text-slate-700 pt-1">
+                        <li className="flex items-start gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" /> Rà soát chất lượng bài giảng</li>
+                        <li className="flex items-start gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" /> Giải đáp thắc mắc chuyên môn</li>
+                        <li className="flex items-start gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" /> Đảm bảo định hướng học tập</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Ưu điểm nổi bật của khóa học Hybrid */}
+                  <div className="pt-2 border-t border-slate-200 grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+                    <div className="p-2 bg-slate-50 border border-slate-200 font-bold text-slate-800">
+                      Linh hoạt thời gian
+                    </div>
+                    <div className="p-2 bg-slate-50 border border-slate-200 font-bold text-slate-800">
+                      Tương tác trực tiếp 1:1
+                    </div>
+                    <div className="p-2 bg-slate-50 border border-slate-200 font-bold text-slate-800">
+                      Đảm bảo chất lượng
+                    </div>
+                    <div className="p-2 bg-slate-50 border border-slate-200 font-bold text-slate-800">
+                      Tối ưu thời gian & chi phí
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <div className="bg-white p-6 sm:p-7 border border-slate-300 rounded-none space-y-4">
                 <h2 className="text-base sm:text-lg font-black text-slate-900 uppercase tracking-wide">
                   {t('courseDetail.whatYouWillLearn')}

@@ -22,19 +22,32 @@ export const useCourses = () => {
   }, [])
 
   const filteredCourses = useMemo(() => {
-    return courses.filter((course) => {
-      const matchCategory =
-        selectedCategory === 'all' || course.category === selectedCategory
+    return courses
+      .filter((course) => {
+        let matchCategory =
+          selectedCategory === 'all' || course.category === selectedCategory
 
-      const cleanQuery = searchQuery.trim().toLowerCase()
-      const matchSearch =
-        !cleanQuery ||
-        course.title.toLowerCase().includes(cleanQuery) ||
-        course.instructor.name.toLowerCase().includes(cleanQuery) ||
-        course.categoryName.toLowerCase().includes(cleanQuery)
+        if (selectedCategory === 'acca-online') {
+          matchCategory = true
+        } else if (selectedCategory === 'acca-offline') {
+          matchCategory =
+            course.id === 'c-fa-hybrid' ||
+            (course.format ? /hybrid|offline|blended/i.test(course.format) : false) ||
+            course.category === 'applied-knowledge' ||
+            course.category === 'applied-skills'
+        }
 
-      return matchCategory && matchSearch
-    })
+        const cleanQuery = searchQuery.trim().toLowerCase()
+        const matchSearch =
+          !cleanQuery ||
+          course.title.toLowerCase().includes(cleanQuery) ||
+          (course.titleEn && course.titleEn.toLowerCase().includes(cleanQuery)) ||
+          course.instructor.name.toLowerCase().includes(cleanQuery) ||
+          course.categoryName.toLowerCase().includes(cleanQuery)
+
+        return matchCategory && matchSearch
+      })
+      .sort((a, b) => (b.discountPercent || 0) - (a.discountPercent || 0))
   }, [courses, selectedCategory, searchQuery])
 
   return {
