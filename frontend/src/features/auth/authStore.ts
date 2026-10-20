@@ -1,15 +1,19 @@
 import { create } from 'zustand'
 
 export interface IUser {
+  id?: string
   name: string
   email: string
   phone?: string
   role?: string
+  roles?: string[]
+  token?: string
 }
 
 interface AuthState {
   isLoggedIn: boolean
   user: IUser | null
+  token: string | null
   enrolledCourseIds: string[]
   isAuthModalOpen: boolean
   authModalMode: 'login' | 'register'
@@ -22,13 +26,18 @@ interface AuthState {
     onAfterLogin?: (() => void) | null
   ) => void
   closeAuthModal: () => void
-  login: (userData: IUser, enrolledIds?: string[]) => void
+  login: (userData: IUser, enrolledIds?: string[], token?: string) => void
   logout: () => void
   addEnrolledCourse: (courseId: string) => void
 }
 
 // Lấy thông tin phiên đăng nhập đã lưu từ localStorage (nếu có)
-const getSavedAuth = (): { isLoggedIn: boolean; user: IUser | null; enrolledCourseIds: string[] } => {
+const getSavedAuth = (): {
+  isLoggedIn: boolean
+  user: IUser | null
+  token: string | null
+  enrolledCourseIds: string[]
+} => {
   try {
     const saved = localStorage.getItem('yt_academy_auth')
     if (saved) {
@@ -37,6 +46,7 @@ const getSavedAuth = (): { isLoggedIn: boolean; user: IUser | null; enrolledCour
         return {
           isLoggedIn: true,
           user: parsed.user,
+          token: parsed.token || localStorage.getItem('yt_academy_token') || null,
           enrolledCourseIds: Array.isArray(parsed.enrolledCourseIds) ? parsed.enrolledCourseIds : ['c-fa'],
         }
       }
@@ -47,6 +57,7 @@ const getSavedAuth = (): { isLoggedIn: boolean; user: IUser | null; enrolledCour
   return {
     isLoggedIn: false,
     user: null,
+    token: null,
     enrolledCourseIds: [],
   }
 }
@@ -57,6 +68,7 @@ export const useAuthStore = create<AuthState>((set, get) => {
   return {
     isLoggedIn: initial.isLoggedIn,
     user: initial.user,
+    token: initial.token,
     enrolledCourseIds: initial.enrolledCourseIds,
     isAuthModalOpen: false,
     authModalMode: 'login',
@@ -80,18 +92,23 @@ export const useAuthStore = create<AuthState>((set, get) => {
       })
     },
 
-    login: (userData: IUser, enrolledIds = ['c-fa']) => {
+    login: (userData: IUser, enrolledIds = ['c-fa'], token?: string) => {
       const state = get()
       const currentEnrolled = state.enrolledCourseIds.length > 0 ? state.enrolledCourseIds : enrolledIds
+      const finalToken = token || userData.token || null
 
       const authData = {
         isLoggedIn: true,
-        user: userData,
+        user: { ...userData, token: finalToken || undefined },
+        token: finalToken,
         enrolledCourseIds: currentEnrolled,
       }
 
       try {
         localStorage.setItem('yt_academy_auth', JSON.stringify(authData))
+        if (finalToken) {
+          localStorage.setItem('yt_academy_token', finalToken)
+        }
       } catch {
         // Ignore localStorage error
       }
@@ -100,7 +117,8 @@ export const useAuthStore = create<AuthState>((set, get) => {
 
       set({
         isLoggedIn: true,
-        user: userData,
+        user: { ...userData, token: finalToken || undefined },
+        token: finalToken,
         enrolledCourseIds: currentEnrolled,
         isAuthModalOpen: false,
         authHintMessage: null,
@@ -120,12 +138,14 @@ export const useAuthStore = create<AuthState>((set, get) => {
     logout: () => {
       try {
         localStorage.removeItem('yt_academy_auth')
+        localStorage.removeItem('yt_academy_token')
       } catch {
         // Ignore localStorage error
       }
       set({
         isLoggedIn: false,
         user: null,
+        token: null,
         enrolledCourseIds: [],
         isAuthModalOpen: false,
         authHintMessage: null,

@@ -47,11 +47,22 @@
 Dự án tách biệt hoàn toàn theo cấu trúc Decoupled:
 ```text
 Ytacademy/
-├── frontend/             # Ứng dụng giao diện người dùng
-├── backend/              # Dịch vụ backend API (sẽ mở rộng sau)
-├── AGENTS.md             # Quy tắc ghi nhớ cho AI Agent
+├── frontend/             # Ứng dụng giao diện người dùng (React, TypeScript, Tailwind, Zustand)
+├── backend/              # Dịch vụ backend API (Node.js, Express, TypeScript, Supabase, RBAC)
+│   ├── database/schema.sql # PostgreSQL DDL & Seed roles cho Supabase
+│   └── AGENTS.md         # Quy tắc & tài liệu bộ nhớ chuyên biệt cho Backend
+├── AGENTS.md             # Quy tắc ghi nhớ toàn hệ thống cho AI Agent
 └── PROJECT_GUIDELINES.md # Tài liệu kiến trúc & hướng dẫn chi tiết
 ```
+
+### Công nghệ Backend:
+1. **Core**: Node.js + Express.js + TypeScript (Strict).
+2. **Database Engine**: **Supabase** (PostgreSQL 15+).
+3. **Phân quyền (RBAC)**: Kiến trúc mở rộng đa vai trò:
+   - Hiện tại: `student` (Học viên) & `admin` (Quản trị viên).
+   - Mở rộng sẵn: `instructor` (Giảng viên), `collaborator` (Cộng tác viên / Affiliate), `assistant` (Trợ giảng).
+4. **Xác thực**: JWT Tokens + bcryptjs hashing + Zod validation.
+5. **Chi tiết xem tại**: `backend/AGENTS.md`.
 
 ### Công nghệ Frontend:
 1. **Core**: React 18/19 + TypeScript + Vite.
