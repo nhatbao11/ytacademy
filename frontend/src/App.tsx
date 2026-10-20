@@ -21,6 +21,7 @@ import { mockCourses } from './features/courses/courseService'
 import { useCartStore } from './features/cart/cartStore'
 import { useAuthStore } from './features/auth/authStore'
 import { SEOHelmet } from './components/common/SEOHelmet'
+import { AdminPage } from './features/admin/AdminPage'
 import type { ICourse } from './types'
 import type { IEnrolledCourse } from './features/learning/types'
 
@@ -155,6 +156,19 @@ export function App() {
 
   const handleEnterClassroom = (enrolled: IEnrolledCourse) => {
     navigate(`/phong-hoc/${enrolled.course.slug || enrolled.course.id}`)
+  }
+
+  // Nếu đang ở trang Admin, render giao diện Full Screen chuyên biệt không kèm Navbar / Footer học viên
+  if (location.pathname.startsWith('/admin')) {
+    return (
+      <>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin/*" element={<AdminPage />} />
+        </Routes>
+      </>
+    )
   }
 
   return (

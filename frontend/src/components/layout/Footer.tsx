@@ -95,7 +95,13 @@ export const Footer: React.FC = () => {
             </a>
           </div>
 
-          <div className="text-amber-400 font-semibold">Learn Today - Grow Tomorrow!</div>
+          <div className="flex items-center gap-2.5 text-xs">
+            <span className="text-amber-400 font-semibold">Learn Today - Grow Tomorrow!</span>
+            <span className="text-slate-700">•</span>
+            <a href="/admin" className="text-slate-500 hover:text-amber-400 font-medium transition-colors">
+              Quản Trị
+            </a>
+          </div>
         </div>
       </div>
     </footer>

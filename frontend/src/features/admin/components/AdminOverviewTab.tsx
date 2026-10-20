@@ -1,0 +1,294 @@
+import React from 'react'
+import {
+  Users,
+  DollarSign,
+  BookOpen,
+  Star,
+  TrendingUp,
+  ArrowUpRight,
+  Plus,
+  KeyRound,
+} from 'lucide-react'
+import type { IAdminCourse, IAdminStudent, IAdminReview } from '../types'
+
+interface OverviewProps {
+  courses: IAdminCourse[]
+  students: IAdminStudent[]
+  reviews: IAdminReview[]
+  onOpenAddCourse: () => void
+  onNavigateTab: (tab: any) => void
+}
+
+export const AdminOverviewTab: React.FC<OverviewProps> = ({
+  courses,
+  students,
+  reviews,
+  onOpenAddCourse,
+  onNavigateTab,
+}) => {
+  const totalRevenue = students.reduce((acc, s) => acc + s.totalSpent, 0)
+  const totalStudents = students.filter((s) => s.role === 'student').length
+  const publishedCourses = courses.filter((c) => c.isPublished).length
+  const avgRating = (
+    reviews.reduce((acc, r) => acc + r.rating, 0) / (reviews.length || 1)
+  ).toFixed(1)
+
+  return (
+    <div className="space-y-6">
+      {/* Top Banner Chào mừng & Thao tác nhanh */}
+      <div className="bg-[#0B2545] text-white p-6 border-l-4 border-amber-400 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-400">
+            Hệ Thống Quản Trị Trung Tâm EdTech
+          </span>
+          <h1 className="text-2xl font-black tracking-tight text-white mt-1">
+            YT ACADEMY – BẢNG ĐIỀU KHIỂN QUẢN TRỊ
+          </h1>
+          <p className="text-xs text-slate-300 mt-1 max-w-2xl">
+            Quản trị toàn diện học viên, danh mục đào tạo ACCA, đề thi CBE, mã kích hoạt và phản hồi học viên trên toàn hệ thống.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            type="button"
+            onClick={onOpenAddCourse}
+            className="px-4 py-2.5 bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider rounded-none flex items-center gap-2 shadow-sm cursor-pointer transition-colors"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Thêm khóa học mới</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => onNavigateTab('activations')}
+            className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs uppercase tracking-wider rounded-none flex items-center gap-2 border border-slate-700 shadow-sm cursor-pointer transition-colors"
+          >
+            <KeyRound className="w-4 h-4 text-amber-400" />
+            <span>Cấp mã học</span>
+          </button>
+        </div>
+      </div>
+
+      {/* 4 THẺ CHỈ SỐ KPI CHÍNH */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* KPI 1: Doanh thu */}
+        <div className="bg-white p-5 border border-slate-200 rounded-none shadow-xs">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Tổng doanh thu
+            </span>
+            <div className="w-9 h-9 bg-emerald-50 text-emerald-600 flex items-center justify-center rounded-none">
+              <DollarSign className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="mt-3">
+            <div className="text-2xl font-black text-slate-900">
+              {new Intl.NumberFormat('vi-VN').format(totalRevenue || 22300000)} đ
+            </div>
+            <div className="flex items-center gap-1.5 text-xs text-emerald-600 mt-1 font-semibold">
+              <TrendingUp className="w-3.5 h-3.5" />
+              <span>+18.5% so với tháng trước</span>
+            </div>
+          </div>
+        </div>
+
+        {/* KPI 2: Tổng học viên */}
+        <div className="bg-white p-5 border border-slate-200 rounded-none shadow-xs">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Học viên hoạt động
+            </span>
+            <div className="w-9 h-9 bg-blue-50 text-blue-600 flex items-center justify-center rounded-none">
+              <Users className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="mt-3">
+            <div className="text-2xl font-black text-slate-900">
+              {totalStudents || 120} Học viên
+            </div>
+            <div className="flex items-center gap-1.5 text-xs text-blue-600 mt-1 font-semibold">
+              <ArrowUpRight className="w-3.5 h-3.5" />
+              <span>+12 học viên mới tuần này</span>
+            </div>
+          </div>
+        </div>
+
+        {/* KPI 3: Khóa học mở bán */}
+        <div className="bg-white p-5 border border-slate-200 rounded-none shadow-xs">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Môn học ACCA mở bán
+            </span>
+            <div className="w-9 h-9 bg-amber-50 text-amber-600 flex items-center justify-center rounded-none">
+              <BookOpen className="w-5 h-5" />
+            </div>
+          </div>
+          <div className="mt-3">
+            <div className="text-2xl font-black text-slate-900">
+              {publishedCourses} / {courses.length} Môn học
+            </div>
+            <div className="text-xs text-slate-500 mt-1">
+              F3 Records, F3 Hybrid, F3, F7, F8
+            </div>
+          </div>
+        </div>
+
+        {/* KPI 4: Đánh giá chất lượng */}
+        <div className="bg-white p-5 border border-slate-200 rounded-none shadow-xs">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              Đánh giá trung bình
+            </span>
+            <div className="w-9 h-9 bg-yellow-50 text-amber-500 flex items-center justify-center rounded-none">
+              <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
+            </div>
+          </div>
+          <div className="mt-3">
+            <div className="text-2xl font-black text-slate-900 flex items-center gap-1.5">
+              <span>{avgRating}</span>
+              <span className="text-sm font-normal text-slate-400">/ 5.0</span>
+            </div>
+            <div className="text-xs text-slate-500 mt-1">
+              Dựa trên {reviews.length} đánh giá học viên thật
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* LƯỚI NỘI DUNG 2 CỘT */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Cột 1: Danh sách khóa học có nhiều học viên nhất (2/3 chiều rộng) */}
+        <div className="lg:col-span-2 bg-white border border-slate-200 rounded-none p-5 shadow-xs">
+          <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
+            <div>
+              <h2 className="text-base font-bold text-slate-900">
+                Hiệu Quả Đào Tạo Các Môn ACCA
+              </h2>
+              <p className="text-xs text-slate-500">
+                Theo dõi số lượng học viên và mức độ giảm giá từng môn
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => onNavigateTab('courses')}
+              className="text-xs font-bold text-amber-700 hover:text-amber-800 hover:underline cursor-pointer"
+            >
+              Xem tất cả →
+            </button>
+          </div>
+
+          <div className="space-y-3">
+            {courses.slice(0, 5).map((course) => (
+              <div
+                key={course.id}
+                className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 bg-slate-50 border border-slate-200 gap-3"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-[#0B2545] text-amber-400 font-mono font-black text-xs flex flex-col items-center justify-center shrink-0 border border-amber-400/30">
+                    <span>ACCA</span>
+                    <span className="text-[10px] text-white font-bold">{course.code.split(' ')[1] || 'F3'}</span>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-slate-900 line-clamp-1">
+                      {course.title}
+                    </h4>
+                    <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-slate-500">
+                      <span className="px-1.5 py-0.5 bg-slate-200 text-slate-700 font-semibold text-[10px]">
+                        {course.format}
+                      </span>
+                      <span>•</span>
+                      <span>Giảng viên: <strong className="text-slate-700">{course.instructorName}</strong></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex sm:flex-col sm:items-end justify-between items-center shrink-0">
+                  <div className="text-sm font-black text-[#0B2545]">
+                    {new Intl.NumberFormat('vi-VN').format(course.salePrice)} đ
+                  </div>
+                  <div className="text-xs font-semibold text-emerald-600">
+                    {course.studentsCount} học viên đăng ký
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Cột 2: Đánh giá & Học viên đăng ký gần đây (1/3 chiều rộng) */}
+        <div className="space-y-6">
+          {/* Học viên mới nhất */}
+          <div className="bg-white border border-slate-200 rounded-none p-5 shadow-xs">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
+              <h3 className="text-sm font-bold text-slate-900">
+                Học viên đăng ký mới
+              </h3>
+              <button
+                type="button"
+                onClick={() => onNavigateTab('students')}
+                className="text-xs font-bold text-amber-700 hover:underline cursor-pointer"
+              >
+                Tất cả
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              {students.slice(0, 4).map((student) => (
+                <div key={student.id} className="flex items-center justify-between text-xs pb-2 border-b border-slate-100 last:border-0">
+                  <div>
+                    <div className="font-bold text-slate-800">{student.name}</div>
+                    <div className="text-slate-500">{student.email}</div>
+                  </div>
+                  <span className={`px-2 py-0.5 text-[10px] font-bold uppercase ${
+                    student.role === 'admin'
+                      ? 'bg-rose-100 text-rose-700'
+                      : student.role === 'instructor'
+                      ? 'bg-purple-100 text-purple-700'
+                      : 'bg-emerald-100 text-emerald-700'
+                  }`}>
+                    {student.role}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Đánh giá mới nhất */}
+          <div className="bg-white border border-slate-200 rounded-none p-5 shadow-xs">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
+              <h3 className="text-sm font-bold text-slate-900">
+                Đánh giá mới gửi
+              </h3>
+              <button
+                type="button"
+                onClick={() => onNavigateTab('reviews')}
+                className="text-xs font-bold text-amber-700 hover:underline cursor-pointer"
+              >
+                Quản lý
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              {reviews.slice(0, 2).map((rev) => (
+                <div key={rev.id} className="p-3 bg-slate-50 border border-slate-200 text-xs">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="font-bold text-slate-900">{rev.studentName}</span>
+                    <div className="flex text-amber-400">
+                      {'★'.repeat(rev.rating)}
+                    </div>
+                  </div>
+                  <p className="text-slate-600 italic line-clamp-2">
+                    "{rev.comment}"
+                  </p>
+                  <div className="text-[10px] text-slate-400 mt-1">
+                    {rev.courseName}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
