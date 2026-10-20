@@ -2,8 +2,11 @@ export type AdminTab =
   | 'overview'
   | 'courses'
   | 'students'
+  | 'orders'
   | 'reviews'
   | 'activations'
+  | 'vouchers'
+  | 'exams'
   | 'settings'
 
 export interface IAdminStudent {
@@ -37,6 +40,21 @@ export interface IAdminCourse {
   lessonsCount?: number
 }
 
+export interface IAdminOrder {
+  id: string
+  orderCode: string
+  studentName: string
+  studentEmail: string
+  studentPhone: string
+  courseId: string
+  courseName: string
+  amount: number
+  paymentMethod: 'VietQR / Chuyển khoản' | 'ZaloPay' | 'MoMo' | 'Tiền mặt tại trung tâm'
+  status: 'completed' | 'pending' | 'cancelled'
+  createdAt: string
+  note?: string
+}
+
 export interface IAdminReview {
   id: string
   studentName: string
@@ -59,4 +77,28 @@ export interface IAdminActivationCode {
   status: 'unused' | 'used' | 'revoked'
   usedByEmail?: string
   usedAt?: string
+}
+
+export interface IAdminVoucher {
+  id: string
+  code: string
+  discountType: 'percent' | 'fixed'
+  discountValue: number
+  applicableCourseId: string // 'all' hoặc id khóa học
+  maxUses: number
+  usedCount: number
+  validUntil: string
+  status: 'active' | 'expired'
+}
+
+export interface IAdminMaterial {
+  id: string
+  title: string
+  courseId: string
+  courseName: string
+  type: 'cbe_mock' | 'lecture_notes' | 'revision_kit'
+  fileFormat: string
+  fileSize: string
+  downloadsCount: number
+  updatedAt: string
 }
