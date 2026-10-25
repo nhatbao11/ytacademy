@@ -81,7 +81,14 @@ export const AdminActivationTab: React.FC<ActivationTabProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-200 font-medium text-slate-700">
-            {codes.map((item) => (
+            {codes.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="py-12 text-center text-slate-400">
+                  Chưa có mã kích hoạt nào được tạo. Bấm "Tạo Mã Mới" ở góc trên để cấp mã cho học viên.
+                </td>
+              </tr>
+            ) : (
+              codes.map((item) => (
               <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
                 {/* Cột Mã */}
                 <td className="py-3 px-4 whitespace-nowrap">
@@ -158,7 +165,7 @@ export const AdminActivationTab: React.FC<ActivationTabProps> = ({
                   )}
                 </td>
               </tr>
-            ))}
+            )))}
           </tbody>
         </table>
       </div>

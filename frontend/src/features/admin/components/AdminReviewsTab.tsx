@@ -78,7 +78,12 @@ export const AdminReviewsTab: React.FC<ReviewsTabProps> = ({
 
       {/* Danh sách thẻ Review */}
       <div className="space-y-3">
-        {filtered.map((rev) => (
+        {filtered.length === 0 ? (
+          <div className="bg-white p-12 text-center border border-slate-200 text-slate-400 text-xs">
+            Chưa có đánh giá nào từ học viên.
+          </div>
+        ) : (
+          filtered.map((rev) => (
           <div
             key={rev.id}
             className="bg-white p-4 sm:p-5 border border-slate-200 rounded-none shadow-xs flex flex-col md:flex-row md:items-start justify-between gap-4"
@@ -170,7 +175,7 @@ export const AdminReviewsTab: React.FC<ReviewsTabProps> = ({
               </button>
             </div>
           </div>
-        ))}
+        )))}
       </div>
     </div>
   )

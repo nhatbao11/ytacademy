@@ -120,7 +120,14 @@ export const AdminStudentsTab: React.FC<StudentsTabProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-200 font-medium text-slate-700">
-            {filtered.map((student) => (
+            {filtered.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="py-12 text-center text-slate-400">
+                  Chưa có tài khoản học viên nào.
+                </td>
+              </tr>
+            ) : (
+              filtered.map((student) => (
               <tr key={student.id} className="hover:bg-slate-50/80 transition-colors">
                 {/* Tên & email */}
                 <td className="py-3.5 px-4">
@@ -210,7 +217,7 @@ export const AdminStudentsTab: React.FC<StudentsTabProps> = ({
                   </button>
                 </td>
               </tr>
-            ))}
+            )))}
           </tbody>
         </table>
       </div>

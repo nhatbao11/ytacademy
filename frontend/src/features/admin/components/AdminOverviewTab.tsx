@@ -4,8 +4,6 @@ import {
   DollarSign,
   BookOpen,
   Star,
-  TrendingUp,
-  ArrowUpRight,
   Plus,
   KeyRound,
   FileCheck2,
@@ -30,12 +28,13 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
   onOpenAddCourse,
   onNavigateTab,
 }) => {
-  const totalRevenue = students.reduce((acc, s) => acc + s.totalSpent, 0)
-  const totalStudents = students.filter((s) => s.role === 'student').length
+  const completedOrders = orders.filter((o) => o.status === 'completed')
+  const totalRevenue = completedOrders.reduce((sum, o) => sum + o.amount, 0)
+  const totalStudents = students.length
   const publishedCourses = courses.filter((c) => c.isPublished).length
-  const avgRating = (
-    reviews.reduce((acc, r) => acc + r.rating, 0) / (reviews.length || 1)
-  ).toFixed(1)
+  const avgRating = reviews.length > 0 ? (
+    reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length
+  ).toFixed(1) : '0.0'
 
   return (
     <div className="space-y-6">
@@ -79,7 +78,7 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
         <div className="bg-white p-5 border border-slate-200 rounded-none shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              Tổng doanh thu
+              Doanh thu thực thu
             </span>
             <div className="w-9 h-9 bg-emerald-50 text-emerald-600 flex items-center justify-center rounded-none">
               <DollarSign className="w-5 h-5" />
@@ -87,11 +86,10 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
           </div>
           <div className="mt-3">
             <div className="text-2xl font-black text-slate-900">
-              {new Intl.NumberFormat('vi-VN').format(totalRevenue || 22300000)} đ
+              {new Intl.NumberFormat('vi-VN').format(totalRevenue)} đ
             </div>
-            <div className="flex items-center gap-1.5 text-xs text-emerald-600 mt-1 font-semibold">
-              <TrendingUp className="w-3.5 h-3.5" />
-              <span>+18.5% so với tháng trước</span>
+            <div className="text-xs text-slate-500 mt-1 font-medium">
+              Từ {completedOrders.length} đơn hoàn tất học phí
             </div>
           </div>
         </div>
@@ -100,7 +98,7 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
         <div className="bg-white p-5 border border-slate-200 rounded-none shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              Học viên hoạt động
+              Học viên thực tế
             </span>
             <div className="w-9 h-9 bg-blue-50 text-blue-600 flex items-center justify-center rounded-none">
               <Users className="w-5 h-5" />
@@ -108,11 +106,10 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
           </div>
           <div className="mt-3">
             <div className="text-2xl font-black text-slate-900">
-              {totalStudents || 120} Học viên
+              {totalStudents} Học viên
             </div>
-            <div className="flex items-center gap-1.5 text-xs text-blue-600 mt-1 font-semibold">
-              <ArrowUpRight className="w-3.5 h-3.5" />
-              <span>+12 học viên mới tuần này</span>
+            <div className="text-xs text-slate-500 mt-1 font-medium">
+              Đồng bộ từ Database Supabase
             </div>
           </div>
         </div>
@@ -160,7 +157,7 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
       </div>
 
       {/* SƠ ĐỒ SO SÁNH DOANH THU & PHÂN TÍCH HIỆU SUẤT TRỰC QUAN */}
-      <AdminRevenueCharts />
+      <AdminRevenueCharts orders={orders} students={students} />
 
       {/* LƯỚI NỘI DUNG 2 CỘT */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -240,23 +237,27 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
             </div>
 
             <div className="space-y-3">
-              {students.slice(0, 4).map((student) => (
-                <div key={student.id} className="flex items-center justify-between text-xs pb-2 border-b border-slate-100 last:border-0">
-                  <div>
-                    <div className="font-bold text-slate-800">{student.name}</div>
-                    <div className="text-slate-500">{student.email}</div>
+              {students.length === 0 ? (
+                <p className="text-xs text-slate-400 py-3 text-center">Chưa có học viên nào đăng ký tài khoản.</p>
+              ) : (
+                students.slice(0, 4).map((student) => (
+                  <div key={student.id} className="flex items-center justify-between text-xs pb-2 border-b border-slate-100 last:border-0">
+                    <div>
+                      <div className="font-bold text-slate-800">{student.name}</div>
+                      <div className="text-slate-500">{student.email}</div>
+                    </div>
+                    <span className={`px-2 py-0.5 text-[10px] font-bold uppercase ${
+                      student.role === 'admin'
+                        ? 'bg-rose-100 text-rose-700'
+                        : student.role === 'instructor'
+                        ? 'bg-purple-100 text-purple-700'
+                        : 'bg-emerald-100 text-emerald-700'
+                    }`}>
+                      {student.role}
+                    </span>
                   </div>
-                  <span className={`px-2 py-0.5 text-[10px] font-bold uppercase ${
-                    student.role === 'admin'
-                      ? 'bg-rose-100 text-rose-700'
-                      : student.role === 'instructor'
-                      ? 'bg-purple-100 text-purple-700'
-                      : 'bg-emerald-100 text-emerald-700'
-                  }`}>
-                    {student.role}
-                  </span>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
 
@@ -276,22 +277,26 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
             </div>
 
             <div className="space-y-3">
-              {reviews.slice(0, 2).map((rev) => (
-                <div key={rev.id} className="p-3 bg-slate-50 border border-slate-200 text-xs">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="font-bold text-slate-900">{rev.studentName}</span>
-                    <div className="flex text-amber-400">
-                      {'★'.repeat(rev.rating)}
+              {reviews.length === 0 ? (
+                <p className="text-xs text-slate-400 py-3 text-center">Chưa có đánh giá nào từ học viên.</p>
+              ) : (
+                reviews.slice(0, 2).map((rev) => (
+                  <div key={rev.id} className="p-3 bg-slate-50 border border-slate-200 text-xs">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-bold text-slate-900">{rev.studentName}</span>
+                      <div className="flex text-amber-400">
+                        {'★'.repeat(rev.rating)}
+                      </div>
+                    </div>
+                    <p className="text-slate-600 italic line-clamp-2">
+                      "{rev.comment}"
+                    </p>
+                    <div className="text-[10px] text-slate-400 mt-1">
+                      {rev.courseName}
                     </div>
                   </div>
-                  <p className="text-slate-600 italic line-clamp-2">
-                    "{rev.comment}"
-                  </p>
-                  <div className="text-[10px] text-slate-400 mt-1">
-                    {rev.courseName}
-                  </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         </div>

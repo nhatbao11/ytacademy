@@ -149,7 +149,14 @@ export const AdminOrdersTab: React.FC<OrdersTabProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-200 font-medium text-slate-700">
-            {filtered.map((order) => (
+            {filtered.length === 0 ? (
+              <tr>
+                <td colSpan={8} className="py-12 text-center text-slate-400">
+                  Chưa có đơn ghi danh học phí nào.
+                </td>
+              </tr>
+            ) : (
+              filtered.map((order) => (
               <tr key={order.id} className="hover:bg-slate-50/80 transition-colors">
                 {/* Mã đơn */}
                 <td className="py-3.5 px-4 whitespace-nowrap">
@@ -235,7 +242,7 @@ export const AdminOrdersTab: React.FC<OrdersTabProps> = ({
                   )}
                 </td>
               </tr>
-            ))}
+            )))}
           </tbody>
         </table>
       </div>

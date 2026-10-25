@@ -131,65 +131,71 @@ export const AdminVouchersTab: React.FC<VouchersTabProps> = ({
       </div>
 
       {/* Danh sách Vouchers */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {vouchers.map((v) => (
-          <div
-            key={v.id}
-            className="bg-white border-2 border-slate-200 p-5 rounded-none shadow-xs relative overflow-hidden flex flex-col justify-between"
-          >
-            <div className="flex items-center justify-between mb-3">
-              <span className="font-mono font-black text-lg text-[#0B2545] tracking-wider bg-amber-100/60 px-3 py-1 border border-amber-300">
-                {v.code}
-              </span>
-              <button
-                type="button"
-                onClick={() => onDeleteVoucher(v.id)}
-                className="text-slate-400 hover:text-rose-600 p-1 cursor-pointer"
-                title="Xóa voucher"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="space-y-1.5 text-xs text-slate-600 my-2">
-              <div className="flex items-center justify-between">
-                <span>Mức giảm:</span>
-                <strong className="text-rose-600 text-sm">
-                  {v.discountType === 'percent'
-                    ? `-${v.discountValue}%`
-                    : `-${new Intl.NumberFormat('vi-VN').format(v.discountValue)} đ`}
-                </strong>
-              </div>
-              <div className="flex items-center justify-between">
-                <span>Đã sử dụng:</span>
-                <span className="font-semibold text-slate-800">
-                  {v.usedCount} / {v.maxUses} lượt
+      {vouchers.length === 0 ? (
+        <div className="bg-white p-12 text-center border border-slate-200 text-slate-400 text-xs">
+          Chưa có mã voucher nào được tạo. Bạn có thể tạo mã ưu đãi mới ở biểu mẫu phía trên.
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {vouchers.map((v) => (
+            <div
+              key={v.id}
+              className="bg-white border-2 border-slate-200 p-5 rounded-none shadow-xs relative overflow-hidden flex flex-col justify-between"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <span className="font-mono font-black text-lg text-[#0B2545] tracking-wider bg-amber-100/60 px-3 py-1 border border-amber-300">
+                  {v.code}
                 </span>
+                <button
+                  type="button"
+                  onClick={() => onDeleteVoucher(v.id)}
+                  className="text-slate-400 hover:text-rose-600 p-1 cursor-pointer"
+                  title="Xóa voucher"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
               </div>
-              <div className="flex items-center justify-between">
-                <span>Hết hạn:</span>
-                <span className="font-mono text-slate-500">{v.validUntil}</span>
-              </div>
-            </div>
 
-            <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
-              <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5">
-                ● Đang Hoạt Động
-              </span>
-              <button
-                type="button"
-                onClick={() => {
-                  navigator.clipboard.writeText(v.code)
-                  alert(`Đã sao chép mã: ${v.code}`)
-                }}
-                className="text-amber-700 font-bold hover:underline cursor-pointer"
-              >
-                Sao chép mã
-              </button>
+              <div className="space-y-1.5 text-xs text-slate-600 my-2">
+                <div className="flex items-center justify-between">
+                  <span>Mức giảm:</span>
+                  <strong className="text-rose-600 text-sm">
+                    {v.discountType === 'percent'
+                      ? `-${v.discountValue}%`
+                      : `-${new Intl.NumberFormat('vi-VN').format(v.discountValue)} đ`}
+                  </strong>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span>Đã sử dụng:</span>
+                  <span className="font-semibold text-slate-800">
+                    {v.usedCount} / {v.maxUses} lượt
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span>Hết hạn:</span>
+                  <span className="font-mono text-slate-500">{v.validUntil}</span>
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5">
+                  ● Đang Hoạt Động
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText(v.code)
+                    alert(`Đã sao chép mã: ${v.code}`)
+                  }}
+                  className="text-amber-700 font-bold hover:underline cursor-pointer"
+                >
+                  Sao chép mã
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

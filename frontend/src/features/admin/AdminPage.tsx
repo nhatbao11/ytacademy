@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { registrationService } from '../../services/registrationService'
+import { adminService } from '../../services/adminService'
 import {
   LayoutDashboard,
   BookOpen,
@@ -70,20 +70,23 @@ export const AdminPage: React.FC = () => {
   const [vouchers, setVouchers] = useState<IAdminVoucher[]>(initialAdminVouchers)
   const [materials, setMaterials] = useState<IAdminMaterial[]>(initialAdminMaterials)
 
-  // Đồng bộ đơn đăng ký thực tế từ Supabase & LocalStorage
+  // Đồng bộ 100% dữ liệu THỰC TẾ từ Supabase (users, user_enrolled_courses, đơn đăng ký)
   useEffect(() => {
-    registrationService.getAllOrders().then((loaded) => {
-      if (loaded && loaded.length > 0) {
-        setOrders(loaded)
-      }
-    })
+    const loadRealData = async () => {
+      const realStudents = await adminService.getRealStudents()
+      setStudents(realStudents)
+
+      const realOrders = await adminService.getRealOrders()
+      setOrders(realOrders)
+
+      const realCourses = adminService.getRealCourses(realStudents)
+      setCourses(realCourses)
+    }
+
+    loadRealData()
 
     const handleUpdated = () => {
-      registrationService.getAllOrders().then((loaded) => {
-        if (loaded) {
-          setOrders(loaded)
-        }
-      })
+      loadRealData()
     }
 
     window.addEventListener('yt:orders_updated', handleUpdated)

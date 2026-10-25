@@ -125,7 +125,14 @@ export const AdminMaterialsTab: React.FC<MaterialsTabProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-200 font-medium text-slate-700">
-            {materials.map((mat) => (
+            {materials.length === 0 ? (
+              <tr>
+                <td colSpan={7} className="py-12 text-center text-slate-400">
+                  Chưa có tài liệu hoặc đề thi nào. Giảng viên có thể đăng tải tài liệu ở biểu mẫu phía trên.
+                </td>
+              </tr>
+            ) : (
+              materials.map((mat) => (
               <tr key={mat.id} className="hover:bg-slate-50/80 transition-colors">
                 <td className="py-3.5 px-4">
                   <div className="flex items-center gap-2.5">
@@ -176,7 +183,7 @@ export const AdminMaterialsTab: React.FC<MaterialsTabProps> = ({
                   </button>
                 </td>
               </tr>
-            ))}
+            )))}
           </tbody>
         </table>
       </div>
