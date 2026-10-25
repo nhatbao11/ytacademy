@@ -169,6 +169,23 @@ export const authApi = {
         }
       }
 
+      // Tự động đồng bộ sang bảng public.users trong Supabase Database
+      if (data.user?.id) {
+        try {
+          await supabase.from('users').upsert({
+            id: data.user.id,
+            email: data.user.email || email,
+            password_hash: 'SUPABASE_AUTH_HASH',
+            full_name: params.fullName || email.split('@')[0],
+            phone: params.phone || '',
+            role_code: roleCode,
+            status: 'active',
+          })
+        } catch (syncErr) {
+          console.warn('Lỗi đồng bộ vào public.users:', syncErr)
+        }
+      }
+
       return {
         success: true,
         message: 'Đăng ký tài khoản học viên YT Academy thành công!',

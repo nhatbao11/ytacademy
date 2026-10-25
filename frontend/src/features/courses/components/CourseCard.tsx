@@ -15,7 +15,7 @@ interface CourseCardProps {
 export const CourseCard: React.FC<CourseCardProps> = ({ course, onSelectCourse }) => {
   const { t, i18n } = useTranslation()
   const currentLang = i18n.language?.startsWith('en') ? 'en' : 'vi'
-  const { addToCart, items } = useCartStore()
+  const { addToCart, items, openCart } = useCartStore()
   const { isLoggedIn, openAuthModal } = useAuthStore()
 
   const isInCart = items.some((item) => item.course.id === course.id)
@@ -28,10 +28,12 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onSelectCourse }
     if (!isLoggedIn) {
       openAuthModal('login', 'auth.loginToAddToCart', () => {
         addToCart(course)
+        openCart()
       })
       return
     }
     addToCart(course)
+    openCart()
   }
 
   return (
@@ -113,14 +115,15 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onSelectCourse }
           <button
             type="button"
             onClick={handleAddToCart}
-            className={`p-2 text-xs font-semibold transition-all border rounded-none cursor-pointer ${
+            className={`px-3 py-1.5 text-xs font-bold transition-all border rounded-none cursor-pointer flex items-center gap-1.5 ${
               isInCart
                 ? 'bg-emerald-50 border-emerald-300 text-emerald-700'
                 : 'bg-amber-400 hover:bg-amber-500 border-amber-400 text-slate-950 active:scale-95'
             }`}
             title={isInCart ? t('courses.addedToCart') : t('courses.addToCart')}
           >
-            {isInCart ? <Check className="w-4 h-4" /> : <ShoppingCart className="w-4 h-4" />}
+            {isInCart ? <Check className="w-3.5 h-3.5" /> : <ShoppingCart className="w-3.5 h-3.5" />}
+            <span>{isInCart ? (currentLang === 'en' ? 'Selected' : 'Đã chọn') : (currentLang === 'en' ? 'Register' : 'Đăng ký')}</span>
           </button>
         </div>
       </div>

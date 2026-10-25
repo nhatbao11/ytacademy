@@ -236,14 +236,14 @@
     "discount": "Giảm giá",
     "total": "Tổng cộng",
     "apply": "Áp dụng",
-    "checkout": "Thanh toán",
+    "checkout": "XÁC NHẬN ĐĂNG KÝ",
     "remove": "Xóa",
     "itemsCount": "khóa học",
-    "orderSuccess": "Đặt hàng thành công!",
-    "orderSuccessDesc": "Cảm ơn bạn đã lựa chọn YT Academy. Chúng tôi đã gửi hướng dẫn kích hoạt vào email của bạn.",
+    "orderSuccess": "Đăng ký khóa học thành công!",
+    "orderSuccessDesc": "Cảm ơn bạn đã đăng ký học tại YT Academy! Ban cố vấn sẽ liên hệ với bạn qua Zalo/Điện thoại để xếp lớp và gửi tài liệu học tập sớm nhất.",
     "voucherPlaceholder": "Mã voucher (Thử: YTACADEMY)",
     "applyVoucher": "Áp dụng",
-    "guarantee": "Thanh toán an toàn bảo mật qua Chuyển khoản QR / Thẻ / MoMo"
+    "guarantee": "Đăng ký nhanh chóng - Hỗ trợ tư vấn và xếp lịch học 1:1 tận tâm"
   },
   "auth": {
     "loginTitle": "Đăng Nhập",
@@ -282,7 +282,7 @@
     "loginToViewMyCourses": "Vui lòng đăng nhập để xem danh sách Khóa học của tôi.",
     "loginToAddToCart": "Vui lòng đăng nhập để thêm khóa học vào giỏ hàng.",
     "loginToEnroll": "Vui lòng đăng nhập để đăng ký và mua khóa học.",
-    "loginToCheckout": "Vui lòng đăng nhập để tiến hành thanh toán giỏ hàng.",
+    "loginToCheckout": "Vui lòng đăng nhập để xác nhận đăng ký khóa học.",
     "logout": "Đăng xuất",
     "myProfile": "Tài khoản của tôi",
     "requireLoginTitle": "Yêu cầu đăng nhập",

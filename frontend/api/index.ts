@@ -65,6 +65,21 @@ export default async function handler(req: any, res: any) {
         return res.status(400).json({ success: false, message: error.message })
       }
 
+      // Tự động đồng bộ sang bảng public.users trong Supabase Database
+      try {
+        await supabase.from('users').upsert({
+          id: data.user.id,
+          email: data.user.email,
+          password_hash: 'SUPABASE_AUTH_HASH',
+          full_name: fullName || email.split('@')[0],
+          phone: phone || '',
+          role_code: roleCode,
+          status: 'active',
+        })
+      } catch (syncErr) {
+        console.warn('Lỗi đồng bộ vào public.users:', syncErr)
+      }
+
       return res.status(201).json({
         success: true,
         message: 'Đăng ký tài khoản học viên YT Academy thành công!',

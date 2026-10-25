@@ -179,3 +179,45 @@ SELECT r.id, p.id
 FROM roles r, permissions p
 WHERE r.code = 'collaborator' AND p.code IN ('affiliate:view', 'courses:view')
 ON CONFLICT DO NOTHING;
+
+-- ------------------------------------------------------------------------------
+-- 7. SUPABASE AUTH TRIGGER: TỰ ĐỘNG ĐỒNG BỘ AUTH.USERS -> PUBLIC.USERS
+-- ------------------------------------------------------------------------------
+-- Khi có tài khoản đăng ký qua Supabase Auth (auth.users), trigger này tự động
+-- tạo bản ghi tương ứng vào bảng public.users để hiển thị ngay trong Table Editor!
+
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS trigger AS $$
+BEGIN
+  INSERT INTO public.users (
+    id,
+    email,
+    password_hash,
+    full_name,
+    phone,
+    role_code,
+    status
+  )
+  VALUES (
+    new.id,
+    new.email,
+    'SUPABASE_AUTH_MANAGED',
+    COALESCE(new.raw_user_meta_data->>'full_name', split_part(new.email, '@', 1)),
+    COALESCE(new.raw_user_meta_data->>'phone', ''),
+    COALESCE(new.raw_user_meta_data->>'role', 'student'),
+    'active'
+  )
+  ON CONFLICT (id) DO UPDATE SET
+    full_name = EXCLUDED.full_name,
+    phone = EXCLUDED.phone,
+    updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Gắn trigger lắng nghe sự kiện INSERT trên auth.users
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
+

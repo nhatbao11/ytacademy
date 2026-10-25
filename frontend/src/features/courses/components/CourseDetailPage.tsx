@@ -45,7 +45,7 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
   const course = mockCourses.find((c) => c.id === propCourse.id) || propCourse
   const { t, i18n } = useTranslation()
   const currentLang = i18n.language?.startsWith('en') ? 'en' : 'vi'
-  const { addToCart, items } = useCartStore()
+  const { addToCart, items, openCart } = useCartStore()
   const { isLoggedIn, openAuthModal } = useAuthStore()
 
   // Dynamic localized fields for course data
@@ -165,10 +165,12 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
     if (!isLoggedIn) {
       openAuthModal('login', 'auth.loginToAddToCart', () => {
         addToCart(course)
+        openCart()
       })
       return
     }
     addToCart(course)
+    openCart()
   }
 
   const handleEnrollNow = () => {
