@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Search, UserPlus, Lock, Unlock, Mail, Phone } from 'lucide-react'
+import { Search, UserPlus, Lock, Unlock, Mail, Phone, Check } from 'lucide-react'
 import type { IAdminStudent } from '../types'
 
 interface StudentsTabProps {
@@ -122,7 +122,7 @@ export const AdminStudentsTab: React.FC<StudentsTabProps> = ({
           <tbody className="divide-y divide-slate-200 font-medium text-slate-700">
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={6} className="py-12 text-center text-slate-400">
+                <td colSpan={7} className="py-12 text-center text-slate-400">
                   Chưa có tài khoản học viên nào.
                 </td>
               </tr>
@@ -172,11 +172,30 @@ export const AdminStudentsTab: React.FC<StudentsTabProps> = ({
                   </select>
                 </td>
 
-                {/* Môn học đã kích hoạt */}
+                {/* Môn học đã đăng ký */}
                 <td className="py-3.5 px-4 text-center whitespace-nowrap">
-                  <span className="font-bold text-[#0B2545] px-2 py-0.5 bg-amber-100">
-                    {student.enrolledCourseIds.length} Môn ACCA
-                  </span>
+                  {student.enrolledCourseIds && student.enrolledCourseIds.length > 0 ? (
+                    <div className="inline-flex flex-col items-center gap-1">
+                      <span className="px-2 py-0.5 bg-emerald-600 text-white text-[10px] font-bold rounded-none flex items-center gap-1 shadow-2xs">
+                        <Check className="w-3 h-3 stroke-[3]" />
+                        <span>ĐÃ ĐĂNG KÝ ({student.enrolledCourseIds.length})</span>
+                      </span>
+                      <div className="flex flex-wrap gap-1 justify-center max-w-[200px]">
+                        {student.enrolledCourseIds.map((cid) => (
+                          <span
+                            key={cid}
+                            className="text-[10px] bg-slate-100 text-slate-800 font-semibold px-1.5 py-0.2 border border-slate-200 uppercase font-mono"
+                          >
+                            {cid.replace(/^c-/, '').toUpperCase()}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <span className="text-[11px] text-slate-400 italic">
+                      Chưa đăng ký môn nào
+                    </span>
+                  )}
                 </td>
 
                 {/* Tổng chi tiêu */}

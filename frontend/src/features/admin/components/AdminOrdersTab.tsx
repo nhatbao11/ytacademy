@@ -55,25 +55,25 @@ export const AdminOrdersTab: React.FC<OrdersTabProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-white p-5 border border-slate-200">
           <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
-            Doanh Thu Đã Thực Thu
+            Lượt Đã Đăng Ký Thành Công
           </span>
           <div className="text-2xl font-black text-emerald-600 mt-1">
-            {new Intl.NumberFormat('vi-VN').format(totalCollected)} đ
+            {orders.filter((o) => o.status === 'completed').length} Lượt Đăng Ký
           </div>
           <span className="text-[11px] text-slate-400 mt-0.5 block">
-            {orders.filter((o) => o.status === 'completed').length} đơn đã kích hoạt thành công
+            Tổng học phí: {new Intl.NumberFormat('vi-VN').format(totalCollected)} đ
           </span>
         </div>
 
         <div className="bg-white p-5 border border-slate-200">
           <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
-            Đang Chờ Kích Hoạt / Chuyển Khoản
+            Đăng Ký Chờ Xác Nhận
           </span>
           <div className="text-2xl font-black text-amber-600 mt-1">
-            {new Intl.NumberFormat('vi-VN').format(totalPending)} đ
+            {orders.filter((o) => o.status === 'pending').length} Yêu Cầu
           </div>
           <span className="text-[11px] text-slate-400 mt-0.5 block">
-            {orders.filter((o) => o.status === 'pending').length} đơn cần xác nhận
+            Tạm tính: {new Intl.NumberFormat('vi-VN').format(totalPending)} đ
           </span>
         </div>
 
@@ -140,10 +140,10 @@ export const AdminOrdersTab: React.FC<OrdersTabProps> = ({
             <tr>
               <th className="py-3 px-4">Mã Đơn Hàng</th>
               <th className="py-3 px-4">Học Viên & Liên Hệ</th>
-              <th className="py-3 px-4">Khóa Học Đăng Ký</th>
+              <th className="py-3 px-4">Môn Học Đã Đăng Ký</th>
               <th className="py-3 px-4">Số Tiền</th>
               <th className="py-3 px-4">Phương Thức</th>
-              <th className="py-3 px-4 text-center">Trạng Thái</th>
+              <th className="py-3 px-4 text-center">Trạng Thái Đăng Ký</th>
               <th className="py-3 px-4">Thời Gian</th>
               <th className="py-3 px-4 text-right">Xử Lý Đơn</th>
             </tr>
@@ -152,7 +152,7 @@ export const AdminOrdersTab: React.FC<OrdersTabProps> = ({
             {filtered.length === 0 ? (
               <tr>
                 <td colSpan={8} className="py-12 text-center text-slate-400">
-                  Chưa có đơn ghi danh học phí nào.
+                  Chưa có lượt đăng ký khóa học nào.
                 </td>
               </tr>
             ) : (
@@ -193,18 +193,18 @@ export const AdminOrdersTab: React.FC<OrdersTabProps> = ({
                 {/* Trạng thái */}
                 <td className="py-3.5 px-4 text-center whitespace-nowrap">
                   <span
-                    className={`inline-block px-2 py-0.5 text-[10px] font-bold uppercase ${
+                    className={`inline-block px-2.5 py-1 text-[10px] font-bold uppercase rounded-none shadow-2xs ${
                       order.status === 'completed'
-                        ? 'bg-emerald-100 text-emerald-800'
+                        ? 'bg-emerald-600 text-white border border-emerald-500'
                         : order.status === 'pending'
-                        ? 'bg-amber-100 text-amber-800 animate-pulse'
+                        ? 'bg-amber-100 text-amber-800 border border-amber-300 animate-pulse'
                         : 'bg-rose-100 text-rose-800'
                     }`}
                   >
                     {order.status === 'completed'
-                      ? '✓ Đã Thanh Toán'
+                      ? '✓ ĐÃ ĐĂNG KÝ'
                       : order.status === 'pending'
-                      ? '⏳ Chờ Thanh Toán'
+                      ? '⏳ Chờ Xác Nhận'
                       : 'Đã Hủy'}
                   </span>
                 </td>
@@ -222,9 +222,9 @@ export const AdminOrdersTab: React.FC<OrdersTabProps> = ({
                         type="button"
                         onClick={() => onApproveOrder(order.id)}
                         className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] uppercase rounded-none cursor-pointer"
-                        title="Xác nhận thanh toán và mở khóa học"
+                        title="Xác nhận đăng ký học viên"
                       >
-                        Kích Hoạt
+                        Xác Nhận Đăng Ký
                       </button>
                       <button
                         type="button"
@@ -236,8 +236,8 @@ export const AdminOrdersTab: React.FC<OrdersTabProps> = ({
                     </div>
                   )}
                   {order.status === 'completed' && (
-                    <span className="text-[11px] text-emerald-600 font-bold">
-                      Đã kích hoạt
+                    <span className="text-[11px] text-emerald-700 font-bold flex items-center justify-end gap-1">
+                      <span>✓ Đã đăng ký</span>
                     </span>
                   )}
                 </td>

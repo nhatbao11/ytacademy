@@ -89,7 +89,7 @@ export const AdminCoursesTab: React.FC<CoursesTabProps> = ({
               <th className="py-3 px-4">Môn Học</th>
               <th className="py-3 px-4">Cấp Độ & Hình Thức</th>
               <th className="py-3 px-4">Học Phí</th>
-              <th className="py-3 px-4 text-center">Học Viên</th>
+              <th className="py-3 px-4 text-center">Học Viên Đã Đăng Ký</th>
               <th className="py-3 px-4 text-center">Đánh Giá</th>
               <th className="py-3 px-4 text-center">Trạng Thái</th>
               <th className="py-3 px-4 text-right">Thao Tác</th>
@@ -133,10 +133,10 @@ export const AdminCoursesTab: React.FC<CoursesTabProps> = ({
                   )}
                 </td>
 
-                {/* Cột Học viên */}
+                {/* Cột Học viên đã đăng ký */}
                 <td className="py-3.5 px-4 text-center whitespace-nowrap">
-                  <span className="font-bold text-slate-900">{course.studentsCount}</span>
-                  <span className="text-slate-400 text-[10px] block">học viên</span>
+                  <span className="font-bold text-[#0B2545] text-sm">{course.studentsCount}</span>
+                  <span className="text-emerald-700 text-[10px] font-bold block">đã đăng ký</span>
                 </td>
 
                 {/* Cột Rating */}

@@ -223,7 +223,7 @@ export const AdminPage: React.FC = () => {
     },
     {
       id: 'orders',
-      label: 'Đơn Hàng & Học Phí',
+      label: 'Đăng Ký & Học Phí',
       icon: ShoppingBag,
       count: pendingOrdersCount || null,
       countBadgeColor: 'bg-rose-500 text-white animate-pulse',

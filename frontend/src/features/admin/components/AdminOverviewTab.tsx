@@ -309,10 +309,10 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
             <div>
               <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
                 <FileCheck2 className="w-4 h-4 text-amber-500" />
-                <span>Giao Dịch Học Phí Gần Nhất</span>
+                <span>Danh Sách Đăng Ký Khóa Học Mới Nhất</span>
               </h2>
               <p className="text-xs text-slate-500">
-                Các đơn đăng ký khóa học ACCA mới phát sinh trên hệ thống
+                Các học viên vừa đăng ký môn học ACCA trên hệ thống
               </p>
             </div>
             <button
@@ -320,7 +320,7 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
               onClick={() => onNavigateTab('orders')}
               className="text-xs font-bold text-amber-700 hover:underline cursor-pointer"
             >
-              Xem tất cả đơn hàng →
+              Xem tất cả danh sách đăng ký →
             </button>
           </div>
 
@@ -330,10 +330,10 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
                 <tr>
                   <th className="py-2.5 px-3">Mã đơn</th>
                   <th className="py-2.5 px-3">Học viên</th>
-                  <th className="py-2.5 px-3">Khóa học đăng ký</th>
+                  <th className="py-2.5 px-3">Môn học đã đăng ký</th>
                   <th className="py-2.5 px-3">Số tiền</th>
                   <th className="py-2.5 px-3">Phương thức</th>
-                  <th className="py-2.5 px-3">Trạng thái</th>
+                  <th className="py-2.5 px-3">Trạng thái đăng ký</th>
                   <th className="py-2.5 px-3 text-right">Thời gian</th>
                 </tr>
               </thead>
@@ -360,16 +360,16 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
                       <span
                         className={`px-2 py-0.5 text-[10px] font-bold uppercase ${
                           order.status === 'completed'
-                            ? 'bg-emerald-100 text-emerald-800'
+                            ? 'bg-emerald-600 text-white'
                             : order.status === 'pending'
-                            ? 'bg-amber-100 text-amber-800'
+                            ? 'bg-amber-100 text-amber-800 border border-amber-300'
                             : 'bg-rose-100 text-rose-800'
                         }`}
                       >
                         {order.status === 'completed'
-                          ? 'Đã duyệt'
+                          ? '✓ ĐÃ ĐĂNG KÝ'
                           : order.status === 'pending'
-                          ? 'Chờ duyệt'
+                          ? 'Chờ xác nhận'
                           : 'Đã hủy'}
                       </span>
                     </td>
