@@ -1,7 +1,8 @@
 /**
  * Admin Service for YT Academy (ytacademy.vn)
  * Truy vấn & tổng hợp 100% dữ liệu THỰC TẾ từ Supabase (users, user_enrolled_courses)
- * TUYỆT ĐỐI KHÔNG FAKE DỮ LIỆU.
+ * NGUYÊN TẮC: Học viên đăng ký khóa học KHÔNG CÓ NGHĨA LÀ ĐÃ THANH TOÁN.
+ * Mọi đơn đăng ký mặc định là CHƯA THANH TOÁN (pending) cho đến khi Admin xác nhận đã thu học phí.
  */
 import { supabase } from '../config/supabase'
 import type { IAdminCourse, IAdminStudent, IAdminOrder } from '../features/admin/types'
@@ -70,12 +71,22 @@ export const adminService = {
 
       const enrList = enrollments || []
 
+      // Đọc danh sách đơn đã được Admin bấm xác nhận thu tiền
+      let approvedOrderIds = new Set<string>()
+      try {
+        const approved = localStorage.getItem('yt_academy_approved_orders')
+        if (approved) {
+          approvedOrderIds = new Set(JSON.parse(approved))
+        }
+      } catch {
+        // ignore
+      }
+
       return users.map((u: any) => {
         const userEnrolled = enrList.filter((e: any) => e.user_id === u.id)
+        // ĐĂNG KÝ KHÔNG CÓ NGHĨA LÀ ĐÃ THANH TOÁN: Chỉ tính totalSpent nếu Admin đã xác nhận thu tiền
         const totalSpent = userEnrolled.reduce((sum: number, e: any) => {
-          // Đăng ký không có nghĩa là đã thanh toán - chỉ tính nếu thực sự đã thanh toán
-          const isPaid = e.payment_status === 'paid' || e.is_paid === true
-          if (!isPaid) return sum
+          if (!approvedOrderIds.has(e.id)) return sum
           const course = initialAdminCourses.find((c) => c.id === e.course_id)
           return sum + (course?.salePrice || 0)
         }, 0)
@@ -107,12 +118,24 @@ export const adminService = {
       const { users, enrollments } = await this.fetchRealDatabaseData()
       const userMap = new Map((users || []).map((u: any) => [u.id, u]))
 
+      // Đọc danh sách ID đơn đã được Admin chủ động bấm xác nhận đã thu học phí
+      let approvedOrderIds = new Set<string>()
+      try {
+        const approved = localStorage.getItem('yt_academy_approved_orders')
+        if (approved) {
+          approvedOrderIds = new Set(JSON.parse(approved))
+        }
+      } catch {
+        // ignore
+      }
+
       if (enrollments && enrollments.length > 0) {
         enrollments.forEach((e: any) => {
           const u = userMap.get(e.user_id)
           const course = initialAdminCourses.find((c) => c.id === e.course_id)
-          // Đăng ký môn học không có nghĩa là đã thanh toán - mặc định là chờ thu phí
-          const isPaid = e.payment_status === 'paid' || e.is_paid === true || e.status === 'paid'
+          // Đăng ký môn học KHÔNG CÓ NGHĨA là đã thanh toán: Mặc định 100% là pending (Chưa thanh toán)
+          const isPaid = approvedOrderIds.has(e.id)
+
           orders.push({
             id: e.id,
             orderCode: `REG-${e.id.toString().slice(0, 8).toUpperCase()}`,
@@ -125,7 +148,7 @@ export const adminService = {
             paymentMethod: 'VietQR / Chuyển khoản',
             status: isPaid ? 'completed' : 'pending',
             createdAt: e.enrolled_at ? e.enrolled_at.replace('T', ' ').slice(0, 19) : new Date().toISOString().replace('T', ' ').slice(0, 19),
-            note: 'Đã đăng ký học (Chưa thanh toán)',
+            note: isPaid ? 'Đã thu học phí' : 'Học viên đã đăng ký học (Chưa thanh toán học phí)',
           })
         })
       }
@@ -145,7 +168,11 @@ export const adminService = {
         const existingIds = new Set(orders.map((o) => o.id))
         realOnly.forEach((ro) => {
           if (!existingIds.has(ro.id)) {
-            orders.unshift(ro)
+            // Đảm bảo đơn mới gửi luôn là pending (Chưa thanh toán)
+            orders.unshift({
+              ...ro,
+              status: ro.status === 'completed' ? 'completed' : 'pending',
+            })
           }
         })
       }

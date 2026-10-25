@@ -133,14 +133,45 @@ export const AdminPage: React.FC = () => {
 
   // Handlers Đơn hàng
   const handleApproveOrder = (orderId: string) => {
-    setOrders(
-      orders.map((o) => (o.id === orderId ? { ...o, status: 'completed' } : o))
+    try {
+      const stored = localStorage.getItem('yt_academy_approved_orders')
+      const approvedIds = stored ? JSON.parse(stored) : []
+      if (!approvedIds.includes(orderId)) {
+        approvedIds.push(orderId)
+        localStorage.setItem('yt_academy_approved_orders', JSON.stringify(approvedIds))
+      }
+    } catch {
+      // ignore
+    }
+
+    setOrders((prev) =>
+      prev.map((o) => (o.id === orderId ? { ...o, status: 'completed', note: 'Đã xác nhận thu học phí' } : o))
+    )
+
+    setStudents((prev) =>
+      prev.map((s) => {
+        const order = orders.find((o) => o.id === orderId)
+        if (order && (order.studentEmail === s.email || order.studentName === s.name)) {
+          return { ...s, totalSpent: s.totalSpent + order.amount }
+        }
+        return s
+      })
     )
   }
 
   const handleCancelOrder = (orderId: string) => {
-    setOrders(
-      orders.map((o) => (o.id === orderId ? { ...o, status: 'cancelled' } : o))
+    try {
+      const stored = localStorage.getItem('yt_academy_approved_orders')
+      if (stored) {
+        const approvedIds = JSON.parse(stored).filter((id: string) => id !== orderId)
+        localStorage.setItem('yt_academy_approved_orders', JSON.stringify(approvedIds))
+      }
+    } catch {
+      // ignore
+    }
+
+    setOrders((prev) =>
+      prev.map((o) => (o.id === orderId ? { ...o, status: 'cancelled', note: 'Đã hủy đơn đăng ký' } : o))
     )
   }
 
