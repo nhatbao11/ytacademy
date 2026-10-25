@@ -243,11 +243,18 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Left Header Info */}
             <div className="lg:col-span-8 space-y-4">
-              <span className="inline-block px-3 py-1 bg-amber-400/20 text-amber-300 text-xs font-bold border border-amber-400/30 rounded-none">
-                {t('courseDetail.intlQualification')} • {displayLevel}
-              </span>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-block px-3 py-1 bg-amber-400/20 text-amber-300 text-xs font-bold border border-amber-400/30 rounded-none">
+                  {t('courseDetail.intlQualification')} • {displayLevel}
+                </span>
+                {isPurchased && (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-600 text-white text-xs font-bold rounded-none shadow-sm">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>{currentLang === 'en' ? 'YOU ARE ENROLLED' : 'BẠN ĐÃ ĐĂNG KÝ KHÓA NÀY'}</span>
+                  </span>
+                )}
+              </div>
 
               <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight leading-tight">
                 {displayTitle}
@@ -996,11 +1003,16 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
                             loading="lazy"
                             decoding="async"
                           />
-                          {rc.discountPercent > 0 && (
+                          {useAuthStore.getState().enrolledCourseIds?.includes(rc.id) ? (
+                            <span className="absolute top-2 left-2 px-2.5 py-1 bg-emerald-600 text-white font-bold text-[11px] shadow-sm rounded-none flex items-center gap-1 z-10 border border-emerald-400/30">
+                              <CheckCircle2 className="w-3.5 h-3.5" />
+                              <span>{currentLang === 'en' ? 'REGISTERED' : 'ĐÃ ĐĂNG KÝ'}</span>
+                            </span>
+                          ) : rc.discountPercent > 0 ? (
                             <span className="absolute top-2 left-2 px-2 py-0.5 bg-red-600 text-white font-black text-xs shadow-sm rounded-none">
                               -{rc.discountPercent}%
                             </span>
-                          )}
+                          ) : null}
                           <span className="absolute bottom-2 right-2 px-2 py-0.5 bg-slate-950/85 text-amber-300 text-[11px] font-bold flex items-center gap-1 rounded-none shadow-sm border border-white/10">
                             <PlayCircle className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                             <span>{rc.lessonsCount} {t('courses.videos')}</span>

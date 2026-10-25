@@ -6,6 +6,7 @@ import {
   User,
   LogOut,
   ChevronDown,
+  Check,
 } from 'lucide-react'
 import { BrandLogo } from '../common/BrandLogo'
 import { LanguageSwitcher } from './LanguageSwitcher'
@@ -29,7 +30,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const { t } = useTranslation()
   const { toggleCart, getTotalCount } = useCartStore()
-  const { isLoggedIn, user, logout, openAuthModal } = useAuthStore()
+  const { isLoggedIn, user, logout, openAuthModal, enrolledCourseIds } = useAuthStore()
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
 
   const cartCount = getTotalCount()
@@ -99,6 +100,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <p className="text-xs font-bold text-slate-900 truncate">{user?.name}</p>
                       <p className="text-[11px] text-slate-500 truncate">{user?.email}</p>
                     </div>
+                    {enrolledCourseIds && enrolledCourseIds.length > 0 && (
+                      <div className="px-3 py-1.5 border-b border-slate-100 bg-emerald-50 text-[11px] font-bold text-emerald-800 flex items-center gap-1.5">
+                        <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                        <span>Đã đăng ký: {enrolledCourseIds.length} môn</span>
+                      </div>
+                    )}
                     <button
                       type="button"
                       onClick={() => {

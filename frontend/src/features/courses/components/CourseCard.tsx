@@ -16,15 +16,17 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onSelectCourse }
   const { t, i18n } = useTranslation()
   const currentLang = i18n.language?.startsWith('en') ? 'en' : 'vi'
   const { addToCart, items, openCart } = useCartStore()
-  const { isLoggedIn, openAuthModal } = useAuthStore()
+  const { isLoggedIn, openAuthModal, enrolledCourseIds } = useAuthStore()
 
   const isInCart = items.some((item) => item.course.id === course.id)
+  const isEnrolled = isLoggedIn && (enrolledCourseIds || []).includes(course.id)
   const displayTitle = currentLang === 'en' && course.titleEn ? course.titleEn : course.title
   const displayDuration = currentLang === 'en' && course.durationHoursEn ? course.durationHoursEn : course.durationHours
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
+    if (isEnrolled) return
     if (!isLoggedIn) {
       openAuthModal('login', 'auth.loginToAddToCart', () => {
         addToCart(course)
@@ -52,11 +54,16 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onSelectCourse }
           decoding="async"
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 rounded-none"
         />
-        {course.discountPercent > 0 && (
+        {isEnrolled ? (
+          <span className="absolute top-2 left-2 px-2.5 py-1 bg-emerald-600 text-white font-black text-[11px] shadow-md rounded-none flex items-center gap-1 z-10 border border-emerald-400/30">
+            <Check className="w-3.5 h-3.5 stroke-[3]" />
+            <span>{currentLang === 'en' ? 'REGISTERED' : 'ĐÃ ĐĂNG KÝ'}</span>
+          </span>
+        ) : course.discountPercent > 0 ? (
           <span className="absolute top-2 left-2 px-2 py-0.5 bg-red-600 text-white font-black text-[11px] shadow-sm rounded-none">
             -{course.discountPercent}%
           </span>
-        )}
+        ) : null}
         <span className="absolute top-2 right-2 px-2 py-0.5 bg-slate-950/80 text-amber-300 text-[10px] font-bold flex items-center gap-1 rounded-none shadow-sm border border-white/10">
           <BookOpen className="w-3 h-3 text-amber-400 shrink-0" />
           <span>{displayDuration ? displayDuration : `${course.chapters?.length || course.lessonsCount} ${t('courses.lessonsUnit')}`}</span>
@@ -112,19 +119,29 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, onSelectCourse }
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={handleAddToCart}
-            className={`px-3 py-1.5 text-xs font-bold transition-all border rounded-none cursor-pointer flex items-center gap-1.5 ${
-              isInCart
-                ? 'bg-emerald-50 border-emerald-300 text-emerald-700'
-                : 'bg-amber-400 hover:bg-amber-500 border-amber-400 text-slate-950 active:scale-95'
-            }`}
-            title={isInCart ? t('courses.addedToCart') : t('courses.addToCart')}
-          >
-            {isInCart ? <Check className="w-3.5 h-3.5" /> : <ShoppingCart className="w-3.5 h-3.5" />}
-            <span>{isInCart ? (currentLang === 'en' ? 'Selected' : 'Đã chọn') : (currentLang === 'en' ? 'Register' : 'Đăng ký')}</span>
-          </button>
+          {isEnrolled ? (
+            <div
+              className="px-3 py-1.5 text-xs font-bold bg-emerald-600 text-white border border-emerald-600 rounded-none flex items-center gap-1.5 shadow-xs"
+              title={currentLang === 'en' ? 'Registered' : 'Đã đăng ký'}
+            >
+              <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+              <span>{currentLang === 'en' ? 'Registered' : 'Đã đăng ký'}</span>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={handleAddToCart}
+              className={`px-3 py-1.5 text-xs font-bold transition-all border rounded-none cursor-pointer flex items-center gap-1.5 ${
+                isInCart
+                  ? 'bg-emerald-50 border-emerald-300 text-emerald-700'
+                  : 'bg-amber-400 hover:bg-amber-500 border-amber-400 text-slate-950 active:scale-95'
+              }`}
+              title={isInCart ? t('courses.addedToCart') : t('courses.addToCart')}
+            >
+              {isInCart ? <Check className="w-3.5 h-3.5" /> : <ShoppingCart className="w-3.5 h-3.5" />}
+              <span>{isInCart ? (currentLang === 'en' ? 'Selected' : 'Đã chọn') : (currentLang === 'en' ? 'Register' : 'Đăng ký')}</span>
+            </button>
+          )}
         </div>
       </div>
     </Link>

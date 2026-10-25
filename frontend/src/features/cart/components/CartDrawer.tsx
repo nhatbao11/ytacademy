@@ -29,7 +29,7 @@ export const CartDrawer: React.FC = () => {
     getSubtotal,
     getTotal,
   } = useCartStore()
-  const { isLoggedIn, user, openAuthModal, addEnrolledCourse } = useAuthStore()
+  const { isLoggedIn, user, openAuthModal, addEnrolledCourse, enrolledCourseIds } = useAuthStore()
 
   const [inputCode, setInputCode] = useState('')
   const [voucherNotice, setVoucherNotice] = useState<{ text: string; success: boolean } | null>(null)
@@ -178,6 +178,11 @@ export const CartDrawer: React.FC = () => {
                           <span className="text-[11px] text-slate-500 block truncate">
                             {course.instructor.name}
                           </span>
+                          {isLoggedIn && (enrolledCourseIds || []).includes(course.id) && (
+                            <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 border border-emerald-200 inline-block mt-0.5">
+                              ✓ {currentLang === 'en' ? 'Already registered' : 'Đã đăng ký trước đó'}
+                            </span>
+                          )}
                         </div>
                         <div className="flex items-center justify-between pt-1">
                           <span className="text-xs font-extrabold text-[#0B2545]">
