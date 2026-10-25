@@ -100,7 +100,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           phone: phone.trim(),
         })
 
-        if (!res.success && res.message && !res.message.includes('kết nối')) {
+        const isNetworkFailure =
+          !res.success &&
+          res.message &&
+          (res.message.includes('kết nối') ||
+            res.message.toLowerCase().includes('failed to fetch') ||
+            res.message.toLowerCase().includes('network'))
+
+        if (!res.success && res.message && !isNetworkFailure) {
           setValidationError(res.message)
           setIsSubmitting(false)
           return
@@ -118,7 +125,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               roles: res.data?.user.roles || ['student'],
               token: res.data?.token,
             },
-            res.data?.enrolledCourseIds || ['c-fa'],
+            res.data?.enrolledCourseIds || ['c-fa-group4', 'c-fa'],
             res.data?.token
           )
           setIsSuccess(false)
@@ -133,7 +140,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           password: password || 'Hocvien@123456',
         })
 
-        if (!res.success && res.message && !res.message.includes('kết nối')) {
+        const isNetworkFailure =
+          !res.success &&
+          res.message &&
+          (res.message.includes('kết nối') ||
+            res.message.toLowerCase().includes('failed to fetch') ||
+            res.message.toLowerCase().includes('network'))
+
+        if (!res.success && res.message && !isNetworkFailure) {
           setValidationError(res.message)
           setIsSubmitting(false)
           return
