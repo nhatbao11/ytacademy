@@ -114,7 +114,7 @@ export const AdminStudentsTab: React.FC<StudentsTabProps> = ({
               <th className="py-3 px-4">Số Điện Thoại</th>
               <th className="py-3 px-4">Vai Trò (Role RBAC)</th>
               <th className="py-3 px-4 text-center">Khóa Học Đã Đăng Ký</th>
-              <th className="py-3 px-4">Tổng Học Phí</th>
+              <th className="py-3 px-4 text-center">Tình Trạng Học Phí</th>
               <th className="py-3 px-4 text-center">Trạng Thái</th>
               <th className="py-3 px-4 text-right">Khóa / Mở</th>
             </tr>
@@ -198,9 +198,31 @@ export const AdminStudentsTab: React.FC<StudentsTabProps> = ({
                   )}
                 </td>
 
-                {/* Tổng chi tiêu */}
-                <td className="py-3.5 px-4 whitespace-nowrap font-bold text-slate-900">
-                  {new Intl.NumberFormat('vi-VN').format(student.totalSpent)} đ
+                {/* Tình trạng học phí */}
+                <td className="py-3.5 px-4 text-center whitespace-nowrap">
+                  {student.totalSpent > 0 ? (
+                    <div>
+                      <div className="font-bold text-emerald-700">
+                        {new Intl.NumberFormat('vi-VN').format(student.totalSpent)} đ
+                      </div>
+                      <span className="text-[10px] text-emerald-800 bg-emerald-50 px-1.5 py-0.2 border border-emerald-200 font-semibold inline-block">
+                        ✓ Đã thanh toán
+                      </span>
+                    </div>
+                  ) : student.enrolledCourseIds && student.enrolledCourseIds.length > 0 ? (
+                    <div>
+                      <div className="font-bold text-amber-700">
+                        Chờ đóng phí
+                      </div>
+                      <span className="text-[10px] text-amber-800 bg-amber-50 px-1.5 py-0.2 border border-amber-200 font-bold inline-block">
+                        Chưa thanh toán
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="text-[11px] text-slate-400">
+                      Chưa phát sinh
+                    </span>
+                  )}
                 </td>
 
                 {/* Trạng thái */}

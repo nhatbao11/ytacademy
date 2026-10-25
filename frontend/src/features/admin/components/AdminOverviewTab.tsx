@@ -74,7 +74,7 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
 
       {/* 4 THẺ CHỈ SỐ KPI CHÍNH */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* KPI 1: Doanh thu */}
+        {/* KPI 1: Doanh thu thực thu */}
         <div className="bg-white p-5 border border-slate-200 rounded-none shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
@@ -89,16 +89,18 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
               {new Intl.NumberFormat('vi-VN').format(totalRevenue)} đ
             </div>
             <div className="text-xs text-slate-500 mt-1 font-medium">
-              Từ {completedOrders.length} đơn hoàn tất học phí
+              {completedOrders.length > 0
+                ? `Từ ${completedOrders.length} học viên đã đóng học phí`
+                : 'Chưa có đơn hoàn tất thanh toán'}
             </div>
           </div>
         </div>
 
-        {/* KPI 2: Tổng học viên */}
+        {/* KPI 2: Học viên đã đăng ký */}
         <div className="bg-white p-5 border border-slate-200 rounded-none shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              Học viên thực tế
+              Học viên đã đăng ký
             </span>
             <div className="w-9 h-9 bg-blue-50 text-blue-600 flex items-center justify-center rounded-none">
               <Users className="w-5 h-5" />
@@ -109,7 +111,7 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
               {totalStudents} Học viên
             </div>
             <div className="text-xs text-slate-500 mt-1 font-medium">
-              Đồng bộ từ Database Supabase
+              Đã ghi danh tài khoản & khóa học
             </div>
           </div>
         </div>
@@ -328,12 +330,13 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
             <table className="w-full text-left text-xs">
               <thead className="bg-slate-50 text-slate-600 font-bold uppercase text-[10px] border-b border-slate-200">
                 <tr>
-                  <th className="py-2.5 px-3">Mã đơn</th>
+                  <th className="py-2.5 px-3">Mã đăng ký</th>
                   <th className="py-2.5 px-3">Học viên</th>
                   <th className="py-2.5 px-3">Môn học đã đăng ký</th>
-                  <th className="py-2.5 px-3">Số tiền</th>
-                  <th className="py-2.5 px-3">Phương thức</th>
-                  <th className="py-2.5 px-3">Trạng thái đăng ký</th>
+                  <th className="py-2.5 px-3">Học phí tạm tính</th>
+                  <th className="py-2.5 px-3">Hình thức</th>
+                  <th className="py-2.5 px-3 text-center">Ghi danh</th>
+                  <th className="py-2.5 px-3 text-center">Tình trạng học phí</th>
                   <th className="py-2.5 px-3 text-right">Thời gian</th>
                 </tr>
               </thead>
@@ -356,20 +359,25 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
                     <td className="py-2.5 px-3 text-slate-600">
                       {order.paymentMethod}
                     </td>
-                    <td className="py-2.5 px-3">
+                    <td className="py-2.5 px-3 text-center">
+                      <span className="px-2 py-0.5 text-[10px] font-bold uppercase bg-emerald-600 text-white rounded-none">
+                        ✓ ĐÃ ĐĂNG KÝ
+                      </span>
+                    </td>
+                    <td className="py-2.5 px-3 text-center">
                       <span
                         className={`px-2 py-0.5 text-[10px] font-bold uppercase ${
                           order.status === 'completed'
-                            ? 'bg-emerald-600 text-white'
+                            ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
                             : order.status === 'pending'
                             ? 'bg-amber-100 text-amber-800 border border-amber-300'
                             : 'bg-rose-100 text-rose-800'
                         }`}
                       >
                         {order.status === 'completed'
-                          ? '✓ ĐÃ ĐĂNG KÝ'
+                          ? '✓ Đã nộp học phí'
                           : order.status === 'pending'
-                          ? 'Chờ xác nhận'
+                          ? 'Chưa thanh toán'
                           : 'Đã hủy'}
                       </span>
                     </td>

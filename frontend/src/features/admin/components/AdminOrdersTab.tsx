@@ -32,58 +32,62 @@ export const AdminOrdersTab: React.FC<OrdersTabProps> = ({
   const totalPending = orders
     .filter((o) => o.status === 'pending')
     .reduce((sum, o) => sum + o.amount, 0)
+  const totalRegisteredTuition = orders.reduce((sum, o) => sum + o.amount, 0)
 
   const handleExportCSV = () => {
-    const headers = 'Mã Đơn,Học Viên,Email,SĐT,Khóa Học,Học Phí,Hình Thức,Trạng Thái,Thời Gian\n'
+    const headers = 'Mã Đơn,Học Viên,Email,SĐT,Khóa Học,Học Phí,Hình Thức,Trạng Thái Ghi Danh,Thanh Toán,Thời Gian\n'
     const rows = filtered
       .map(
         (o) =>
-          `"${o.orderCode}","${o.studentName}","${o.studentEmail}","${o.studentPhone}","${o.courseName}",${o.amount},"${o.paymentMethod}","${o.status}","${o.createdAt}"`
+          `"${o.orderCode}","${o.studentName}","${o.studentEmail}","${o.studentPhone}","${o.courseName}",${o.amount},"${o.paymentMethod}","Đã Đăng Ký","${o.status === 'completed' ? 'Đã Thanh Toán' : 'Chưa Thanh Toán'}","${o.createdAt}"`
       )
       .join('\n')
     const blob = new Blob(['\uFEFF' + headers + rows], { type: 'text/csv;charset=utf-8;' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `YT_Academy_Don_Hang_${new Date().toISOString().split('T')[0]}.csv`
+    a.download = `YT_Academy_Danh_Sach_Dang_Ky_${new Date().toISOString().split('T')[0]}.csv`
     a.click()
   }
 
   return (
     <div className="space-y-5 w-full">
-      {/* Top Banner KPI Đơn hàng */}
+      {/* Top Banner KPI Đơn hàng & Đăng ký */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-white p-5 border border-slate-200">
           <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
-            Lượt Đã Đăng Ký Thành Công
+            Tổng Lượt Học Viên Đăng Ký
           </span>
-          <div className="text-2xl font-black text-emerald-600 mt-1">
-            {orders.filter((o) => o.status === 'completed').length} Lượt Đăng Ký
+          <div className="text-2xl font-black text-slate-900 mt-1">
+            {orders.length} Lượt Đăng Ký
           </div>
-          <span className="text-[11px] text-slate-400 mt-0.5 block">
-            Tổng học phí: {new Intl.NumberFormat('vi-VN').format(totalCollected)} đ
+          <span className="text-[11px] text-slate-500 mt-0.5 block">
+            Học phí tạm tính: {new Intl.NumberFormat('vi-VN').format(totalRegisteredTuition)} đ
           </span>
         </div>
 
         <div className="bg-white p-5 border border-slate-200">
-          <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
-            Đăng Ký Chờ Xác Nhận
+          <span className="text-xs font-bold text-amber-700 uppercase tracking-wider block">
+            Đã Đăng Ký (Chưa Thanh Toán)
           </span>
           <div className="text-2xl font-black text-amber-600 mt-1">
             {orders.filter((o) => o.status === 'pending').length} Yêu Cầu
           </div>
-          <span className="text-[11px] text-slate-400 mt-0.5 block">
-            Tạm tính: {new Intl.NumberFormat('vi-VN').format(totalPending)} đ
+          <span className="text-[11px] text-amber-800/80 mt-0.5 block">
+            Học phí chờ đóng: {new Intl.NumberFormat('vi-VN').format(totalPending)} đ
           </span>
         </div>
 
         <div className="bg-white p-5 border border-slate-200 flex flex-col justify-between">
           <div>
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
-              Xuất Báo Cáo Kế Toán
+            <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider block">
+              Doanh Thu Thực Thu
             </span>
-            <span className="text-xs text-slate-600 mt-1 block">
-              Tải file CSV danh sách thanh toán để đối soát số dư ngân hàng
+            <div className="text-2xl font-black text-emerald-600 mt-1">
+              {new Intl.NumberFormat('vi-VN').format(totalCollected)} đ
+            </div>
+            <span className="text-[11px] text-slate-500 mt-0.5 block">
+              {orders.filter((o) => o.status === 'completed').length} học viên đã hoàn tất nộp phí
             </span>
           </div>
           <button
@@ -92,7 +96,7 @@ export const AdminOrdersTab: React.FC<OrdersTabProps> = ({
             className="mt-3 py-2 px-3.5 bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs uppercase flex items-center justify-center gap-2 cursor-pointer transition-colors"
           >
             <Download className="w-3.5 h-3.5 text-amber-400" />
-            <span>Tải Báo Cáo CSV (Excel)</span>
+            <span>Tải Danh Sách CSV (Excel)</span>
           </button>
         </div>
       </div>
@@ -138,20 +142,21 @@ export const AdminOrdersTab: React.FC<OrdersTabProps> = ({
         <table className="w-full text-left text-xs">
           <thead className="bg-[#0B2545] text-white uppercase text-[11px] font-bold tracking-wider">
             <tr>
-              <th className="py-3 px-4">Mã Đơn Hàng</th>
+              <th className="py-3 px-4">Mã Đăng Ký</th>
               <th className="py-3 px-4">Học Viên & Liên Hệ</th>
               <th className="py-3 px-4">Môn Học Đã Đăng Ký</th>
-              <th className="py-3 px-4">Số Tiền</th>
-              <th className="py-3 px-4">Phương Thức</th>
-              <th className="py-3 px-4 text-center">Trạng Thái Đăng Ký</th>
+              <th className="py-3 px-4">Học Phí Tạm Tính</th>
+              <th className="py-3 px-4">Hình Thức</th>
+              <th className="py-3 px-4 text-center">Ghi Danh</th>
+              <th className="py-3 px-4 text-center">Tình Trạng Học Phí</th>
               <th className="py-3 px-4">Thời Gian</th>
-              <th className="py-3 px-4 text-right">Xử Lý Đơn</th>
+              <th className="py-3 px-4 text-right">Xử Lý Học Phí</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-200 font-medium text-slate-700">
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={8} className="py-12 text-center text-slate-400">
+                <td colSpan={9} className="py-12 text-center text-slate-400">
                   Chưa có lượt đăng ký khóa học nào.
                 </td>
               </tr>
@@ -190,22 +195,29 @@ export const AdminOrdersTab: React.FC<OrdersTabProps> = ({
                   </span>
                 </td>
 
-                {/* Trạng thái */}
+                {/* Trạng thái Ghi Danh */}
+                <td className="py-3.5 px-4 text-center whitespace-nowrap">
+                  <span className="inline-block px-2.5 py-1 text-[10px] font-bold uppercase rounded-none bg-emerald-600 text-white shadow-2xs">
+                    ✓ ĐÃ ĐĂNG KÝ
+                  </span>
+                </td>
+
+                {/* Tình Trạng Học Phí */}
                 <td className="py-3.5 px-4 text-center whitespace-nowrap">
                   <span
                     className={`inline-block px-2.5 py-1 text-[10px] font-bold uppercase rounded-none shadow-2xs ${
                       order.status === 'completed'
-                        ? 'bg-emerald-600 text-white border border-emerald-500'
+                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
                         : order.status === 'pending'
                         ? 'bg-amber-100 text-amber-800 border border-amber-300 animate-pulse'
                         : 'bg-rose-100 text-rose-800'
                     }`}
                   >
                     {order.status === 'completed'
-                      ? '✓ ĐÃ ĐĂNG KÝ'
+                      ? '✓ ĐÃ THANH TOÁN'
                       : order.status === 'pending'
-                      ? '⏳ Chờ Xác Nhận'
-                      : 'Đã Hủy'}
+                      ? '⏳ CHƯA THANH TOÁN'
+                      : 'ĐÃ HỦY'}
                   </span>
                 </td>
 
@@ -222,9 +234,9 @@ export const AdminOrdersTab: React.FC<OrdersTabProps> = ({
                         type="button"
                         onClick={() => onApproveOrder(order.id)}
                         className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] uppercase rounded-none cursor-pointer"
-                        title="Xác nhận đăng ký học viên"
+                        title="Xác nhận học viên đã thanh toán học phí"
                       >
-                        Xác Nhận Đăng Ký
+                        Xác Nhận Đã Thu Tiền
                       </button>
                       <button
                         type="button"
@@ -237,7 +249,7 @@ export const AdminOrdersTab: React.FC<OrdersTabProps> = ({
                   )}
                   {order.status === 'completed' && (
                     <span className="text-[11px] text-emerald-700 font-bold flex items-center justify-end gap-1">
-                      <span>✓ Đã đăng ký</span>
+                      <span>✓ Đã thu học phí</span>
                     </span>
                   )}
                 </td>

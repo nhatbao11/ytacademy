@@ -73,6 +73,9 @@ export const adminService = {
       return users.map((u: any) => {
         const userEnrolled = enrList.filter((e: any) => e.user_id === u.id)
         const totalSpent = userEnrolled.reduce((sum: number, e: any) => {
+          // Đăng ký không có nghĩa là đã thanh toán - chỉ tính nếu thực sự đã thanh toán
+          const isPaid = e.payment_status === 'paid' || e.is_paid === true
+          if (!isPaid) return sum
           const course = initialAdminCourses.find((c) => c.id === e.course_id)
           return sum + (course?.salePrice || 0)
         }, 0)
@@ -108,6 +111,8 @@ export const adminService = {
         enrollments.forEach((e: any) => {
           const u = userMap.get(e.user_id)
           const course = initialAdminCourses.find((c) => c.id === e.course_id)
+          // Đăng ký môn học không có nghĩa là đã thanh toán - mặc định là chờ thu phí
+          const isPaid = e.payment_status === 'paid' || e.is_paid === true || e.status === 'paid'
           orders.push({
             id: e.id,
             orderCode: `REG-${e.id.toString().slice(0, 8).toUpperCase()}`,
@@ -118,9 +123,9 @@ export const adminService = {
             courseName: course?.title || e.course_id,
             amount: course?.salePrice || 0,
             paymentMethod: 'VietQR / Chuyển khoản',
-            status: e.status === 'active' ? 'completed' : 'pending',
+            status: isPaid ? 'completed' : 'pending',
             createdAt: e.enrolled_at ? e.enrolled_at.replace('T', ' ').slice(0, 19) : new Date().toISOString().replace('T', ' ').slice(0, 19),
-            note: 'Đăng ký thành công từ website',
+            note: 'Đã đăng ký học (Chưa thanh toán)',
           })
         })
       }
