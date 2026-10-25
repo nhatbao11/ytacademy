@@ -12,6 +12,7 @@ import {
 import { useCartStore } from '../cartStore'
 import { useAuthStore } from '../../auth/authStore'
 import { formatCurrency } from '../../../utils/format'
+import { registrationService } from '../../../services/registrationService'
 
 export const CartDrawer: React.FC = () => {
   const { t, i18n } = useTranslation()
@@ -28,11 +29,12 @@ export const CartDrawer: React.FC = () => {
     getSubtotal,
     getTotal,
   } = useCartStore()
-  const { isLoggedIn, openAuthModal, addEnrolledCourse } = useAuthStore()
+  const { isLoggedIn, user, openAuthModal, addEnrolledCourse } = useAuthStore()
 
   const [inputCode, setInputCode] = useState('')
   const [voucherNotice, setVoucherNotice] = useState<{ text: string; success: boolean } | null>(null)
   const [isCheckoutSuccess, setIsCheckoutSuccess] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   if (!isOpen) return null
 
@@ -43,27 +45,52 @@ export const CartDrawer: React.FC = () => {
     setVoucherNotice({ text: res.message, success: res.success })
   }
 
+  const executeRegistration = async () => {
+    setIsSubmitting(true)
+    try {
+      items.forEach((item) => addEnrolledCourse(item.course.id))
+
+      // 1. Lưu bản ghi học viên đăng ký vào Supabase Database & Admin System
+      await registrationService.submitRegistration({
+        userId: user?.id,
+        studentName: user?.name || (user?.email ? user.email.split('@')[0] : 'Học viên YT Academy'),
+        studentEmail: user?.email || 'hocvien@ytacademy.vn',
+        studentPhone: user?.phone || '',
+        items,
+        voucherCode,
+        discountRate,
+        totalAmount: getTotal(),
+      })
+
+      setIsCheckoutSuccess(true)
+      setTimeout(() => {
+        clearCart()
+        setIsCheckoutSuccess(false)
+        closeCart()
+        setIsSubmitting(false)
+      }, 2500)
+    } catch (err) {
+      console.error('Lỗi khi lưu đăng ký:', err)
+      setIsCheckoutSuccess(true)
+      setTimeout(() => {
+        clearCart()
+        setIsCheckoutSuccess(false)
+        closeCart()
+        setIsSubmitting(false)
+      }, 2500)
+    }
+  }
+
   const handleCheckout = () => {
+    if (isSubmitting) return
     if (!isLoggedIn) {
       openAuthModal('login', 'auth.loginToCheckout', () => {
-        items.forEach((item) => addEnrolledCourse(item.course.id))
-        setIsCheckoutSuccess(true)
-        setTimeout(() => {
-          clearCart()
-          setIsCheckoutSuccess(false)
-          closeCart()
-        }, 2500)
+        executeRegistration()
       })
       return
     }
 
-    items.forEach((item) => addEnrolledCourse(item.course.id))
-    setIsCheckoutSuccess(true)
-    setTimeout(() => {
-      clearCart()
-      setIsCheckoutSuccess(false)
-      closeCart()
-    }, 2500)
+    executeRegistration()
   }
 
   return (

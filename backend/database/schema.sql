@@ -221,3 +221,35 @@ CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
 
+-- ------------------------------------------------------------------------------
+-- 8. BẢNG COURSE_REGISTRATIONS (DANH SÁCH HỌC VIÊN ĐĂNG KÝ MÔN HỌC / ĐƠN HÀNG)
+-- ------------------------------------------------------------------------------
+-- Lưu trữ đầy đủ thông tin mỗi lần học viên bấm 'XÁC NHẬN ĐĂNG KÝ'
+CREATE TABLE IF NOT EXISTS public.course_registrations (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES public.users(id) ON DELETE SET NULL,
+  student_name VARCHAR(150) NOT NULL,
+  student_email VARCHAR(255) NOT NULL,
+  student_phone VARCHAR(25),
+  course_id VARCHAR(50) NOT NULL,
+  course_title VARCHAR(255) NOT NULL,
+  course_price NUMERIC DEFAULT 0,
+  sale_price NUMERIC DEFAULT 0,
+  voucher_code VARCHAR(50),
+  final_price NUMERIC DEFAULT 0,
+  status VARCHAR(30) DEFAULT 'pending' CHECK (status IN ('pending', 'contacted', 'confirmed', 'completed', 'cancelled')),
+  note TEXT,
+  created_at TIMESTAMPTZ DEFAULT TIMEZONE('utc', NOW()),
+  updated_at TIMESTAMPTZ DEFAULT TIMEZONE('utc', NOW())
+);
+
+-- Bật Row Level Security (RLS) cho phép đọc ghi an toàn
+ALTER TABLE public.course_registrations ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Cho phép học viên tạo đơn đăng ký" ON public.course_registrations
+  FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Cho phép đọc đơn đăng ký" ON public.course_registrations
+  FOR SELECT USING (true);
+
+

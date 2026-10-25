@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { registrationService } from '../../services/registrationService'
 import {
   LayoutDashboard,
   BookOpen,
@@ -68,6 +69,28 @@ export const AdminPage: React.FC = () => {
   const [activations, setActivations] = useState<IAdminActivationCode[]>(initialAdminActivations)
   const [vouchers, setVouchers] = useState<IAdminVoucher[]>(initialAdminVouchers)
   const [materials, setMaterials] = useState<IAdminMaterial[]>(initialAdminMaterials)
+
+  // Đồng bộ đơn đăng ký thực tế từ Supabase & LocalStorage
+  useEffect(() => {
+    registrationService.getAllOrders().then((loaded) => {
+      if (loaded && loaded.length > 0) {
+        setOrders(loaded)
+      }
+    })
+
+    const handleUpdated = () => {
+      registrationService.getAllOrders().then((loaded) => {
+        if (loaded) {
+          setOrders(loaded)
+        }
+      })
+    }
+
+    window.addEventListener('yt:orders_updated', handleUpdated)
+    return () => {
+      window.removeEventListener('yt:orders_updated', handleUpdated)
+    }
+  }, [])
 
   // Handlers Khóa học
   const handleAddCourse = (newCourse: IAdminCourse) => {
