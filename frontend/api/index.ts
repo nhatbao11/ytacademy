@@ -151,9 +151,34 @@ export default async function handler(req: any, res: any) {
     }
   }
 
+  // 4. Admin Data: GET /api/admin/data
+  if (url.includes('/admin/data')) {
+    try {
+      const { data: users, error: uErr } = await supabase
+        .from('users')
+        .select('*')
+        .order('created_at', { ascending: false })
+
+      const { data: enrollments } = await supabase
+        .from('user_enrolled_courses')
+        .select('*')
+        .order('enrolled_at', { ascending: false })
+
+      return res.status(200).json({
+        success: true,
+        data: {
+          users: users || [],
+          enrollments: enrollments || [],
+        },
+      })
+    } catch (err: any) {
+      return res.status(500).json({ success: false, message: err.message })
+    }
+  }
+
   // Default handler
   return res.status(200).json({
     message: 'YT Academy API Service is online on Vercel!',
-    endpoints: ['/api/health', '/api/auth/register', '/api/auth/login'],
+    endpoints: ['/api/health', '/api/auth/register', '/api/auth/login', '/api/admin/data'],
   })
 }

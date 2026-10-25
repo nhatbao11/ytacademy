@@ -9,35 +9,84 @@ import { initialAdminCourses } from '../features/admin/adminData'
 
 export const adminService = {
   /**
-   * Lấy danh sách học viên THỰC TẾ từ Supabase
+   * Lấy dữ liệu thực tế từ API Backend (Sử dụng service role key để vượt qua RLS của Supabase)
    */
-  async getRealStudents(): Promise<IAdminStudent[]> {
+  async fetchRealDatabaseData(): Promise<{ users: any[]; enrollments: any[] }> {
+    // 1. Thử gọi API Backend /api/admin/data
     try {
-      const { data: users, error: uErr } = await supabase
+      const res = await fetch('/api/admin/data')
+      if (res.ok) {
+        const json = await res.json()
+        if (json.success && json.data && json.data.users && json.data.users.length > 0) {
+          return json.data
+        }
+      }
+    } catch {
+      // ignore
+    }
+
+    // 2. Thử gọi /api/v1/admin/data
+    try {
+      const res = await fetch('/api/v1/admin/data')
+      if (res.ok) {
+        const json = await res.json()
+        if (json.success && json.data && json.data.users && json.data.users.length > 0) {
+          return json.data
+        }
+      }
+    } catch {
+      // ignore
+    }
+
+    // 3. Fallback: Trực tiếp qua Supabase client
+    try {
+      const { data: users } = await supabase
         .from('users')
         .select('*')
         .order('created_at', { ascending: false })
 
-      if (uErr || !users) return []
-
       const { data: enrollments } = await supabase
         .from('user_enrolled_courses')
         .select('*')
+        .order('enrolled_at', { ascending: false })
+
+      return {
+        users: users || [],
+        enrollments: enrollments || [],
+      }
+    } catch {
+      return { users: [], enrollments: [] }
+    }
+  },
+
+  /**
+   * Lấy danh sách học viên THỰC TẾ từ Supabase
+   */
+  async getRealStudents(): Promise<IAdminStudent[]> {
+    try {
+      const { users, enrollments } = await this.fetchRealDatabaseData()
+
+      if (!users || users.length === 0) return []
 
       const enrList = enrollments || []
 
       return users.map((u: any) => {
         const userEnrolled = enrList.filter((e: any) => e.user_id === u.id)
+        const totalSpent = userEnrolled.reduce((sum: number, e: any) => {
+          const course = initialAdminCourses.find((c) => c.id === e.course_id)
+          return sum + (course?.salePrice || 0)
+        }, 0)
+
         return {
           id: u.id,
-          name: u.full_name || u.email.split('@')[0],
+          name: u.full_name || (u.email ? u.email.split('@')[0] : 'Học viên YT Academy'),
           email: u.email,
           phone: u.phone || 'Chưa cập nhật',
           role: u.role_code || 'student',
           enrolledCourseIds: userEnrolled.map((e: any) => e.course_id),
           status: (u.status as any) || 'active',
           registeredAt: u.created_at ? u.created_at.split('T')[0] : new Date().toISOString().split('T')[0],
-          totalSpent: 0,
+          totalSpent,
         }
       })
     } catch {
@@ -52,12 +101,7 @@ export const adminService = {
     const orders: IAdminOrder[] = []
 
     try {
-      const { data: enrollments } = await supabase
-        .from('user_enrolled_courses')
-        .select('*')
-        .order('enrolled_at', { ascending: false })
-
-      const { data: users } = await supabase.from('users').select('*')
+      const { users, enrollments } = await this.fetchRealDatabaseData()
       const userMap = new Map((users || []).map((u: any) => [u.id, u]))
 
       if (enrollments && enrollments.length > 0) {
@@ -75,7 +119,7 @@ export const adminService = {
             amount: course?.salePrice || 0,
             paymentMethod: 'VietQR / Chuyển khoản',
             status: e.status === 'active' ? 'completed' : 'pending',
-            createdAt: e.enrolled_at || new Date().toISOString(),
+            createdAt: e.enrolled_at ? e.enrolled_at.replace('T', ' ').slice(0, 19) : new Date().toISOString().replace('T', ' ').slice(0, 19),
             note: 'Đăng ký thành công từ website',
           })
         })
