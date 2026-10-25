@@ -1209,26 +1209,39 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
-          <button
-            type="button"
-            onClick={handleAddToCart}
-            className={`p-2.5 border transition-all rounded-none cursor-pointer ${
-              isInCart
-                ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
-                : 'bg-slate-100 text-[#0B2545] border-slate-300 hover:bg-slate-200'
-            }`}
-            title={isInCart ? t('courseDetail.inCartBtn') : t('courseDetail.addToCartBtn')}
-          >
-            <ShoppingCart className="w-4 h-4" />
-          </button>
+          {isPurchased ? (
+            <button
+              type="button"
+              onClick={onGoToClassroom}
+              className="px-4 py-2.5 bg-emerald-600 text-white font-black text-xs uppercase tracking-wider rounded-none flex items-center gap-1.5 cursor-pointer shadow-sm"
+            >
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>{t('courseDetail.enterClassroomNow')}</span>
+            </button>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                className={`p-2.5 border transition-all rounded-none cursor-pointer ${
+                  isInCart
+                    ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
+                    : 'bg-slate-100 text-[#0B2545] border-slate-300 hover:bg-slate-200'
+                }`}
+                title={isInCart ? t('courseDetail.inCartBtn') : t('courseDetail.addToCartBtn')}
+              >
+                <ShoppingCart className="w-4 h-4" />
+              </button>
 
-          <button
-            type="button"
-            onClick={handleEnrollNow}
-            className="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-black text-xs uppercase tracking-wider transition-all rounded-none cursor-pointer shadow-md active:scale-95"
-          >
-            {t('courseDetail.enrollNow')}
-          </button>
+              <button
+                type="button"
+                onClick={handleEnrollNow}
+                className="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-black text-xs uppercase tracking-wider transition-all rounded-none cursor-pointer shadow-md active:scale-95"
+              >
+                {t('courseDetail.enrollNow')}
+              </button>
+            </>
+          )}
         </div>
       </div>
 
