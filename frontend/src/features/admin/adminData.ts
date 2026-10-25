@@ -10,6 +10,24 @@ import type {
 
 export const initialAdminCourses: IAdminCourse[] = [
   {
+    id: 'c-fa-group4',
+    code: 'ACCA F3 (FA)',
+    title: 'ACCA F3 – Financial Accounting (FA / F3) - Lớp 1 Kèm 4',
+    category: 'Applied Knowledge',
+    format: 'Lớp 1 Kèm 4',
+    originalPrice: 3670000,
+    salePrice: 2200000,
+    discountPercent: 40,
+    studentsCount: 4,
+    rating: 5.0,
+    reviewsCount: 8,
+    isPublished: true,
+    instructorName: 'Mr. Trần Minh Nhật',
+    chaptersCount: 15,
+    lessonsCount: 26,
+    description: 'Chiến dịch đặc biệt: Lớp nhỏ 4 bạn cá nhân hóa lộ trình, tặng kèm Combo Records ôn luyện thực chiến.',
+  },
+  {
     id: 'c-fa-records',
     code: 'ACCA F3 (FA)',
     title: 'ACCA F3 – Financial Accounting (FA / F3) - Records',

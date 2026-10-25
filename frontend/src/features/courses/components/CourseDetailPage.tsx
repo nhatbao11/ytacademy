@@ -343,8 +343,8 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
 
             {/* SECTION 1: "Bạn sẽ học được gì" & Giới thiệu khóa học */}
             <div id="sec-intro" className="space-y-6 scroll-mt-32">
-              {/* Lựa chọn hình thức học: Records hoặc Hybrid nếu là môn F3 */}
-              {(course.id === 'c-fa' || course.id === 'c-fa-records' || course.id === 'c-fa-hybrid') && (
+              {/* Lựa chọn hình thức học: Lớp 1 Kèm 4, Records hoặc Hybrid nếu là môn F3 */}
+              {(course.id === 'c-fa' || course.id === 'c-fa-records' || course.id === 'c-fa-hybrid' || course.id === 'c-fa-group4') && (
                 <div className="bg-amber-50 border-2 border-amber-300 p-4 rounded-none space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-black uppercase text-amber-900 tracking-wide flex items-center gap-1.5">
@@ -352,10 +352,45 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
                       {currentLang === 'en' ? 'Select Learning Format:' : 'Lựa chọn hình thức đào tạo môn F3:'}
                     </span>
                     <span className="text-[11px] font-bold text-amber-700">
-                      {course.id === 'c-fa-records' ? 'Đang chọn: Records' : course.id === 'c-fa-hybrid' ? 'Đang chọn: Hybrid' : 'Đang chọn: Online 1:1'}
+                      {course.id === 'c-fa-group4'
+                        ? 'Đang chọn: Lớp 1 Kèm 4 (-40%)'
+                        : course.id === 'c-fa-records'
+                        ? 'Đang chọn: Records (-40%)'
+                        : course.id === 'c-fa-hybrid'
+                        ? 'Đang chọn: Hybrid (-25%)'
+                        : 'Đang chọn: Online 1:1'}
                     </span>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                    {/* Nút 1: Lớp 1 Kèm 4 */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const target = mockCourses.find((c) => c.id === 'c-fa-group4')
+                        if (target && course.id !== 'c-fa-group4') onSelectRelatedCourse(target)
+                      }}
+                      className={`p-3 text-left border transition-all cursor-pointer rounded-none flex items-start justify-between ${
+                        course.id === 'c-fa-group4'
+                          ? 'bg-[#0B2545] text-white border-[#0B2545] shadow-xs'
+                          : 'bg-white hover:bg-slate-50 text-slate-800 border-slate-300'
+                      }`}
+                    >
+                      <div>
+                        <div className="font-black text-xs sm:text-sm flex items-center gap-1.5">
+                          <span>Lớp 1 Kèm 4</span>
+                          <span className={`text-[10px] px-1.5 py-0.2 font-bold ${course.id === 'c-fa-group4' ? 'bg-amber-400 text-slate-950' : 'bg-red-50 text-red-600 border border-red-200'}`}>-40%</span>
+                        </div>
+                        <p className={`text-[11px] mt-0.5 ${course.id === 'c-fa-group4' ? 'text-slate-300' : 'text-slate-500'}`}>
+                          Lớp nhỏ 4 bạn + Combo Records
+                        </p>
+                      </div>
+                      <div className="text-right shrink-0 ml-2">
+                        <span className={`text-xs sm:text-sm font-black block ${course.id === 'c-fa-group4' ? 'text-amber-400' : 'text-[#0B2545]'}`}>2.200.000 đ</span>
+                        <span className="text-[10px] text-slate-400 line-through">3.670.000 đ</span>
+                      </div>
+                    </button>
+
+                    {/* Nút 2: Khóa Records */}
                     <button
                       type="button"
                       onClick={() => {
@@ -370,11 +405,11 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
                     >
                       <div>
                         <div className="font-black text-xs sm:text-sm flex items-center gap-1.5">
-                          <span>Khóa Records (30 buổi)</span>
+                          <span>Khóa Records</span>
                           <span className={`text-[10px] px-1.5 py-0.2 font-bold ${course.id === 'c-fa-records' ? 'bg-amber-400 text-slate-950' : 'bg-red-50 text-red-600 border border-red-200'}`}>-40%</span>
                         </div>
                         <p className={`text-[11px] mt-0.5 ${course.id === 'c-fa-records' ? 'text-slate-300' : 'text-slate-500'}`}>
-                          Học video record bài bản + Luyện đề CBE
+                          Video record + Luyện đề CBE
                         </p>
                       </div>
                       <div className="text-right shrink-0 ml-2">
@@ -383,6 +418,7 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
                       </div>
                     </button>
 
+                    {/* Nút 3: Khóa Hybrid */}
                     <button
                       type="button"
                       onClick={() => {
@@ -397,11 +433,11 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
                     >
                       <div>
                         <div className="font-black text-xs sm:text-sm flex items-center gap-1.5">
-                          <span>Khóa Hybrid (19 buổi: 7 buổi 1:1 & 12 buổi Records)</span>
+                          <span>Khóa Hybrid</span>
                           <span className={`text-[10px] px-1.5 py-0.2 font-bold ${course.id === 'c-fa-hybrid' ? 'bg-amber-400 text-slate-950' : 'bg-red-50 text-red-600 border border-red-200'}`}>-25%</span>
                         </div>
                         <p className={`text-[11px] mt-0.5 ${course.id === 'c-fa-hybrid' ? 'text-slate-300' : 'text-slate-500'}`}>
-                          Online 1:1 giải đáp + Video Records đầy đủ
+                          7 buổi 1:1 & 12 buổi Records
                         </p>
                       </div>
                       <div className="text-right shrink-0 ml-2">
@@ -409,6 +445,98 @@ export const CourseDetailPage: React.FC<CourseDetailPageProps> = ({
                         <span className="text-[10px] text-slate-400 line-through">3.800.000 đ</span>
                       </div>
                     </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Infographic Đặc Biệt: Khóa học Lớp F3 1 Kèm 4 */}
+              {course.id === 'c-fa-group4' && (
+                <div className="bg-white border-2 border-[#0B2545] p-5 sm:p-6 rounded-none space-y-5">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-200 gap-2">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="px-2.5 py-1 bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider">
+                          Chiến dịch đặc biệt
+                        </span>
+                        <span className="text-xs font-bold text-[#0B2545]">LỚP F3 – 1 KÈM 4</span>
+                        <span className="text-xs font-bold text-rose-600 bg-rose-50 px-2 py-0.5 border border-rose-200">
+                          GIẢM 40% HỌC PHÍ
+                        </span>
+                      </div>
+                      <h3 className="text-base sm:text-xl font-black text-slate-900 mt-2">
+                        Học hiệu quả hơn – Chi phí tối ưu hơn! (Fast track Together!)
+                      </h3>
+                      <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                        Cùng YT Academy chinh phục ACCA F3 với phương pháp học cá nhân hóa trong lớp nhỏ 4 bạn – sát sao tiến độ, vững vàng kiến thức!
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* 4 Khối thông số đặc quyền */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div className="p-3.5 bg-amber-50 border border-amber-300 text-center">
+                      <span className="text-[11px] font-bold text-slate-600 uppercase block">Học phí ưu đãi</span>
+                      <strong className="text-base sm:text-lg font-black text-rose-600 block mt-0.5">2.200.000đ</strong>
+                      <span className="text-[10px] text-slate-500 font-medium">/ 1 bạn (Tiết kiệm 40%)</span>
+                    </div>
+
+                    <div className="p-3.5 bg-slate-50 border border-slate-200 text-center">
+                      <span className="text-[11px] font-bold text-slate-600 uppercase block">Thời lượng</span>
+                      <strong className="text-base sm:text-lg font-black text-[#0B2545] block mt-0.5">12 buổi</strong>
+                      <span className="text-[10px] text-slate-500 font-medium">(1h30 / buổi)</span>
+                    </div>
+
+                    <div className="p-3.5 bg-slate-50 border border-slate-200 text-center">
+                      <span className="text-[11px] font-bold text-slate-600 uppercase block">Lịch học</span>
+                      <strong className="text-base sm:text-lg font-black text-[#0B2545] block mt-0.5">2 buổi / tuần</strong>
+                      <span className="text-[10px] text-slate-500 font-medium">Linh hoạt theo nhóm</span>
+                    </div>
+
+                    <div className="p-3.5 bg-emerald-50 border border-emerald-300 text-center">
+                      <span className="text-[11px] font-bold text-emerald-800 uppercase block">Quà tặng kèm</span>
+                      <strong className="text-sm sm:text-base font-black text-emerald-700 block mt-0.5">Combo Records</strong>
+                      <span className="text-[10px] text-emerald-600 font-medium">Ôn luyện + Đề thi CBE</span>
+                    </div>
+                  </div>
+
+                  {/* 5 Lý do vàng */}
+                  <div className="bg-slate-50 p-4 border border-slate-200 space-y-2.5">
+                    <span className="text-xs font-black uppercase text-[#0B2545] tracking-wide block">
+                      VÌ SAO NÊN CHỌN LỚP F3 1 KÈM 4 TẠI YT ACADEMY?
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-700">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <span><strong>Cá nhân hóa</strong> lộ trình học theo từng học viên</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <span><strong>Giảng viên Mr. Trần Minh Nhật</strong> giàu kinh nghiệm thực tế</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <span><strong>Tăng tương tác</strong> – giải đáp trực tiếp sát sao</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <span><strong>Hệ thống bài tập</strong> và đề thi thử CBE phong phú</span>
+                      </div>
+                      <div className="flex items-center gap-2 sm:col-span-2">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <span><strong>Đồng hành cùng bạn đến Big4:</strong> "F3 không chỉ là một môn học - mà là bước đệm cho sự nghiệp Big4!"</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Banner Thông báo Số lượng có hạn */}
+                  <div className="flex items-center justify-between p-3 bg-gradient-to-r from-[#0B2545] to-[#123969] text-white text-xs">
+                    <span className="font-bold flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-amber-400" />
+                      <span>Team nhỏ - Hiệu quả lớn!</span>
+                    </span>
+                    <span className="px-2.5 py-1 bg-amber-400 text-slate-950 font-black text-[11px] uppercase tracking-wider">
+                      SỐ LƯỢNG LỚP CÓ HẠN
+                    </span>
                   </div>
                 </div>
               )}

@@ -132,7 +132,7 @@ export const AdminOverviewTab: React.FC<OverviewProps> = ({
               {publishedCourses} / {courses.length} Môn học
             </div>
             <div className="text-xs text-slate-500 mt-1">
-              F3 Records, F3 Hybrid, F3, F7, F8
+              F3 1 Kèm 4, F3 Records, F3 Hybrid, F3, F7, F8
             </div>
           </div>
         </div>

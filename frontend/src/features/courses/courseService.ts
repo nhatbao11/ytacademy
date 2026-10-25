@@ -6,8 +6,8 @@ export const defaultInstructor: IInstructor = {
   title: 'Giảng viên ACCA',
   avatar: '/instructor-tran-minh-nhat.webp',
   experience: 'Có nhiều năm kinh nghiệm đào tạo học viên ACCA đạt tỷ lệ đỗ cao',
-  coursesCount: 5,
-  studentsCount: 14,
+  coursesCount: 6,
+  studentsCount: 18,
 }
 
 export const mockCategories: ICategoryItem[] = [
@@ -15,13 +15,13 @@ export const mockCategories: ICategoryItem[] = [
     id: 'all',
     name: 'Tất cả môn ACCA',
     description: 'Chương trình đào tạo chứng chỉ Kế toán Công chứng Anh quốc ACCA Quốc tế',
-    courseCount: 5,
+    courseCount: 6,
   },
   {
     id: 'applied-knowledge',
     name: 'Applied Knowledge (BT, MA, FA)',
     description: 'Cấp độ Kiến thức Ứng dụng - Nền tảng cho người mới bắt đầu',
-    courseCount: 3,
+    courseCount: 4,
   },
   {
     id: 'applied-skills',
@@ -38,18 +38,28 @@ export const mockCategories: ICategoryItem[] = [
   {
     id: 'acca-online',
     name: 'ACCA Online',
-    description: 'Lớp học trực tuyến linh hoạt, tương tác chuyên sâu 1-1 cùng giảng viên',
-    courseCount: 5,
+    description: 'Lớp học trực tuyến linh hoạt, tương tác chuyên sâu 1-1 và nhóm nhỏ cùng giảng viên',
+    courseCount: 6,
   },
   {
     id: 'acca-offline',
     name: 'ACCA Offline & Blended',
     description: 'Lớp học kết hợp trực tiếp và giải đáp trực tuyến',
-    courseCount: 5,
+    courseCount: 6,
   },
 ]
 
 export const mockCourseReviewsMap: Record<string, ICourseReview[]> = {
+  'c-fa-group4': [
+    {
+      id: 'rev-fag4-1',
+      userName: 'Đặng Mai Phương',
+      userRole: 'Học viên Lớp 1 Kèm 4 • ĐH Ngoại thương',
+      rating: 5,
+      date: '22/10/2026',
+      comment: 'Lớp 4 bạn học cực kỳ hiệu quả, thầy Nhật theo sát từng bạn giải bài tập. Vừa được học trực tiếp tương tác lại vừa được tặng kèm Combo Records để ôn tập lại bất kỳ lúc nào!',
+    },
+  ],
   'c-fa': [
     {
       id: 'rev-fa-1',
@@ -883,7 +893,57 @@ export const aa15Chapters: IChapterDetail[] = [
 
 
 export const mockCourses: ICourse[] = [
-  // 1. ACCA F3 – Financial Accounting (FA / F3) - Records (Khóa mới)
+  // 1. ACCA F3 – Financial Accounting (FA / F3) - Lớp 1 Kèm 4 (Chiến dịch đặc biệt mới)
+  {
+    id: 'c-fa-group4',
+    title: 'ACCA F3 – Financial Accounting (FA / F3) - Lớp 1 Kèm 4',
+    titleEn: 'ACCA F3 – Financial Accounting (FA / F3) - 1 on 4 Mentorship',
+    slug: 'acca-f3-financial-accounting-1-kem-4',
+    category: 'applied-knowledge',
+    categoryName: 'Applied Knowledge',
+    categoryNameEn: 'Applied Knowledge',
+    levelName: 'Kiến thức Ứng dụng',
+    levelNameEn: 'Applied Knowledge',
+    instructor: defaultInstructor,
+    rating: 5.0,
+    reviewCount: 1,
+    studentCount: 4,
+    originalPrice: 3670000,
+    salePrice: 2200000,
+    discountPercent: 40,
+    thumbnail: '/courses/course-fa-group4.webp',
+    isHot: true,
+    lessonsCount: 26,
+    durationHours: '12 buổi (1h30/buổi)',
+    durationHoursEn: '12 sessions (1.5h/session)',
+    format: 'Lớp 1 kèm 4',
+    formatEn: '1 on 4 Small Group',
+    allDevicesSupport: 'Laptop; Ipad; ...',
+    allDevicesSupportEn: 'Laptop; iPad; ...',
+    description: 'Chiến dịch đặc biệt Lớp F3 1 Kèm 4: Học hiệu quả hơn – Chi phí tối ưu hơn! Phương pháp cá nhân hóa trong lớp nhỏ 4 bạn, sát sao tiến độ và tặng kèm Combo Records ôn luyện thực chiến.',
+    descriptionEn: 'Special Campaign ACCA F3 1 on 4 Small Group: High efficiency - optimized tuition! Personalized progress tracking in small 4-student class with complimentary practice Records combo.',
+    targetAudience: 'Sinh viên, người mới bắt đầu học ACCA muốn học lớp nhóm nhỏ tương tác cao (chỉ 4 bạn), tối ưu chi phí học phí và được giảng viên kèm cặp sát sao.',
+    targetAudienceEn: 'Students and beginners pursuing ACCA who aim for high-interaction small group classes (4 students), optimized tuition, and close mentorship.',
+    whatYouWillLearn: [
+      'Phương pháp học cá nhân hóa trong lớp nhỏ 4 bạn: Tăng tương tác, giải đáp thắc mắc trực tiếp cùng giảng viên Mr. Trần Minh Nhật.',
+      'Lộ trình 12 buổi học chuyên sâu (1h30/buổi, 2 buổi/tuần), linh hoạt thời gian phù hợp lịch học của nhóm.',
+      'Tặng kèm trọn bộ Combo Records: Video bài giảng ôn luyện + bài tập thực chiến chinh phục đề thi F3.',
+      'Hệ thống bài tập phong phú, luyện đề thi máy tính CBE bám sát cấu trúc đề thi ACCA thực tế.',
+      'Đồng hành cùng bạn đến Big4: Xây dựng nền tảng tư duy kế toán tài chính quốc tế IFRS vững vàng.',
+    ],
+    whatYouWillLearnEn: [
+      'Personalized learning methodology in a small 4-student class: Enhanced engagement and direct Q&A with instructor Mr. Tran Minh Nhat.',
+      'Intensive 12-session curriculum (1.5h/session, 2 sessions/week) with flexible scheduling tailored to the group.',
+      'Complimentary full Combo Records: Recorded video lectures + exam practice drills to master ACCA F3.',
+      'Comprehensive exercise library and CBE computer-based mock exams mirroring actual exam formats.',
+      'Mentorship towards Big4: Building a rock-solid foundation in international IFRS financial accounting.',
+    ],
+    fullDescription: 'Chiến dịch đặc biệt LỚP F3 1 KÈM 4 tại YT Academy:\n\nHọc hiệu quả hơn – Chi phí tối ưu hơn! Cùng YT Academy chinh phục ACCA F3 với phương pháp học cá nhân hóa trong lớp nhỏ 4 bạn – sát sao tiến độ, vững vàng kiến thức.\n\nĐặc quyền nổi bật của lớp F3 1 Kèm 4:\n• Lớp học giới hạn chỉ 4 học viên: Đảm bảo giảng viên theo sát từng bạn, giải đáp cặn kẽ mọi thắc mắc ngay trong buổi học.\n• Lộ trình 12 buổi tinh gọn (1h30/buổi), học 2 buổi/tuần, linh hoạt thời gian theo nhóm.\n• Tặng kèm Combo Records: Ôn luyện + Bài tập thực chiến chinh phục đề F3.\n• Học phí ưu đãi đặc biệt: Chỉ 2.200.000đ/bạn (Giảm 40% so với giá gốc 3.670.000đ).\n\n"F3 không chỉ là một môn học - mà là bước đệm cho sự nghiệp Big4!"',
+    fullDescriptionEn: 'Special Campaign ACCA F3 1 on 4 Mentorship at YT Academy:\n\nStudy more effectively – Optimize your investment! Conquer ACCA F3 with a personalized approach in an intimate 4-student class setting – close progress tracking, solid conceptual mastery.\n\nKey highlights of the 1 on 4 Small Group:\n• Strictly capped at 4 students per class: Ensuring the instructor monitors each individual, addressing questions thoroughly in real time.\n• Compact 12-session roadmap (1.5h/session, 2 sessions/week) with flexible group scheduling.\n• Complimentary Combo Records included: Full recorded revision masterclasses + practical CBE drills.\n• Special tuition discount: Only 2,200,000 VND per student (40% discount off standard 3,670,000 VND tuition).\n\n"F3 is not just an exam paper - it is your stepping stone to Big4!"',
+    reviews: mockCourseReviewsMap['c-fa-group4'] || mockCourseReviewsMap['c-fa'] || [],
+    chapters: fa26Chapters,
+  },
+  // 2. ACCA F3 – Financial Accounting (FA / F3) - Records (Khóa mới)
   {
     id: 'c-fa-records',
     title: 'ACCA F3 – Financial Accounting (FA / F3) - Records',
